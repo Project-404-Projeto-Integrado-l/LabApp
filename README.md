@@ -8,10 +8,10 @@ LabApp: Plataforma gamificada para o ensino lúdico e interativo de robótica b�
 O **LabApp** nasceu da necessidade de transformar o processo de aprendizagem em tecnologia em uma experiência prática, intuitiva e acessível. A plataforma resolve desafios comuns em sala de aula, como a dispersão de atenção, disparidade de níveis de conhecimento e a complexidade de conceitos abstratos de eletrônica e código, utilizando dinâmicas lúdicas e gamificação.
 
 ### Módulos e Minijogos
-- ** Jogo de Eletrônica (Montagem de Circuitos):** Simulação interativa onde o usuário conecta componentes virtuais (placa Arduino Uno, LEDs, resistores, baterias e jumpers) com prevenção ativa de erros e feedback contextual.
-- ** Jogo de Perguntas (Quiz):** Desafios de múltipla escolha focados em lógica de controle, automação e sintaxe da linguagem do Arduino.
-- ** Jogo de Memorização (Flashcards Interativos):** Modos lúdico e avançado para fixação visual e conceitual de hardware, sensores e atuadores.
-- ** Gamificação & Progressão:** Sistema de pontuação (XP), conquistas, estrelas de desempenho e ranking para incentivo contínuo.
+- **Jogo de Eletrônica (Montagem de Circuitos):** Simulação interativa onde o usuário conecta componentes virtuais (placa Arduino Uno, LEDs, resistores, baterias e jumpers) com prevenção ativa de erros e feedback contextual.
+- **Jogo de Perguntas (Quiz):** Desafios de múltipla escolha focados em lógica de controle, automação e sintaxe da linguagem do Arduino.
+- **Jogo de Memorização (Flashcards Interativos):** Modos lúdico e avançado para fixação visual e conceitual de hardware, sensores e atuadores.
+- **Gamificação & Progressão:** Sistema de pontuação (XP), conquistas, estrelas de desempenho e ranking para incentivo contínuo.
 
 ---
 
