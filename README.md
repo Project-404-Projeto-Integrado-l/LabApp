@@ -30,7 +30,7 @@ O **LabApp** nasceu da necessidade de transformar o processo de aprendizagem em 
 * **João Lucas** — Desenvolvimento & Lógica Interativa
 
 ### Supervisão Acadêmica
-* **Profª. Drª. Cátia Luzia Silva**
+* **Profª. Drª. Cátia Luzia Oliveira da Silva**
 * **Prof. Dr. Wellington Wagner Ferreira Sarmento**
 
 *Curso de Sistemas e Mídias Digitais (SMD) — Universidade Federal do Ceará (UFC)*
