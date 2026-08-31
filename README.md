@@ -25,9 +25,11 @@ O **LabApp** nasceu da necessidade de transformar o processo de aprendizagem em 
 
 ## Equipe do Projeto
 
-* **Sérgio Brener** — Design de Produto & Desenvolvimento Front-End
-* **Benjamn Clécio** — Desenvolvimento & Experiência do Usuário (UX)
-* **João Lucas** — Desenvolvimento & Lógica Interativa
+* **Sérgio Brener** — UI/UX Design, Programação & Testes
+* **Benjamn Clécio** — Programação & Testes
+* **João Lucas** — Gestão & Testes
+* **Maria Rosa** — Arte/Design
+* **Murilo Marcondes** — Gestão & Testes
 
 ### Supervisão Acadêmica
 * **Profª. Drª. Cátia Luzia Oliveira da Silva**
