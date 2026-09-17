@@ -4,10 +4,10 @@ import { Route, BadgeHelp, Dices, Settings, Crown, Home as HomeIcon } from "luci
 export default function Home() {
   return (
     <div className="relative min-h-screen bg-[#212121] text-[#F6F6F9] flex flex-col justify-between">
-      <div 
+      <div
         className="absolute inset-0 opacity-15 pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(#3a3a3a 1.5px, transparent 1.5px)`,
+          backgroundImage: `radial-gradient(#cccccc 1.5px, transparent 1.5px)`,
           backgroundSize: `24px 24px`
         }}
       />
