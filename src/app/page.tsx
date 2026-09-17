@@ -1,15 +1,13 @@
 import Link from "next/link";
-import { Route, BadgeHelp, Dices, Play, Settings, Crown, Home as HomeIcon } from "lucide-react";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Route, BadgeHelp, Dices, Settings, Crown, Home as HomeIcon } from "lucide-react";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#212121] text-white flex flex-col justify-between">
+    <div className="relative min-h-screen bg-[#212121] text-[#F6F6F9] flex flex-col justify-between">
       <div 
-        className="absolute inset-0 opacity-40 pointer-events-none"
+        className="absolute inset-0 opacity-15 pointer-events-none"
         style={{
-          backgroundImage: `radial-gradient(#ffffff 1px, transparent 1px)`,
+          backgroundImage: `radial-gradient(#3a3a3a 1.5px, transparent 1.5px)`,
           backgroundSize: `24px 24px`
         }}
       />
@@ -22,27 +20,27 @@ export default function Home() {
               <circle cx="35.5" cy="31" r="14" fill="#FFFFFF" />
             </svg>
           </div>
-          <span className="text-3xl tracking-tight">
+          <span className="text-3xl tracking-tight text-[#F6F6F9]">
             <strong className="font-bold italic">Lab</strong>
             <span className="font-light italic">App</span>
           </span>
         </div>
 
         <nav className="flex items-center gap-8">
-          <Link href="/" className="flex items-center gap-2 py-2 border-b-2 border-[#883cec] text-white font-semibold">
-            <HomeIcon className="w-6 h-6" />
+          <Link href="/" className="flex items-center gap-2 py-2 border-b-2 border-[#883cec] text-[#F6F6F9] font-semibold">
+            <HomeIcon className="w-6 h-6 text-[#F6F6F9]" />
             <span>Início</span>
           </Link>
-          <Link href="#" className="flex items-center gap-2 py-2 text-[#f6f6f9] opacity-80 hover:opacity-100 transition-opacity">
-            <Settings className="w-6 h-6" />
+          <Link href="#" className="flex items-center gap-2 py-2 text-[#F6F6F9] opacity-80 hover:opacity-100 transition-opacity">
+            <Settings className="w-6 h-6 text-[#F6F6F9]" />
             <span>Configurações</span>
           </Link>
-          <Link href="#" className="flex items-center gap-2 py-2 text-[#f6f6f9] opacity-80 hover:opacity-100 transition-opacity">
-            <Crown className="w-6 h-6" />
+          <Link href="#" className="flex items-center gap-2 py-2 text-[#F6F6F9] opacity-80 hover:opacity-100 transition-opacity">
+            <Crown className="w-6 h-6 text-[#F6F6F9]" />
             <span>Ranking</span>
           </Link>
-          <Link href="#" className="flex items-center gap-2 py-2 text-[#f6f6f9] opacity-80 hover:opacity-100 transition-opacity">
-            <BadgeHelp className="w-6 h-6" />
+          <Link href="#" className="flex items-center gap-2 py-2 text-[#F6F6F9] opacity-80 hover:opacity-100 transition-opacity">
+            <BadgeHelp className="w-6 h-6 text-[#F6F6F9]" />
             <span>Ajuda / Como Jogar</span>
           </Link>
         </nav>
@@ -50,84 +48,101 @@ export default function Home() {
 
       <main className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-6 py-12 flex flex-col justify-center gap-12">
         <div className="flex flex-col gap-4 max-w-3xl">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#f6f6f9] tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-bold text-[#F6F6F9] tracking-tight">
             Laboratório de Aprendizado
           </h1>
-          <p className="text-lg text-gray-300 leading-relaxed max-w-2xl">
+          <p className="text-lg text-[#F6F6F9] leading-relaxed max-w-2xl">
             Teste e aprimore suas habilidades em robótica básica, eletrônica e reconhecimento de hardware de forma interativa.
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <Card className="bg-[#262626] border-[#5e5e5e] text-white h-[500px] flex flex-col justify-between p-8 rounded-lg shadow-lg">
-            <CardHeader className="p-0 gap-6">
-              <Route className="w-24 h-24 text-white stroke-[1.5]" />
-              <CardTitle className="text-2xl font-bold text-white">
-                Jogo de Eletrônica
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-                Desafie seus conhecimentos teóricos e práticos sobre circuitos! Neste jogo, você vai explorar o funcionamento de componentes, entender a lógica das conexões e dominar os principais conceitos eletrônicos aplicados ao ecossistema Arduino.
-              </p>
-            </CardContent>
-            <div className="w-full border-t border-[#5e5e5e] my-2" />
-            <CardFooter className="p-0">
-              <Button className="bg-white text-black hover:bg-gray-200 px-8 py-6 rounded-lg font-medium text-base flex items-center gap-2">
-                <span>Jogar agora</span>
-                <Play className="w-5 h-5 fill-black" />
-              </Button>
-            </CardFooter>
-          </Card>
+          {/* Card 1: Jogo de Eletrônica */}
+          <div className="bg-[#262626] border border-[#5e5e5e] text-[#F6F6F9] h-[500px] flex flex-col justify-between p-8 rounded-lg shadow-lg">
+            <div className="flex flex-col items-start gap-8">
+              <Route className="w-24 h-24 text-[#F6F6F9] stroke-[1.5]" />
+              <div className="flex flex-col gap-4">
+                <h2 className="text-2xl font-bold text-[#F6F6F9]">
+                  Jogo de Eletrônica
+                </h2>
+                <p className="text-[#F6F6F9] text-sm md:text-base leading-relaxed">
+                  Desafie seus conhecimentos teóricos e práticos sobre circuitos! Neste jogo, você vai explorar o funcionamento de componentes, entender a lógica das conexões e dominar os principais conceitos eletrônicos aplicados ao ecossistema Arduino.
+                </p>
+              </div>
+            </div>
 
-          <Card className="bg-[#262626] border-[#5e5e5e] text-white h-[500px] flex flex-col justify-between p-8 rounded-lg shadow-lg">
-            <CardHeader className="p-0 gap-6">
-              <BadgeHelp className="w-24 h-24 text-white stroke-[1.5]" />
-              <CardTitle className="text-2xl font-bold text-white">
-                Jogo de Perguntas (Quiz)
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-                Teste sua mente com perguntas dinâmicas sobre robótica básica! Um quiz interativo para você validar o que aprendeu sobre programação em Arduino, lógica de controle e automação de forma divertida e rápida.
-              </p>
-            </CardContent>
-            <div className="w-full border-t border-[#5e5e5e] my-2" />
-            <CardFooter className="p-0">
-              <Button className="bg-white text-black hover:bg-gray-200 px-8 py-6 rounded-lg font-medium text-base flex items-center gap-2">
-                <span>Jogar agora</span>
-                <Play className="w-5 h-5 fill-black" />
-              </Button>
-            </CardFooter>
-          </Card>
+            <div className="flex flex-col gap-6 w-full">
+              <div className="w-full border-t border-[#5e5e5e]" />
+              <div>
+                <button className="bg-white text-[#000000] hover:bg-gray-100 px-8 py-4 rounded-lg font-medium text-base flex items-center gap-2 transition-colors cursor-pointer">
+                  <span className="text-[#000000] font-medium">Jogar agora</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                    <polygon points="6 3 20 12 6 21 6 3" fill="none" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
 
-          <Card className="bg-[#262626] border-[#5e5e5e] text-white h-[500px] flex flex-col justify-between p-8 rounded-lg shadow-lg">
-            <CardHeader className="p-0 gap-6">
-              <Dices className="w-24 h-24 text-white stroke-[1.5]" />
-              <CardTitle className="text-2xl font-bold text-white">
-                Jogo de Memorização
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              <p className="text-gray-300 text-sm md:text-base leading-relaxed">
-                Ative sua memória visual! Exercite o reconhecimento rápido de sensores, atuadores, placas e ferramentas essenciais da robótica básica, associando os nomes corretos ao hardware do Arduino real.
-              </p>
-            </CardContent>
-            <div className="w-full border-t border-[#5e5e5e] my-2" />
-            <CardFooter className="p-0">
-              <Button className="bg-white text-black hover:bg-gray-200 px-8 py-6 rounded-lg font-medium text-base flex items-center gap-2">
-                <span>Jogar agora</span>
-                <Play className="w-5 h-5 fill-black" />
-              </Button>
-            </CardFooter>
-          </Card>
+          {/* Card 2: Jogo de Perguntas (Quiz) */}
+          <div className="bg-[#262626] border border-[#5e5e5e] text-[#F6F6F9] h-[500px] flex flex-col justify-between p-8 rounded-lg shadow-lg">
+            <div className="flex flex-col items-start gap-8">
+              <BadgeHelp className="w-24 h-24 text-[#F6F6F9] stroke-[1.5]" />
+              <div className="flex flex-col gap-4">
+                <h2 className="text-2xl font-bold text-[#F6F6F9]">
+                  Jogo de Perguntas (Quiz)
+                </h2>
+                <p className="text-[#F6F6F9] text-sm md:text-base leading-relaxed">
+                  Teste sua mente com perguntas dinâmicas sobre robótica básica! Um quiz interativo para você validar o que aprendeu sobre programação em Arduino, lógica de controle e automação de forma divertida e rápida.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-6 w-full">
+              <div className="w-full border-t border-[#5e5e5e]" />
+              <div>
+                <button className="bg-white text-[#000000] hover:bg-gray-100 px-8 py-4 rounded-lg font-medium text-base flex items-center gap-2 transition-colors cursor-pointer">
+                  <span className="text-[#000000] font-medium">Jogar agora</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                    <polygon points="6 3 20 12 6 21 6 3" fill="none" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Card 3: Jogo de Memorização */}
+          <div className="bg-[#262626] border border-[#5e5e5e] text-[#F6F6F9] h-[500px] flex flex-col justify-between p-8 rounded-lg shadow-lg">
+            <div className="flex flex-col items-start gap-8">
+              <Dices className="w-24 h-24 text-[#F6F6F9] stroke-[1.5]" />
+              <div className="flex flex-col gap-4">
+                <h2 className="text-2xl font-bold text-[#F6F6F9]">
+                  Jogo de Memorização
+                </h2>
+                <p className="text-[#F6F6F9] text-sm md:text-base leading-relaxed">
+                  Ative sua memória visual! Exercite o reconhecimento rápido de sensores, atuadores, placas e ferramentas essenciais da robótica básica, associando os nomes corretos ao hardware do Arduino real.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-6 w-full">
+              <div className="w-full border-t border-[#5e5e5e]" />
+              <div>
+                <button className="bg-white text-[#000000] hover:bg-gray-100 px-8 py-4 rounded-lg font-medium text-base flex items-center gap-2 transition-colors cursor-pointer">
+                  <span className="text-[#000000] font-medium">Jogar agora</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                    <polygon points="6 3 20 12 6 21 6 3" fill="none" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
 
-      <footer className="relative z-10 py-6 text-center text-sm text-gray-500 border-t border-[#333]">
+      <footer className="relative z-10 py-6 text-center text-sm text-[#F6F6F9] border-t border-[#333]">
         <p>LabApp — Projeto LabiNEC (UFC / SMD)</p>
       </footer>
     </div>
   );
 }
-
