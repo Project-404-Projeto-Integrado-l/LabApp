@@ -72,15 +72,15 @@ A interface e as mecânicas foram desenhadas seguindo critérios rigorosos de Us
 
 | Identificador | Descrição | Prioridade | Depende de | Situação |
 | :--- | :--- | :--- | :--- | :--- |
-| **RF01** | O usuário deve conseguir cadastrar e gerenciar seu perfil na aplicação, definindo sua categoria como aluno ou professor. | Alta | Nenhum | `NÃO INICIADO` |
+| **RF01** | O usuário deve conseguir cadastrar e gerenciar seu perfil na aplicação, definindo sua categoria como aluno ou professor. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
 | **RF02** | O usuário deve ser capaz de navegar livremente entre as telas de Início, Catálogo de Jogos, Ranking e Configurações. | Alta | RF01 | `EM DESENVOLVIMENTO` |
 | **RF03** | O usuário deve conseguir acessar a central de suporte contendo instruções de "Como Jogar" e o Glossário de Termos. | Média | RF02 | `FEITO` |
-| **RF04** | O sistema deve permitir que o professor/administrador cadastre, edite, liste e remova perguntas, alternativas e gabaritos para os quizzes. | Alta | Nenhum | `NÃO INICIADO` |
+| **RF04** | O sistema deve permitir que o professor/administrador cadastre, edite, liste e remova perguntas, alternativas e gabaritos para os quizzes. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
 | **RF05** | O jogo deve exibir as perguntas de forma individual com o enunciado e o indicador de progresso (ex.: "Pergunta 01/03"). | Alta | RF04 | `NÃO INICIADO` |
 | **RF06** | O sistema deve permitir ao usuário selecionar apenas uma única alternativa por pergunta. | Alta | RF05 | `NÃO INICIADO` |
 | **RF07** | O jogo deve validar a alternativa escolhida e apresentar retorno visual imediato sobre a correção da resposta. | Alta | RF06 | `NÃO INICIADO` |
 | **RF08** | O sistema deve computar a pontuação de XP ao final do quiz com base no desempenho alcançado pelo usuário. | Alta | RF07, RF22 | `NÃO INICIADO` |
-| **RF09** | O sistema deve disponibilizar um catálogo de imagens, nomes e descrições dos componentes para o jogo de memorização. | Alta | Nenhum | `NÃO INICIADO` |
+| **RF09** | O sistema deve disponibilizar um catálogo de imagens, nomes e descrições dos componentes para o jogo de memorização. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
 | **RF10** | O usuário deve poder alternar livremente entre o "Modo Lúdico" e o "Modo Avançado" no jogo de memorização. | Média | RF09 | `NÃO INICIADO` |
 | **RF11** | O usuário deve ser capaz de acionar a ação "Virar Flashcard" para visualizar os detalhes e a imagem do componente. | Alta | RF09 | `NÃO INICIADO` |
 | **RF12** | O usuário deve associar o componente apresentado em tela à sua opção de identificação correta. | Alta | RF09, RF11 | `NÃO INICIADO` |
@@ -93,8 +93,8 @@ A interface e as mecânicas foram desenhadas seguindo critérios rigorosos de Us
 | **RF19** | O sistema deve validar a coerência lógica e elétrica das conexões montadas pelo usuário na bancada de ensaios. | Alta | RF18 | `NÃO INICIADO` |
 | **RF20** | O jogo deve exibir retorno de sucesso com estrelas de desempenho e concessão de +50XP ao concluir o circuito. | Alta | RF19, RF22 | `NÃO INICIADO` |
 | **RF21** | O jogo deve fornecer dicas pedagógicas e orientações construtivas no modal de erro caso o circuito contenha falhas. | Alta | RF19 | `NÃO INICIADO` |
-| **RF22** | O sistema deve acumular e persistir o saldo total de XP conquistado pelo aluno ao término de cada desafio. | Alta | RF01 | `NÃO INICIADO` |
-| **RF23** | O usuário deve conseguir visualizar a classificação geral (ranking) e seu posicionamento frente aos colegas. | Média | RF22 | `NÃO INICIADO` |
+| **RF22** | O sistema deve acumular e persistir o saldo total de XP conquistado pelo aluno ao término de cada desafio. | Alta | RF01 | `EM DESENVOLVIMENTO` |
+| **RF23** | O usuário deve conseguir visualizar a classificação geral (ranking) e seu posicionamento frente aos colegas. | Média | RF22 | `EM DESENVOLVIMENTO` |
 | **RF24** | O professor deve ter acesso a um relatório com o progresso, tempo e erros dos alunos nas atividades. | Média | RF08, RF20, RF22 | `NÃO INICIADO` |
 | **RF25** | O aluno deve poder realizar login utilizando identificador único simples (ex.: apelido/matrícula + PIN de 4 dígitos ou avatar). | Alta | RF01 | `NÃO INICIADO` |
 | **RF26** | O professor deve conseguir criar turmas, gerar código de vinculação e associar alunos à sua respectiva turma. | Alta | RF01 | `NÃO INICIADO` |
