@@ -15,7 +15,7 @@ export default function Home() {
 
       <Header />
 
-      <main className="relative z-10 flex-1 max-w-7xl w-full mx-auto px-6 py-12 flex flex-col justify-center gap-12">
+      <main className="relative z-10 flex-1 max-w-[1216px] w-full mx-auto px-6 lg:px-0 py-12 flex flex-col justify-center gap-12">
         <div className="flex flex-col gap-4 max-w-3xl">
           <h1 className="text-4xl md:text-5xl font-bold text-white tracking-tight">
             Laboratório de Aprendizado
@@ -110,7 +110,7 @@ export default function Home() {
       </main>
 
       <footer className="relative z-10 border-t border-[#333]">
-        <div className="max-w-7xl w-full mx-auto px-6 py-6 text-center text-sm text-white">
+        <div className="max-w-[1216px] w-full mx-auto px-6 lg:px-0 py-6 text-center text-sm text-white">
           <p>LabApp — Projeto LabiNEC (UFC / SMD)</p>
         </div>
       </footer>

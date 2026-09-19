@@ -15,7 +15,7 @@ export default function AjudaPage() {
 
       <Header />
 
-      <main className="relative z-10 flex-1 max-w-[1216px] w-full mx-auto px-6 py-16 flex flex-col gap-16">
+      <main className="relative z-10 flex-1 max-w-[1216px] w-full mx-auto px-6 lg:px-0 py-16 flex flex-col gap-16">
         <section className="flex flex-col gap-12">
           <div className="flex flex-col gap-4 max-w-4xl">
             <h1 className="text-4xl md:text-[48px] font-bold text-[#f6f6f9] tracking-tight leading-tight">
@@ -220,7 +220,7 @@ export default function AjudaPage() {
       </main>
 
       <footer className="relative z-10 border-t border-[#333]">
-        <div className="max-w-7xl w-full mx-auto px-6 py-6 text-center text-sm text-white">
+        <div className="max-w-[1216px] w-full mx-auto px-6 lg:px-0 py-6 text-center text-sm text-white">
           <p>LabApp — Projeto LabiNEC (UFC / SMD)</p>
         </div>
       </footer>

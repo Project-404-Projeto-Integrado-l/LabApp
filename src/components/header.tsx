@@ -16,7 +16,7 @@ export function Header() {
 
   return (
     <header className="relative z-20 w-full border-b border-[#5a5a5a] bg-[#212121]">
-      <div className="max-w-7xl w-full mx-auto px-6 md:px-12 h-24 flex items-center justify-between">
+      <div className="max-w-[1216px] w-full mx-auto px-6 lg:px-0 h-24 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-4">
           <div className="w-12 h-10 relative flex items-center justify-center">
             <svg viewBox="0 0 71 62" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
