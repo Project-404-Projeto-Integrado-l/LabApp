@@ -73,7 +73,7 @@ A interface e as mecânicas foram desenhadas seguindo critérios rigorosos de Us
 | Identificador | Descrição | Prioridade | Depende de | Situação |
 | :--- | :--- | :--- | :--- | :--- |
 | **RF01** | **Gestão de Perfil**: O usuário (aluno ou professor) deve conseguir cadastrar e gerenciar seu perfil na aplicação, definindo sua categoria. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
-| **RF02** | **Navegação Principal**: O usuário (aluno ou professor) deve ser capaz de navegar livremente entre as telas de Início, Catálogo de Jogos, Ranking e Configurações. | Alta | RF01 | `EM DESENVOLVIMENTO` |
+| **RF02** | **Navegação Principal**: O usuário (aluno ou professor) deve ser capaz de navegar livremente entre as telas de Início, Catálogo de Jogos, Ranking e Configurações. | Alta | RF01 | `FEITO` |
 | **RF03** | **Central de Ajuda**: O usuário (aluno ou professor) deve conseguir acessar a central de suporte contendo instruções de "Como Jogar" e o Glossário de Termos. | Média | RF02 | `FEITO` |
 | **RF04** | **Gerenciamento de Conteúdo do Quiz**: O professor/administrador deve conseguir cadastrar, editar, listar e remover perguntas, alternativas e gabaritos para os quizzes. | Alta | Nenhum | `FEITO` |
 | **RF05** | **Apresentação de Questões**: O aluno deve visualizar as perguntas do quiz de forma individual com o enunciado e o indicador de progresso (ex.: "Pergunta 01/03"). | Alta | RF04 | `NÃO INICIADO` |
@@ -94,7 +94,7 @@ A interface e as mecânicas foram desenhadas seguindo critérios rigorosos de Us
 | **RF20** | **Recompensa por Conclusão de Circuito**: O aluno deve receber retorno de sucesso com estrelas de desempenho e concessão de +50XP ao concluir o circuito corretamente. | Alta | RF19, RF22 | `NÃO INICIADO` |
 | **RF21** | **Dicas de Recuperação Pedagógica**: O aluno deve receber dicas pedagógicas e orientações construtivas no modal de erro caso o circuito contenha falhas. | Alta | RF19 | `NÃO INICIADO` |
 | **RF22** | **Persistência de Dados**: O aluno deve ter o saldo total de XP conquistado acumulado e persistido no seu perfil ao término de cada atividade. | Alta | RF01 | `EM DESENVOLVIMENTO` |
-| **RF23** | **Visualização de Ranking**: O aluno ou professor deve conseguir visualizar a classificação geral (ranking) e o posicionamento dos estudantes. | Média | RF22 | `EM DESENVOLVIMENTO` |
+| **RF23** | **Visualização de Ranking**: O aluno ou professor deve conseguir visualizar a classificação geral (ranking) e o posicionamento dos estudantes. | Média | RF22 | `FEITO` |
 | **RF24** | **Relatório de Acompanhamento**: O professor deve ter acesso a um relatório com métricas de progresso, tempo investido e erros cometidos pelos alunos nas atividades. | Média | RF08, RF20, RF22 | `NÃO INICIADO` |
 | **RF25** | **Autenticação Simplificada**: O aluno deve poder realizar login utilizando um identificador único simples (ex.: apelido/matrícula + PIN de 4 dígitos ou seleção de avatar). | Alta | RF01 | `NÃO INICIADO` |
 | **RF26** | **Gestão de Turmas**: O professor deve conseguir criar turmas, gerar código de vinculação e associar alunos à sua respectiva sala. | Alta | RF01 | `NÃO INICIADO` |
