@@ -4,15 +4,17 @@ import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BadgeHelp, Crown, Home as HomeIcon, Menu, Settings, X } from "lucide-react";
+import { RankingModal } from "@/components/modals/ranking-modal";
+import { ConfigModal } from "@/components/modals/config-modal";
 
 export function Header() {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
+  const [isRankingOpen, setIsRankingOpen] = useState(false);
+  const [isConfigOpen, setIsConfigOpen] = useState(false);
 
   const isHome = pathname === "/";
   const isAjuda = pathname === "/ajuda";
-  const isConfig = pathname === "/configuracoes";
-  const isRanking = pathname === "/ranking";
 
   return (
     <header className="relative z-20 w-full border-b border-[#5a5a5a] bg-[#212121]">
@@ -43,28 +45,20 @@ export function Header() {
             <HomeIcon className="w-6 h-6 text-white" />
             <span>Início</span>
           </Link>
-          <Link
-            href="#"
-            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity ${
-              isConfig
-                ? "border-b-2 border-[#883cec] font-semibold"
-                : "opacity-85 hover:opacity-100"
-            }`}
+          <button
+            onClick={() => setIsConfigOpen(true)}
+            className="flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity opacity-85 hover:opacity-100 cursor-pointer"
           >
             <Settings className="w-6 h-6 text-white" />
             <span>Configurações</span>
-          </Link>
-          <Link
-            href="#"
-            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity ${
-              isRanking
-                ? "border-b-2 border-[#883cec] font-semibold"
-                : "opacity-85 hover:opacity-100"
-            }`}
+          </button>
+          <button
+            onClick={() => setIsRankingOpen(true)}
+            className="flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity opacity-85 hover:opacity-100 cursor-pointer"
           >
             <Crown className="w-6 h-6 text-white" />
             <span>Ranking</span>
-          </Link>
+          </button>
           <Link
             href="/ajuda"
             className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity ${
@@ -115,31 +109,27 @@ export function Header() {
             <span>Início</span>
           </Link>
 
-          <Link
-            href="#"
-            onClick={() => setIsOpen(false)}
-            className={`flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors ${
-              isConfig
-                ? "bg-[#883cec]/20 border-l-4 border-[#883cec] font-semibold"
-                : "hover:bg-[#333333]"
-            }`}
+          <button
+            onClick={() => {
+              setIsOpen(false);
+              setIsConfigOpen(true);
+            }}
+            className="flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors hover:bg-[#333333] cursor-pointer text-left w-full"
           >
             <Settings className="w-6 h-6 text-white" />
             <span>Configurações</span>
-          </Link>
+          </button>
 
-          <Link
-            href="#"
-            onClick={() => setIsOpen(false)}
-            className={`flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors ${
-              isRanking
-                ? "bg-[#883cec]/20 border-l-4 border-[#883cec] font-semibold"
-                : "hover:bg-[#333333]"
-            }`}
+          <button
+            onClick={() => {
+              setIsOpen(false);
+              setIsRankingOpen(true);
+            }}
+            className="flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors hover:bg-[#333333] cursor-pointer text-left w-full"
           >
             <Crown className="w-6 h-6 text-white" />
             <span>Ranking</span>
-          </Link>
+          </button>
 
           <Link
             href="/ajuda"
@@ -168,6 +158,10 @@ export function Header() {
           </Link>
         </div>
       )}
+
+      {/* Popups / Modals */}
+      <RankingModal isOpen={isRankingOpen} onClose={() => setIsRankingOpen(false)} />
+      <ConfigModal isOpen={isConfigOpen} onClose={() => setIsConfigOpen(false)} />
     </header>
   );
 }
