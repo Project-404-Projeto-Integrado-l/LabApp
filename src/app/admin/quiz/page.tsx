@@ -11,7 +11,7 @@ import {
   HelpCircle, 
   RotateCcw, 
   X, 
-  Sparkles,
+  Map,
   Layers,
   AlertCircle,
   FileQuestion,
@@ -22,7 +22,7 @@ import { supabase, QuizQuestion } from "@/lib/supabase";
 
 const SAMPLE_QUESTIONS: QuizQuestion[] = [
   {
-    id: "sample-1",
+    id: "00000000-0000-0000-0000-000000000001",
     question: "Qual pino do Arduino Uno deve ser conectado ao terminal negativo de um circuito?",
     options: ["5V", "GND", "RESET", "AREF"],
     correct_option_index: 1,
@@ -31,7 +31,7 @@ const SAMPLE_QUESTIONS: QuizQuestion[] = [
     created_at: new Date().toISOString()
   },
   {
-    id: "sample-2",
+    id: "00000000-0000-0000-0000-000000000002",
     question: "Qual função no código do Arduino é executada repetidamente em um loop infinito?",
     options: ["setup()", "loop()", "pinMode()", "digitalWrite()"],
     correct_option_index: 1,
@@ -40,7 +40,7 @@ const SAMPLE_QUESTIONS: QuizQuestion[] = [
     created_at: new Date().toISOString()
   },
   {
-    id: "sample-3",
+    id: "00000000-0000-0000-0000-000000000003",
     question: "Qual componente é essencial para evitar que um LED queime ao ser conectado a uma fonte de 5V?",
     options: ["Capacitor", "Resistor", "Potenciômetro", "Diodo Zener"],
     correct_option_index: 1,
@@ -49,7 +49,7 @@ const SAMPLE_QUESTIONS: QuizQuestion[] = [
     created_at: new Date().toISOString()
   },
   {
-    id: "sample-4",
+    id: "00000000-0000-0000-0000-000000000004",
     question: "Qual é o valor da tensão de saída dos pinos digitais do Arduino Uno quando em estado HIGH?",
     options: ["3.3V", "5V", "12V", "0V"],
     correct_option_index: 1,
@@ -208,36 +208,40 @@ export default function AdminQuizPage() {
           .eq("id", editingQuestion.id);
 
         if (error) {
-          // Local fallback state update
+          console.error("Erro ao atualizar no Supabase:", error);
+          showToast(`Erro no banco: ${error.message}`, "error");
           setQuestions(prev => prev.map(q => q.id === editingQuestion.id ? { ...q, ...payload } : q));
         } else {
+          showToast("Pergunta atualizada no banco de dados com sucesso!");
           await fetchQuestions();
         }
-        showToast("Pergunta atualizada com sucesso!");
       } else {
         // Create
-        const { data, error } = await supabase
+        const { error } = await supabase
           .from("quiz_questions")
-          .insert([payload])
-          .select();
+          .insert([payload]);
 
-        if (error || !data) {
+        if (error) {
+          console.error("Erro ao inserir no Supabase:", error);
+          showToast(`Erro no banco: ${error.message}`, "error");
+          const localUuid = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `00000000-0000-0000-0000-${Date.now().toString().padStart(12, '0')}`;
           const newLocalQuestion: QuizQuestion = {
-            id: `custom-${Date.now()}`,
+            id: localUuid,
             ...payload,
             created_at: new Date().toISOString()
           };
           setQuestions(prev => [newLocalQuestion, ...prev]);
         } else {
+          showToast("Nova pergunta criada e salva no banco!");
           await fetchQuestions();
         }
-        showToast("Nova pergunta criada com sucesso!");
       }
 
       setIsModalOpen(false);
-    } catch (err) {
+    } catch (err: unknown) {
       console.error("Erro ao salvar:", err);
-      showToast("Erro ao salvar pergunta no banco de dados.", "error");
+      const errMsg = err instanceof Error ? err.message : "Erro desconhecido";
+      showToast(`Erro ao salvar: ${errMsg}`, "error");
     } finally {
       setIsSubmitting(false);
     }
@@ -251,15 +255,16 @@ export default function AdminQuizPage() {
         .eq("id", id);
 
       if (error) {
-        setQuestions(prev => prev.filter(q => q.id !== id));
+        console.error("Erro ao excluir do Supabase:", error);
+        showToast(`Erro no banco: ${error.message}`, "error");
       } else {
-        setQuestions(prev => prev.filter(q => q.id !== id));
+        showToast("Pergunta excluída do banco de dados!");
       }
-      showToast("Pergunta excluída com sucesso!");
-    } catch (err) {
+      setQuestions(prev => prev.filter(q => q.id !== id));
+    } catch (err: unknown) {
       console.error("Erro ao excluir:", err);
       setQuestions(prev => prev.filter(q => q.id !== id));
-      showToast("Pergunta excluída localmente.");
+      showToast("Pergunta removida localmente.", "error");
     } finally {
       setDeleteConfirmId(null);
     }
@@ -268,28 +273,30 @@ export default function AdminQuizPage() {
   const handleRestoreDefaults = async () => {
     setLoading(true);
     try {
+      const sampleData = SAMPLE_QUESTIONS.map(q => ({
+        question: q.question,
+        options: q.options,
+        correct_option_index: q.correct_option_index,
+        explanation: q.explanation,
+        category: q.category
+      }));
+
       const { error } = await supabase
         .from("quiz_questions")
-        .insert(
-          SAMPLE_QUESTIONS.map(q => ({
-            question: q.question,
-            options: q.options,
-            correct_option_index: q.correct_option_index,
-            explanation: q.explanation,
-            category: q.category
-          }))
-        );
+        .insert(sampleData);
 
       if (error) {
+        console.error("Erro ao restaurar no Supabase:", error);
+        showToast(`Erro no banco: ${error.message}`, "error");
         setQuestions(SAMPLE_QUESTIONS);
       } else {
+        showToast("Perguntas padrão inseridas no banco de dados!");
         await fetchQuestions();
       }
-      showToast("Perguntas padrão restauradas!");
-    } catch (err) {
+    } catch (err: unknown) {
       console.error("Erro ao restaurar:", err);
       setQuestions(SAMPLE_QUESTIONS);
-      showToast("Perguntas padrão restauradas.");
+      showToast("Perguntas padrão carregadas localmente.", "error");
     } finally {
       setLoading(false);
     }
@@ -396,7 +403,7 @@ export default function AdminQuizPage() {
 
           <div className="bg-[#262626] border border-[#5e5e5e] p-6 rounded-lg flex items-center gap-4 shadow-sm">
             <div className="p-3 bg-emerald-950/50 border border-emerald-500/30 rounded-lg">
-              <Sparkles className="w-8 h-8 text-emerald-400" />
+              <Map className="w-8 h-8 text-emerald-400" />
             </div>
             <div className="flex flex-col">
               <span className="text-2xl font-bold text-white">{questions.length * 4}</span>
