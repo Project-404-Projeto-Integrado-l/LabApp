@@ -72,35 +72,35 @@ A interface e as mecânicas foram desenhadas seguindo critérios rigorosos de Us
 
 | Identificador | Descrição | Prioridade | Depende de | Situação |
 | :--- | :--- | :--- | :--- | :--- |
-| **RF01** | O usuário deve conseguir cadastrar e gerenciar seu perfil na aplicação, definindo sua categoria como aluno ou professor. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
-| **RF02** | O usuário deve ser capaz de navegar livremente entre as telas de Início, Catálogo de Jogos, Ranking e Configurações. | Alta | RF01 | `EM DESENVOLVIMENTO` |
-| **RF03** | O usuário deve conseguir acessar a central de suporte contendo instruções de "Como Jogar" e o Glossário de Termos. | Média | RF02 | `FEITO` |
-| **RF04** | O sistema deve permitir que o professor/administrador cadastre, edite, liste e remova perguntas, alternativas e gabaritos para os quizzes. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
-| **RF05** | O jogo deve exibir as perguntas de forma individual com o enunciado e o indicador de progresso (ex.: "Pergunta 01/03"). | Alta | RF04 | `NÃO INICIADO` |
-| **RF06** | O sistema deve permitir ao usuário selecionar apenas uma única alternativa por pergunta. | Alta | RF05 | `NÃO INICIADO` |
-| **RF07** | O jogo deve validar a alternativa escolhida e apresentar retorno visual imediato sobre a correção da resposta. | Alta | RF06 | `NÃO INICIADO` |
-| **RF08** | O sistema deve computar a pontuação de XP ao final do quiz com base no desempenho alcançado pelo usuário. | Alta | RF07, RF22 | `NÃO INICIADO` |
-| **RF09** | O sistema deve disponibilizar um catálogo de imagens, nomes e descrições dos componentes para o jogo de memorização. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
-| **RF10** | O usuário deve poder alternar livremente entre o "Modo Lúdico" e o "Modo Avançado" no jogo de memorização. | Média | RF09 | `NÃO INICIADO` |
-| **RF11** | O usuário deve ser capaz de acionar a ação "Virar Flashcard" para visualizar os detalhes e a imagem do componente. | Alta | RF09 | `NÃO INICIADO` |
-| **RF12** | O usuário deve associar o componente apresentado em tela à sua opção de identificação correta. | Alta | RF09, RF11 | `NÃO INICIADO` |
-| **RF13** | O sistema deve bloquear a confirmação de resposta nula e exibir mensagem de aviso caso nenhuma opção seja marcada. | Média | RF12 | `NÃO INICIADO` |
-| **RF14** | O jogo deve exibir o objetivo prático do circuito elétrico a ser montado na fase atual (ex.: "Ligar um LED com Arduino"). | Alta | Nenhum | `NÃO INICIADO` |
-| **RF15** | O sistema deve apresentar a biblioteca de componentes disponíveis (Arduino Uno, LED, Resistor, Bateria 9V, Jumper). | Alta | Nenhum | `NÃO INICIADO` |
-| **RF16** | O usuário deve poder alocar peças selecionadas da biblioteca nos slots disponíveis na bancada de montagem. | Alta | RF15 | `NÃO INICIADO` |
-| **RF17** | O jogo deve indicar visualmente o status de cada posição da bancada (ex.: "Slot X Vazio" ou ícone do componente alocado). | Média | RF16 | `NÃO INICIADO` |
-| **RF18** | O jogo deve habilitar o botão "Validar Circuito" somente após o preenchimento da quantidade mínima de componentes exigida. | Média | RF16, RF17 | `NÃO INICIADO` |
-| **RF19** | O sistema deve validar a coerência lógica e elétrica das conexões montadas pelo usuário na bancada de ensaios. | Alta | RF18 | `NÃO INICIADO` |
-| **RF20** | O jogo deve exibir retorno de sucesso com estrelas de desempenho e concessão de +50XP ao concluir o circuito. | Alta | RF19, RF22 | `NÃO INICIADO` |
-| **RF21** | O jogo deve fornecer dicas pedagógicas e orientações construtivas no modal de erro caso o circuito contenha falhas. | Alta | RF19 | `NÃO INICIADO` |
-| **RF22** | O sistema deve acumular e persistir o saldo total de XP conquistado pelo aluno ao término de cada desafio. | Alta | RF01 | `EM DESENVOLVIMENTO` |
-| **RF23** | O usuário deve conseguir visualizar a classificação geral (ranking) e seu posicionamento frente aos colegas. | Média | RF22 | `EM DESENVOLVIMENTO` |
-| **RF24** | O professor deve ter acesso a um relatório com o progresso, tempo e erros dos alunos nas atividades. | Média | RF08, RF20, RF22 | `NÃO INICIADO` |
-| **RF25** | O aluno deve poder realizar login utilizando identificador único simples (ex.: apelido/matrícula + PIN de 4 dígitos ou avatar). | Alta | RF01 | `NÃO INICIADO` |
-| **RF26** | O professor deve conseguir criar turmas, gerar código de vinculação e associar alunos à sua respectiva turma. | Alta | RF01 | `NÃO INICIADO` |
-| **RF27** | O sistema deve permitir ao professor/administrador cadastrar novos componentes, imagens, descrições e objetivos de circuito. | Média | Nenhum | `NÃO INICIADO` |
-| **RF28** | O usuário deve conseguir selecionar e filtrar os desafios e quizzes por nível (Iniciante / Intermediário). | Alta | Nenhum | `NÃO INICIADO` |
-| **RF29** | O aluno deve conseguir visualizar seu histórico de tentativas, circuitos concluídos e medalhas/estrelas conquistadas no perfil. | Média | RF22, RF25 | `NÃO INICIADO` |
+| **RF01** | **Gestão de Perfil**: O usuário (aluno ou professor) deve conseguir cadastrar e gerenciar seu perfil na aplicação, definindo sua categoria. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
+| **RF02** | **Navegação Principal**: O usuário (aluno ou professor) deve ser capaz de navegar livremente entre as telas de Início, Catálogo de Jogos, Ranking e Configurações. | Alta | RF01 | `EM DESENVOLVIMENTO` |
+| **RF03** | **Central de Ajuda**: O usuário (aluno ou professor) deve conseguir acessar a central de suporte contendo instruções de "Como Jogar" e o Glossário de Termos. | Média | RF02 | `FEITO` |
+| **RF04** | **Gerenciamento de Conteúdo do Quiz**: O professor/administrador deve conseguir cadastrar, editar, listar e remover perguntas, alternativas e gabaritos para os quizzes. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
+| **RF05** | **Apresentação de Questões**: O aluno deve visualizar as perguntas do quiz de forma individual com o enunciado e o indicador de progresso (ex.: "Pergunta 01/03"). | Alta | RF04 | `NÃO INICIADO` |
+| **RF06** | **Seleção Exclusiva de Resposta**: O aluno deve poder selecionar apenas uma única alternativa por pergunta no quiz. | Alta | RF05 | `NÃO INICIADO` |
+| **RF07** | **Feedback Imediato de Resposta**: O aluno deve receber validação automática e retorno visual imediato sobre a correção da resposta escolhida. | Alta | RF06 | `NÃO INICIADO` |
+| **RF08** | **Cálculo de Recompensa do Quiz**: O aluno deve receber a pontuação de XP computada ao final do quiz com base no seu desempenho. | Alta | RF07, RF22 | `NÃO INICIADO` |
+| **RF09** | **Catálogo de Componentes**: O aluno deve ter acesso a um catálogo com imagens, nomes e descrições dos componentes para o jogo de memorização. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
+| **RF10** | **Seleção de Dificuldade de Memorização**: O aluno deve poder alternar livremente entre o "Modo Lúdico" e o "Modo Avançado" no jogo de memorização. | Média | RF09 | `NÃO INICIADO` |
+| **RF11** | **Interação com Flashcards**: O aluno deve ser capaz de acionar a ação "Virar Flashcard" para visualizar os detalhes e a imagem do componente. | Alta | RF09 | `NÃO INICIADO` |
+| **RF12** | **Associação de Hardware**: O aluno deve associar o componente apresentado em tela à sua opção de identificação correta. | Alta | RF09, RF11 | `NÃO INICIADO` |
+| **RF13** | **Prevenção de Submissão Nula**: O aluno deve ser impedido pelo sistema de confirmar respostas em branco, recebendo um aviso contextual. | Média | RF12 | `NÃO INICIADO` |
+| **RF14** | **Apresentação de Desafio de Circuito**: O aluno deve visualizar o objetivo prático do circuito elétrico a ser montado na fase atual (ex.: "Ligar um LED com Arduino"). | Alta | Nenhum | `NÃO INICIADO` |
+| **RF15** | **Biblioteca de Componentes**: O aluno deve ter à disposição a lista de componentes virtuais disponíveis (Arduino Uno, LED, Resistor, Bateria 9V, Jumper). | Alta | Nenhum | `NÃO INICIADO` |
+| **RF16** | **Montagem na Bancada**: O aluno deve poder alocar peças selecionadas da biblioteca nos slots disponíveis na bancada virtual de montagem. | Alta | RF15 | `NÃO INICIADO` |
+| **RF17** | **Status Visual dos Slots**: O aluno deve identificar visualmente o estado de cada posição da bancada (ex.: "Slot X Vazio" ou o ícone do componente alocado). | Média | RF16 | `NÃO INICIADO` |
+| **RF18** | **Bloqueio de Validação Incompleta**: O aluno deve ter o botão "Validar Circuito" habilitado apenas após preencher a quantidade mínima necessária de componentes. | Média | RF16, RF17 | `NÃO INICIADO` |
+| **RF19** | **Simulação e Checagem Eletrônica**: O aluno deve ter a coerência lógica e elétrica das conexões montadas na bancada avaliada pelo sistema. | Alta | RF18 | `NÃO INICIADO` |
+| **RF20** | **Recompensa por Conclusão de Circuito**: O aluno deve receber retorno de sucesso com estrelas de desempenho e concessão de +50XP ao concluir o circuito corretamente. | Alta | RF19, RF22 | `NÃO INICIADO` |
+| **RF21** | **Dicas de Recuperação Pedagógica**: O aluno deve receber dicas pedagógicas e orientações construtivas no modal de erro caso o circuito contenha falhas. | Alta | RF19 | `NÃO INICIADO` |
+| **RF22** | **Persistência de Dados**: O aluno deve ter o saldo total de XP conquistado acumulado e persistido no seu perfil ao término de cada atividade. | Alta | RF01 | `EM DESENVOLVIMENTO` |
+| **RF23** | **Visualização de Ranking**: O aluno ou professor deve conseguir visualizar a classificação geral (ranking) e o posicionamento dos estudantes. | Média | RF22 | `EM DESENVOLVIMENTO` |
+| **RF24** | **Relatório de Acompanhamento**: O professor deve ter acesso a um relatório com métricas de progresso, tempo investido e erros cometidos pelos alunos nas atividades. | Média | RF08, RF20, RF22 | `NÃO INICIADO` |
+| **RF25** | **Autenticação Simplificada**: O aluno deve poder realizar login utilizando um identificador único simples (ex.: apelido/matrícula + PIN de 4 dígitos ou seleção de avatar). | Alta | RF01 | `NÃO INICIADO` |
+| **RF26** | **Gestão de Turmas**: O professor deve conseguir criar turmas, gerar código de vinculação e associar alunos à sua respectiva sala. | Alta | RF01 | `NÃO INICIADO` |
+| **RF27** | **Gerenciamento da Bancada Didática**: O professor/administrador deve poder cadastrar novos componentes, imagens, descrições e metas de circuitos práticos. | Média | Nenhum | `NÃO INICIADO` |
+| **RF28** | **Filtragem por Dificuldade**: O aluno ou professor deve conseguir selecionar e filtrar desafios e quizzes por nível pedagógico (Iniciante / Intermediário). | Alta | Nenhum | `NÃO INICIADO` |
+| **RF29** | **Histórico e Conquistas**: O aluno deve conseguir visualizar no seu perfil o histórico de tentativas, circuitos finalizados e estrelas obtidas. | Média | RF22, RF25 | `NÃO INICIADO` |
 
 ---
 
