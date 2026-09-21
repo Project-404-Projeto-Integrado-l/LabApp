@@ -37,6 +37,22 @@ CREATE TABLE IF NOT EXISTS public.quiz_questions (
     created_at TIMESTAMPTZ DEFAULT NOW()
 );
 
+-- Políticas RLS para tabela quiz_questions
+ALTER TABLE public.quiz_questions ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Permitir leitura pública de quiz_questions" ON public.quiz_questions;
+CREATE POLICY "Permitir leitura pública de quiz_questions" ON public.quiz_questions FOR SELECT USING (true);
+
+DROP POLICY IF EXISTS "Permitir inserção pública de quiz_questions" ON public.quiz_questions;
+CREATE POLICY "Permitir inserção pública de quiz_questions" ON public.quiz_questions FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "Permitir atualização pública de quiz_questions" ON public.quiz_questions;
+CREATE POLICY "Permitir atualização pública de quiz_questions" ON public.quiz_questions FOR UPDATE USING (true);
+
+DROP POLICY IF EXISTS "Permitir deleção pública de quiz_questions" ON public.quiz_questions;
+CREATE POLICY "Permitir deleção pública de quiz_questions" ON public.quiz_questions FOR DELETE USING (true);
+
+
 
 -- 4. TABELA DE RANKING E LEADERBOARD DOS JOGOS
 CREATE TABLE IF NOT EXISTS public.rankings (
