@@ -76,6 +76,17 @@ export function Header() {
             <BadgeHelp className="w-6 h-6 text-white" />
             <span>Ajuda / Como Jogar</span>
           </Link>
+          <Link
+            href="/admin/quiz"
+            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity ${
+              pathname === "/admin/quiz"
+                ? "border-b-2 border-[#883cec] font-semibold"
+                : "opacity-85 hover:opacity-100"
+            }`}
+          >
+            <Settings className="w-6 h-6 text-[#883cec]" />
+            <span>Gerenciar Quiz</span>
+          </Link>
         </nav>
 
         {/* Tablet & Mobile Hamburger Toggle Button */}
@@ -141,6 +152,19 @@ export function Header() {
           >
             <BadgeHelp className="w-6 h-6 text-white" />
             <span>Ajuda / Como Jogar</span>
+          </Link>
+
+          <Link
+            href="/admin/quiz"
+            onClick={() => setIsOpen(false)}
+            className={`flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors ${
+              pathname === "/admin/quiz"
+                ? "bg-[#883cec]/20 border-l-4 border-[#883cec] font-semibold"
+                : "hover:bg-[#333333]"
+            }`}
+          >
+            <Settings className="w-6 h-6 text-[#883cec]" />
+            <span>Gerenciar Quiz</span>
           </Link>
         </div>
       )}
