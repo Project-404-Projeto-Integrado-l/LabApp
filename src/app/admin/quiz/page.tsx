@@ -77,6 +77,16 @@ export default function AdminQuizPage() {
   const [formExplanation, setFormExplanation] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [isOfflineMode, setIsOfflineMode] = useState(false);
+
+  const formatErrorMessage = (err: unknown): string => {
+    const rawMsg = err instanceof Error ? err.message : typeof err === "object" && err && "message" in err ? String((err as { message: unknown }).message) : String(err);
+    if (rawMsg.includes("Failed to fetch") || rawMsg.includes("fetch")) {
+      return "Erro de rede no navegador (Failed to fetch). Dica: Reinicie o servidor 'npm run dev' para recarregar o .env.local ou verifique bloqueadores (AdBlock/Brave). Alteração mantida localmente.";
+    }
+    return rawMsg;
+  };
+
   const fetchQuestions = useCallback(async () => {
     setLoading(true);
     try {
@@ -86,7 +96,10 @@ export default function AdminQuizPage() {
         .order("created_at", { ascending: false });
 
       if (error || !data || data.length === 0) {
-        console.warn("Supabase fetch notice:", error?.message || "Nenhuma pergunta encontrada, usando dados de demonstração.");
+        if (error) {
+          console.warn("Supabase fetch notice:", error.message);
+          setIsOfflineMode(error.message.includes("Failed to fetch") || error.message.includes("fetch"));
+        }
         setQuestions(SAMPLE_QUESTIONS);
       } else {
         const formatted: QuizQuestion[] = data.map((item) => ({
@@ -94,9 +107,11 @@ export default function AdminQuizPage() {
           options: typeof item.options === "string" ? JSON.parse(item.options) : item.options
         }));
         setQuestions(formatted);
+        setIsOfflineMode(false);
       }
     } catch (err) {
       console.error("Erro ao buscar perguntas:", err);
+      setIsOfflineMode(true);
       setQuestions(SAMPLE_QUESTIONS);
     } finally {
       setLoading(false);
@@ -116,6 +131,10 @@ export default function AdminQuizPage() {
         if (ignore) return;
 
         if (error || !data || data.length === 0) {
+          if (error) {
+            console.warn("Aviso ao carregar perguntas:", error.message);
+            setIsOfflineMode(error.message.includes("Failed to fetch") || error.message.includes("fetch"));
+          }
           setQuestions(SAMPLE_QUESTIONS);
         } else {
           const formatted: QuizQuestion[] = data.map((item) => ({
@@ -123,10 +142,12 @@ export default function AdminQuizPage() {
             options: typeof item.options === "string" ? JSON.parse(item.options) : item.options
           }));
           setQuestions(formatted);
+          setIsOfflineMode(false);
         }
       } catch (err) {
         if (!ignore) {
           console.error("Erro ao carregar inicial:", err);
+          setIsOfflineMode(true);
           setQuestions(SAMPLE_QUESTIONS);
         }
       } finally {
@@ -147,7 +168,7 @@ export default function AdminQuizPage() {
     setToastMessage({ text, type });
     setTimeout(() => {
       setToastMessage(null);
-    }, 4000);
+    }, 5000);
   };
 
   const openCreateModal = () => {
@@ -209,7 +230,7 @@ export default function AdminQuizPage() {
 
         if (error) {
           console.error("Erro ao atualizar no Supabase:", error);
-          showToast(`Erro no banco: ${error.message}`, "error");
+          showToast(`Aviso: ${formatErrorMessage(error)}`, "error");
           setQuestions(prev => prev.map(q => q.id === editingQuestion.id ? { ...q, ...payload } : q));
         } else {
           showToast("Pergunta atualizada no banco de dados com sucesso!");
@@ -223,7 +244,7 @@ export default function AdminQuizPage() {
 
         if (error) {
           console.error("Erro ao inserir no Supabase:", error);
-          showToast(`Erro no banco: ${error.message}`, "error");
+          showToast(`Aviso: ${formatErrorMessage(error)}`, "error");
           const localUuid = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `00000000-0000-0000-0000-${Date.now().toString().padStart(12, '0')}`;
           const newLocalQuestion: QuizQuestion = {
             id: localUuid,
@@ -240,8 +261,14 @@ export default function AdminQuizPage() {
       setIsModalOpen(false);
     } catch (err: unknown) {
       console.error("Erro ao salvar:", err);
-      const errMsg = err instanceof Error ? err.message : "Erro desconhecido";
-      showToast(`Erro ao salvar: ${errMsg}`, "error");
+      showToast(`Erro ao salvar: ${formatErrorMessage(err)}`, "error");
+      const localUuid = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `00000000-0000-0000-0000-${Date.now().toString().padStart(12, '0')}`;
+      if (!editingQuestion) {
+        setQuestions(prev => [{ id: localUuid, ...payload, created_at: new Date().toISOString() }, ...prev]);
+      } else {
+        setQuestions(prev => prev.map(q => q.id === editingQuestion.id ? { ...q, ...payload } : q));
+      }
+      setIsModalOpen(false);
     } finally {
       setIsSubmitting(false);
     }
@@ -256,7 +283,7 @@ export default function AdminQuizPage() {
 
       if (error) {
         console.error("Erro ao excluir do Supabase:", error);
-        showToast(`Erro no banco: ${error.message}`, "error");
+        showToast(`Aviso: ${formatErrorMessage(error)}`, "error");
       } else {
         showToast("Pergunta excluída do banco de dados!");
       }
@@ -287,7 +314,7 @@ export default function AdminQuizPage() {
 
       if (error) {
         console.error("Erro ao restaurar no Supabase:", error);
-        showToast(`Erro no banco: ${error.message}`, "error");
+        showToast(`Aviso: ${formatErrorMessage(error)}`, "error");
         setQuestions(SAMPLE_QUESTIONS);
       } else {
         showToast("Perguntas padrão inseridas no banco de dados!");
@@ -341,6 +368,21 @@ export default function AdminQuizPage() {
 
       <main className="relative z-10 flex-1 max-w-[1216px] w-full mx-auto px-6 lg:px-0 py-12 flex flex-col gap-10">
         
+        {/* Offline / Paused Supabase Project Banner */}
+        {isOfflineMode && (
+          <div className="bg-amber-950/70 border border-amber-500/60 p-5 rounded-lg text-amber-100 flex items-start gap-4 shadow-xl">
+            <AlertCircle className="w-6 h-6 text-amber-400 flex-shrink-0 mt-0.5" />
+            <div className="flex flex-col gap-1">
+              <strong className="font-bold text-amber-300 text-base">
+                Banco Supabase Indisponível (Modo de Demonstração Local Ativo)
+              </strong>
+              <p className="text-amber-200/90 text-sm leading-relaxed">
+                O servidor do Supabase (<code className="bg-black/40 px-1.5 py-0.5 rounded text-amber-300 font-mono text-xs">tukgaroslokvosweqdiz.supabase.co</code>) não está respondendo. Projetos gratuitos no Supabase entram em pausa automaticamente por inatividade. Para reativar o banco remoto, acesse o <strong>Dashboard do Supabase</strong> e clique em <em>Restore project</em>. Suas edições continuam funcionando localmente durante esta sessão.
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Header Title Section */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-[#262626] border border-[#5e5e5e] p-8 rounded-lg shadow-lg">
           <div className="flex flex-col gap-2">
