@@ -75,7 +75,7 @@ A interface e as mecânicas foram desenhadas seguindo critérios rigorosos de Us
 | **RF01** | **Gestão de Perfil**: O usuário (aluno ou professor) deve conseguir cadastrar e gerenciar seu perfil na aplicação, definindo sua categoria. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
 | **RF02** | **Navegação Principal**: O usuário (aluno ou professor) deve ser capaz de navegar livremente entre as telas de Início, Catálogo de Jogos, Ranking e Configurações. | Alta | RF01 | `EM DESENVOLVIMENTO` |
 | **RF03** | **Central de Ajuda**: O usuário (aluno ou professor) deve conseguir acessar a central de suporte contendo instruções de "Como Jogar" e o Glossário de Termos. | Média | RF02 | `FEITO` |
-| **RF04** | **Gerenciamento de Conteúdo do Quiz**: O professor/administrador deve conseguir cadastrar, editar, listar e remover perguntas, alternativas e gabaritos para os quizzes. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
+| **RF04** | **Gerenciamento de Conteúdo do Quiz**: O professor/administrador deve conseguir cadastrar, editar, listar e remover perguntas, alternativas e gabaritos para os quizzes. | Alta | Nenhum | `FEITO` |
 | **RF05** | **Apresentação de Questões**: O aluno deve visualizar as perguntas do quiz de forma individual com o enunciado e o indicador de progresso (ex.: "Pergunta 01/03"). | Alta | RF04 | `NÃO INICIADO` |
 | **RF06** | **Seleção Exclusiva de Resposta**: O aluno deve poder selecionar apenas uma única alternativa por pergunta no quiz. | Alta | RF05 | `NÃO INICIADO` |
 | **RF07** | **Feedback Imediato de Resposta**: O aluno deve receber validação automática e retorno visual imediato sobre a correção da resposta escolhida. | Alta | RF06 | `NÃO INICIADO` |
