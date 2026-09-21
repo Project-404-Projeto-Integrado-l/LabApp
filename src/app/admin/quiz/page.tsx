@@ -82,7 +82,7 @@ export default function AdminQuizPage() {
   const formatErrorMessage = (err: unknown): string => {
     const rawMsg = err instanceof Error ? err.message : typeof err === "object" && err && "message" in err ? String((err as { message: unknown }).message) : String(err);
     if (rawMsg.includes("Failed to fetch") || rawMsg.includes("fetch")) {
-      return "Supabase offline ou projeto pausado no Supabase. Alteração aplicada localmente.";
+      return "Erro de rede no navegador (Failed to fetch). Dica: Reinicie o servidor 'npm run dev' para recarregar o .env.local ou verifique bloqueadores (AdBlock/Brave). Alteração mantida localmente.";
     }
     return rawMsg;
   };
