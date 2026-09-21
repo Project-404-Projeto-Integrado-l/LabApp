@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { 
   BadgeHelp, 
   Plus, 
@@ -77,18 +77,7 @@ export default function AdminQuizPage() {
   const [formExplanation, setFormExplanation] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  useEffect(() => {
-    fetchQuestions();
-  }, []);
-
-  const showToast = (text: string, type: "success" | "error" = "success") => {
-    setToastMessage({ text, type });
-    setTimeout(() => {
-      setToastMessage(null);
-    }, 4000);
-  };
-
-  const fetchQuestions = async () => {
+  const fetchQuestions = useCallback(async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase
@@ -100,7 +89,6 @@ export default function AdminQuizPage() {
         console.warn("Supabase fetch notice:", error?.message || "Nenhuma pergunta encontrada, usando dados de demonstração.");
         setQuestions(SAMPLE_QUESTIONS);
       } else {
-        // Parse options if JSONB returned as string
         const formatted: QuizQuestion[] = data.map((item) => ({
           ...item,
           options: typeof item.options === "string" ? JSON.parse(item.options) : item.options
@@ -113,6 +101,53 @@ export default function AdminQuizPage() {
     } finally {
       setLoading(false);
     }
+  }, []);
+
+  useEffect(() => {
+    let ignore = false;
+
+    const loadInitialData = async () => {
+      try {
+        const { data, error } = await supabase
+          .from("quiz_questions")
+          .select("*")
+          .order("created_at", { ascending: false });
+
+        if (ignore) return;
+
+        if (error || !data || data.length === 0) {
+          setQuestions(SAMPLE_QUESTIONS);
+        } else {
+          const formatted: QuizQuestion[] = data.map((item) => ({
+            ...item,
+            options: typeof item.options === "string" ? JSON.parse(item.options) : item.options
+          }));
+          setQuestions(formatted);
+        }
+      } catch (err) {
+        if (!ignore) {
+          console.error("Erro ao carregar inicial:", err);
+          setQuestions(SAMPLE_QUESTIONS);
+        }
+      } finally {
+        if (!ignore) {
+          setLoading(false);
+        }
+      }
+    };
+
+    loadInitialData();
+
+    return () => {
+      ignore = true;
+    };
+  }, []);
+
+  const showToast = (text: string, type: "success" | "error" = "success") => {
+    setToastMessage({ text, type });
+    setTimeout(() => {
+      setToastMessage(null);
+    }, 4000);
   };
 
   const openCreateModal = () => {
@@ -236,7 +271,13 @@ export default function AdminQuizPage() {
       const { error } = await supabase
         .from("quiz_questions")
         .insert(
-          SAMPLE_QUESTIONS.map(({ id, ...rest }) => rest)
+          SAMPLE_QUESTIONS.map(q => ({
+            question: q.question,
+            options: q.options,
+            correct_option_index: q.correct_option_index,
+            explanation: q.explanation,
+            category: q.category
+          }))
         );
 
       if (error) {

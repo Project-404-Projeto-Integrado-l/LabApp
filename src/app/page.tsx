@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { Route, BadgeHelp, Dices } from "lucide-react";
 import { Header } from "@/components/header";
 
