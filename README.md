@@ -39,21 +39,24 @@ O **LabApp** nasceu da necessidade de transformar o processo de aprendizagem em 
 
 ---
 
-## Arquitetura e Stack Tecnológica Proposta
+## Arquitetura e Stack Tecnológica
 
-A plataforma foi planejada para uma arquitetura moderna, escalável, performática e altamente responsiva para navegadores desktop e tablets.
+A plataforma é construída sobre uma arquitetura moderna, escalável, performática e altamente responsiva.
 
-### Tecnologias
+### Tecnologias Utilizadas
 
-* **Framework Principal:** **[Next.js](https://nextjs.org/) (App Router & React 19 / TypeScript)**
-  * Renderização híbrida (SSR/SSG para páginas institucionais e documentação, SPA interativa para a área logada de jogos).
-  * *Server Actions* e rotas de API integradas para comunicação simplificada com o backend.
+* **Framework Principal:** **[Next.js](https://nextjs.org/) (App Router, React 19 & TypeScript)**
+  * Renderização otimizada e arquitetura baseada em Server e Client Components.
 * **Estilização & Design System:**
-  * **[Tailwind CSS](https://tailwindcss.com/):** Agilidade e consistência visual no layout escuro/acessível planejado no design.
-  * **[shadcn/ui](https://ui.shadcn.com/) & Radix UI:** Componentes acessíveis (WAI-ARIA), modais com fechamento por *overlay*, menus de navegação e diálogos de ajuda/glossário.
-* **Banco de Dados & Autenticação:**
-  * **[PostgreSQL](https://www.postgresql.org/):** Modelagem de dados para turmas, alunos, histórico de tentativas, pontuações e métricas de desempenho.
-  * **[Auth.js (NextAuth)](https://authjs.dev/):** Autenticação segura com suporte a perfis de Aluno e Professor.
+  * **[Tailwind CSS v4](https://tailwindcss.com/):** Estilização moderna e utilitária para layouts responsivos e acessíveis.
+  * **[shadcn/ui](https://ui.shadcn.com/) & Base UI:** Componentes de interface acessíveis e customizáveis.
+  * **[Lucide React](https://lucide.dev/):** Biblioteca de ícones.
+* **Backend, Banco de Dados & Autenticação:**
+  * **[Supabase](https://supabase.com/):** Plataforma Backend as a Service (BaaS) responsável por:
+    * **Autenticação (Supabase Auth):** Gestão segura de contas e sessões de usuários (Alunos e Professores).
+    * **Banco de Dados (PostgreSQL):** Armazenamento de turmas, progresso, quizzes, ranking e pontuações de XP.
+* **Hospedagem & Deploy:**
+  * **[Vercel](https://vercel.com/):** Infraestrutura de hospedagem serverless com deploy contínuo automatizado.
 
 ---
 
@@ -105,6 +108,24 @@ A interface e as mecânicas foram desenhadas seguindo critérios rigorosos de Us
 ---
 
 ## Como Executar o Projeto Localmente
+
+1. **Instalar as dependências:**
+   ```bash
+   npm install
+   ```
+
+2. **Configurar as Variáveis de Ambiente:**
+   Crie um arquivo `.env.local` na raiz do projeto com as credenciais do Supabase:
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=sua_url_do_supabase
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_chave_anon_do_supabase
+   ```
+
+3. **Executar o servidor de desenvolvimento:**
+   ```bash
+   npm run dev
+   ```
+   Acesse [http://localhost:3000](http://localhost:3000) no seu navegador.
 
 ---
 
