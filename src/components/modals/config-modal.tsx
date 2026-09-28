@@ -46,12 +46,12 @@ export function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div 
+    <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs animate-fade-in"
       onClick={handleClose}
       data-sound="none"
     >
-      <div 
+      <div
         className="bg-[#262626] border border-[#5e5e5e] text-white w-full max-w-[501px] rounded-xl shadow-2xl overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
         data-sound="none"
@@ -105,14 +105,12 @@ export function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
                 aria-checked={soundEffectsEnabled}
                 onClick={handleToggleSoundEffects}
                 data-sound="none"
-                className={`w-12 h-6 rounded-full transition-colors relative focus:outline-none cursor-pointer ${
-                  soundEffectsEnabled ? "bg-[#883cec]" : "bg-[#444444]"
-                }`}
+                className={`w-12 h-6 rounded-full transition-colors relative focus:outline-none cursor-pointer ${soundEffectsEnabled ? "bg-[#883cec]" : "bg-[#444444]"
+                  }`}
               >
                 <span
-                  className={`block w-5 h-5 rounded-full bg-white shadow-md transform transition-transform top-0.5 relative ${
-                    soundEffectsEnabled ? "translate-x-6" : "translate-x-1"
-                  }`}
+                  className={`block w-5 h-5 rounded-full bg-white shadow-md transform transition-transform top-0 relative ${soundEffectsEnabled ? "translate-x-6" : "translate-x-1"
+                    }`}
                 />
               </button>
             </div>
@@ -138,14 +136,12 @@ export function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
                 aria-checked={backgroundMusicEnabled}
                 onClick={handleToggleBackgroundMusic}
                 data-sound="none"
-                className={`w-12 h-6 rounded-full transition-colors relative focus:outline-none cursor-pointer ${
-                  backgroundMusicEnabled ? "bg-[#883cec]" : "bg-[#444444]"
-                }`}
+                className={`w-12 h-6 rounded-full transition-colors relative focus:outline-none cursor-pointer ${backgroundMusicEnabled ? "bg-[#883cec]" : "bg-[#444444]"
+                  }`}
               >
                 <span
-                  className={`block w-5 h-5 rounded-full bg-white shadow-md transform transition-transform top-0.5 relative ${
-                    backgroundMusicEnabled ? "translate-x-6" : "translate-x-1"
-                  }`}
+                  className={`block w-5 h-5 rounded-full bg-white shadow-md transform transition-transform top-0 relative ${backgroundMusicEnabled ? "translate-x-6" : "translate-x-1"
+                    }`}
                 />
               </button>
             </div>

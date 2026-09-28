@@ -32,7 +32,7 @@ const SFX_MAP: Record<string, string> = {
 // Cache for Howl instances
 const howlCache: Record<string, Howl> = {};
 
-const getHowl = (key: string, url: string, volume = 0.5) => {
+const getHowl = (key: string, url: string, volume = 0.25) => {
   if (typeof window === "undefined") return null;
   if (!howlCache[key]) {
     howlCache[key] = new Howl({
@@ -40,6 +40,8 @@ const getHowl = (key: string, url: string, volume = 0.5) => {
       html5: true,
       volume: volume,
     });
+  } else {
+    howlCache[key].volume(volume);
   }
   return howlCache[key];
 };
@@ -61,7 +63,7 @@ const playSynthSound = (type: "click" | "open" | "close" | "toggle") => {
       osc.type = "sine";
       osc.frequency.setValueAtTime(600, now);
       osc.frequency.exponentialRampToValueAtTime(150, now + 0.04);
-      gain.gain.setValueAtTime(0.12, now);
+      gain.gain.setValueAtTime(0.06, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
       osc.connect(gain);
       gain.connect(ctx.destination);
@@ -77,7 +79,7 @@ const playSynthSound = (type: "click" | "open" | "close" | "toggle") => {
       osc1.frequency.exponentialRampToValueAtTime(480, now + 0.07);
       osc2.frequency.setValueAtTime(480, now + 0.07);
       osc2.frequency.exponentialRampToValueAtTime(640, now + 0.14);
-      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.setValueAtTime(0.05, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
       osc1.connect(gain);
       osc2.connect(gain);
@@ -96,7 +98,7 @@ const playSynthSound = (type: "click" | "open" | "close" | "toggle") => {
       osc1.frequency.exponentialRampToValueAtTime(380, now + 0.07);
       osc2.frequency.setValueAtTime(380, now + 0.07);
       osc2.frequency.exponentialRampToValueAtTime(240, now + 0.14);
-      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.setValueAtTime(0.05, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
       osc1.connect(gain);
       osc2.connect(gain);
@@ -111,7 +113,7 @@ const playSynthSound = (type: "click" | "open" | "close" | "toggle") => {
       osc.type = "triangle";
       osc.frequency.setValueAtTime(750, now);
       osc.frequency.exponentialRampToValueAtTime(950, now + 0.05);
-      gain.gain.setValueAtTime(0.1, now);
+      gain.gain.setValueAtTime(0.05, now);
       gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
       osc.connect(gain);
       gain.connect(ctx.destination);
@@ -157,18 +159,19 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     backgroundMusicEnabledRef.current = backgroundMusicEnabled;
   }, [backgroundMusicEnabled]);
 
-  // Background Music Controller
+  // Background Music Controller (Volume 0.15 for smooth ambient sound)
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     if (!audioRef.current) {
       const audio = new Audio("/audio/bg-music.mp3");
       audio.loop = true;
-      audio.volume = 0.35;
+      audio.volume = 0.15;
       audioRef.current = audio;
     }
 
     const audio = audioRef.current;
+    audio.volume = 0.15;
 
     if (backgroundMusicEnabled) {
       audio.play().catch(() => {
@@ -185,6 +188,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
 
     const unlockAudio = () => {
       if (backgroundMusicEnabledRef.current && audioRef.current && audioRef.current.paused) {
+        audioRef.current.volume = 0.15;
         audioRef.current.play().catch(() => {});
       }
     };
@@ -221,6 +225,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
 
     // Immediately trigger playback if enabled by user click
     if (enabled && audioRef.current && audioRef.current.paused) {
+      audioRef.current.volume = 0.15;
       audioRef.current.play().catch(() => {});
     }
   };
@@ -228,21 +233,21 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   const playClick = () => {
     if (!soundEffectsEnabledRef.current) return;
     playSynthSound("click");
-    const sound = getHowl("click", SFX_MAP.click, 0.5);
+    const sound = getHowl("click", SFX_MAP.click, 0.25);
     sound?.play();
   };
 
   const playPopupOpen = () => {
     if (!soundEffectsEnabledRef.current) return;
     playSynthSound("open");
-    const sound = getHowl("open", SFX_MAP.open, 0.6);
+    const sound = getHowl("open", SFX_MAP.open, 0.3);
     sound?.play();
   };
 
   const playPopupClose = () => {
     if (!soundEffectsEnabledRef.current) return;
     playSynthSound("close");
-    const sound = getHowl("close", SFX_MAP.close, 0.6);
+    const sound = getHowl("close", SFX_MAP.close, 0.3);
     sound?.play();
   };
 
@@ -250,7 +255,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     if (!soundEffectsEnabledRef.current) return;
     playSynthSound("toggle");
     const key = on ? "toggle_on" : "toggle_off";
-    const sound = getHowl(key, SFX_MAP[key], 0.5);
+    const sound = getHowl(key, SFX_MAP[key], 0.25);
     sound?.play();
   };
 
@@ -258,7 +263,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     if (!soundEffectsEnabledRef.current) return;
     const url = SFX_MAP[soundName];
     if (url) {
-      const sound = getHowl(soundName, url, 0.5);
+      const sound = getHowl(soundName, url, 0.25);
       sound?.play();
     } else {
       playSynthSound("click");
