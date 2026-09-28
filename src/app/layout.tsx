@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Exo_2 } from "next/font/google";
+import { SoundProvider } from "@/providers/sound-provider";
 import "./globals.css";
 
 const exo2 = Exo_2({
@@ -16,7 +17,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR" className={`dark h-full antialiased ${exo2.variable}`}>
-      <body className="min-h-full bg-[#212121] text-[#F6F6F9] font-sans flex flex-col">{children}</body>
+      <body className="min-h-full bg-[#212121] text-[#F6F6F9] font-sans flex flex-col">
+        <SoundProvider>{children}</SoundProvider>
+      </body>
     </html>
   );
 }
+

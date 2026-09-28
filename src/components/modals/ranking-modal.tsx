@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import { Crown, X } from "lucide-react";
+import { useSoundEffects } from "@/providers/sound-provider";
 
 interface RankingModalProps {
   isOpen: boolean;
@@ -23,16 +25,31 @@ const STATIC_RANKING: RankingUser[] = [
 ];
 
 export function RankingModal({ isOpen, onClose }: RankingModalProps) {
+  const { playPopupOpen, playPopupClose } = useSoundEffects();
+
+  useEffect(() => {
+    if (isOpen) {
+      playPopupOpen();
+    }
+  }, [isOpen, playPopupOpen]);
+
+  const handleClose = () => {
+    playPopupClose();
+    onClose();
+  };
+
   if (!isOpen) return null;
 
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs animate-fade-in"
-      onClick={onClose}
+      onClick={handleClose}
+      data-sound="none"
     >
       <div 
         className="bg-[#262626] border border-[#5e5e5e] text-white w-full max-w-[501px] rounded-xl shadow-2xl overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
+        data-sound="none"
       >
         {/* Modal Header */}
         <div className="flex items-center justify-between px-8 py-5 border-b border-[#5e5e5e]">
@@ -43,8 +60,9 @@ export function RankingModal({ isOpen, onClose }: RankingModalProps) {
             </h2>
           </div>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             aria-label="Fechar ranking"
+            data-sound="none"
             className="p-1.5 text-gray-400 hover:text-white rounded-lg hover:bg-[#333333] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5 text-white" />
@@ -85,7 +103,8 @@ export function RankingModal({ isOpen, onClose }: RankingModalProps) {
 
           {/* Action Button */}
           <button
-            onClick={onClose}
+            onClick={handleClose}
+            data-sound="none"
             className="w-full bg-white text-black hover:bg-gray-100 font-medium py-3.5 rounded-lg text-base transition-colors cursor-pointer mt-2"
           >
             Fechar
