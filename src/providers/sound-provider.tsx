@@ -100,36 +100,31 @@ const playSynthSound = (type: "click" | "open" | "close" | "toggle") => {
 };
 
 export function SoundProvider({ children }: { children: React.ReactNode }) {
-  const [soundEffectsEnabled, setSoundEffectsEnabledState] = useState<boolean>(true);
-  const [backgroundMusicEnabled, setBackgroundMusicEnabledState] = useState<boolean>(true);
-
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const soundEffectsEnabledRef = useRef<boolean>(true);
-  const backgroundMusicEnabledRef = useRef<boolean>(true);
-
-  // Initialize from localStorage on mount
-  useEffect(() => {
+  const [soundEffectsEnabled, setSoundEffectsEnabledState] = useState<boolean>(() => {
+    if (typeof window === "undefined") return true;
     try {
       const storedSFX = localStorage.getItem(LS_SOUND_EFFECTS_KEY);
-      if (storedSFX !== null) {
-        const val = storedSFX === "true";
-        setSoundEffectsEnabledState(val);
-        soundEffectsEnabledRef.current = val;
-        setSoundEnabled(val);
-      }
-
-      const storedBGM = localStorage.getItem(LS_BG_MUSIC_KEY);
-      if (storedBGM !== null) {
-        const val = storedBGM === "true";
-        setBackgroundMusicEnabledState(val);
-        backgroundMusicEnabledRef.current = val;
-      }
+      return storedSFX !== null ? storedSFX === "true" : true;
     } catch {
-      // localStorage error fallback
+      return true;
     }
-  }, []);
+  });
 
-  // Sync ref with state
+  const [backgroundMusicEnabled, setBackgroundMusicEnabledState] = useState<boolean>(() => {
+    if (typeof window === "undefined") return true;
+    try {
+      const storedBGM = localStorage.getItem(LS_BG_MUSIC_KEY);
+      return storedBGM !== null ? storedBGM === "true" : true;
+    } catch {
+      return true;
+    }
+  });
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const soundEffectsEnabledRef = useRef<boolean>(soundEffectsEnabled);
+  const backgroundMusicEnabledRef = useRef<boolean>(backgroundMusicEnabled);
+
+  // Sync ref and external library with state
   useEffect(() => {
     soundEffectsEnabledRef.current = soundEffectsEnabled;
     setSoundEnabled(soundEffectsEnabled);
