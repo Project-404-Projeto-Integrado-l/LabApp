@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 import { Music, Settings, Volume2, X } from "lucide-react";
+import { useSoundEffects } from "@/providers/sound-provider";
 
 interface ConfigModalProps {
   isOpen: boolean;
@@ -9,19 +10,51 @@ interface ConfigModalProps {
 }
 
 export function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
-  const [soundEffects, setSoundEffects] = useState(true);
-  const [backgroundMusic, setBackgroundMusic] = useState(true);
+  const {
+    soundEffectsEnabled,
+    backgroundMusicEnabled,
+    setSoundEffectsEnabled,
+    setBackgroundMusicEnabled,
+    playPopupOpen,
+    playPopupClose,
+    playToggle,
+  } = useSoundEffects();
+
+  useEffect(() => {
+    if (isOpen) {
+      playPopupOpen();
+    }
+  }, [isOpen, playPopupOpen]);
+
+  const handleClose = () => {
+    playPopupClose();
+    onClose();
+  };
+
+  const handleToggleSoundEffects = () => {
+    const nextState = !soundEffectsEnabled;
+    setSoundEffectsEnabled(nextState);
+    playToggle(nextState);
+  };
+
+  const handleToggleBackgroundMusic = () => {
+    const nextState = !backgroundMusicEnabled;
+    setBackgroundMusicEnabled(nextState);
+    playToggle(nextState);
+  };
 
   if (!isOpen) return null;
 
   return (
     <div 
       className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs animate-fade-in"
-      onClick={onClose}
+      onClick={handleClose}
+      data-sound="none"
     >
       <div 
         className="bg-[#262626] border border-[#5e5e5e] text-white w-full max-w-[501px] rounded-xl shadow-2xl overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
+        data-sound="none"
       >
         {/* Modal Header */}
         <div className="flex items-center justify-between px-8 py-5 border-b border-[#5e5e5e]">
@@ -32,8 +65,9 @@ export function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
             </h2>
           </div>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             aria-label="Fechar configurações"
+            data-sound="none"
             className="p-1.5 text-gray-400 hover:text-white rounded-lg hover:bg-[#333333] transition-colors cursor-pointer"
           >
             <X className="w-5 h-5 text-white" />
@@ -68,15 +102,16 @@ export function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
               <button
                 type="button"
                 role="switch"
-                aria-checked={soundEffects}
-                onClick={() => setSoundEffects(!soundEffects)}
+                aria-checked={soundEffectsEnabled}
+                onClick={handleToggleSoundEffects}
+                data-sound="none"
                 className={`w-12 h-6 rounded-full transition-colors relative focus:outline-none cursor-pointer ${
-                  soundEffects ? "bg-[#883cec]" : "bg-[#444444]"
+                  soundEffectsEnabled ? "bg-[#883cec]" : "bg-[#444444]"
                 }`}
               >
                 <span
                   className={`block w-5 h-5 rounded-full bg-white shadow-md transform transition-transform top-0.5 relative ${
-                    soundEffects ? "translate-x-6" : "translate-x-1"
+                    soundEffectsEnabled ? "translate-x-6" : "translate-x-1"
                   }`}
                 />
               </button>
@@ -100,15 +135,16 @@ export function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
               <button
                 type="button"
                 role="switch"
-                aria-checked={backgroundMusic}
-                onClick={() => setBackgroundMusic(!backgroundMusic)}
+                aria-checked={backgroundMusicEnabled}
+                onClick={handleToggleBackgroundMusic}
+                data-sound="none"
                 className={`w-12 h-6 rounded-full transition-colors relative focus:outline-none cursor-pointer ${
-                  backgroundMusic ? "bg-[#883cec]" : "bg-[#444444]"
+                  backgroundMusicEnabled ? "bg-[#883cec]" : "bg-[#444444]"
                 }`}
               >
                 <span
                   className={`block w-5 h-5 rounded-full bg-white shadow-md transform transition-transform top-0.5 relative ${
-                    backgroundMusic ? "translate-x-6" : "translate-x-1"
+                    backgroundMusicEnabled ? "translate-x-6" : "translate-x-1"
                   }`}
                 />
               </button>
@@ -117,7 +153,8 @@ export function ConfigModal({ isOpen, onClose }: ConfigModalProps) {
 
           {/* Action Button */}
           <button
-            onClick={onClose}
+            onClick={handleClose}
+            data-sound="none"
             className="w-full bg-white text-black hover:bg-gray-100 font-medium py-3.5 rounded-lg text-base transition-colors cursor-pointer mt-2"
           >
             Salvar

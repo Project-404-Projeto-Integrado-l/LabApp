@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { Header } from "@/components/header";
 import { supabase, QuizQuestion } from "@/lib/supabase";
+import { useSoundEffects } from "@/providers/sound-provider";
 
 const SAMPLE_QUESTIONS: QuizQuestion[] = [
   {
@@ -60,6 +61,7 @@ const SAMPLE_QUESTIONS: QuizQuestion[] = [
 ];
 
 export default function AdminQuizPage() {
+  const { playPopupOpen, playPopupClose } = useSoundEffects();
   const [questions, setQuestions] = useState<QuizQuestion[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -178,6 +180,7 @@ export default function AdminQuizPage() {
     setFormOptions(["", "", "", ""]);
     setFormCorrectIndex(0);
     setFormExplanation("");
+    playPopupOpen();
     setIsModalOpen(true);
   };
 
@@ -188,6 +191,7 @@ export default function AdminQuizPage() {
     setFormOptions(Array.isArray(q.options) && q.options.length >= 4 ? [...q.options] : [q.options[0] || "", q.options[1] || "", q.options[2] || "", q.options[3] || ""]);
     setFormCorrectIndex(q.correct_option_index || 0);
     setFormExplanation(q.explanation || "");
+    playPopupOpen();
     setIsModalOpen(true);
   };
 
@@ -551,7 +555,10 @@ export default function AdminQuizPage() {
                     </button>
 
                     <button
-                      onClick={() => setDeleteConfirmId(q.id)}
+                      onClick={() => {
+                        playPopupOpen();
+                        setDeleteConfirmId(q.id);
+                      }}
                       className="bg-[#333333] hover:bg-red-950/40 border border-[#5e5e5e] text-red-400 hover:border-red-500/50 px-3.5 py-2 rounded-lg font-medium text-xs md:text-sm flex items-center gap-1.5 transition-colors cursor-pointer"
                       title="Excluir Pergunta"
                     >
@@ -625,7 +632,10 @@ export default function AdminQuizPage() {
                 </h3>
               </div>
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => {
+                  playPopupClose();
+                  setIsModalOpen(false);
+                }}
                 className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-[#333] transition-colors"
               >
                 <X className="w-6 h-6" />
@@ -727,7 +737,10 @@ export default function AdminQuizPage() {
               <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#444444]">
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={() => {
+                    playPopupClose();
+                    setIsModalOpen(false);
+                  }}
                   className="bg-[#333333] hover:bg-[#444444] text-gray-200 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer"
                 >
                   Cancelar
@@ -770,7 +783,10 @@ export default function AdminQuizPage() {
 
             <div className="flex items-center justify-end gap-3 pt-2">
               <button
-                onClick={() => setDeleteConfirmId(null)}
+                onClick={() => {
+                  playPopupClose();
+                  setDeleteConfirmId(null);
+                }}
                 className="bg-[#333333] hover:bg-[#444444] text-gray-200 px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer"
               >
                 Cancelar
