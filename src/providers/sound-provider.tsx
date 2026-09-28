@@ -149,6 +149,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const soundEffectsEnabledRef = useRef<boolean>(soundEffectsEnabled);
   const backgroundMusicEnabledRef = useRef<boolean>(backgroundMusicEnabled);
+  const initialDelayTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Sync ref with state
   useEffect(() => {
@@ -159,7 +160,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     backgroundMusicEnabledRef.current = backgroundMusicEnabled;
   }, [backgroundMusicEnabled]);
 
-  // Background Music Controller (Volume 0.15 for smooth ambient sound)
+  // Background Music Controller with 2.5 seconds initial delay on page enter
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -174,12 +175,30 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     audio.volume = 0.15;
 
     if (backgroundMusicEnabled) {
-      audio.play().catch(() => {
-        // Autoplay policy prevented playback until user interaction
-      });
+      // Start background music after 2.5s delay upon entering the site
+      if (initialDelayTimerRef.current) {
+        clearTimeout(initialDelayTimerRef.current);
+      }
+
+      initialDelayTimerRef.current = setTimeout(() => {
+        if (backgroundMusicEnabledRef.current && audio.paused) {
+          audio.play().catch(() => {
+            // Autoplay policy prevented playback until user interaction
+          });
+        }
+      }, 2500);
     } else {
+      if (initialDelayTimerRef.current) {
+        clearTimeout(initialDelayTimerRef.current);
+      }
       audio.pause();
     }
+
+    return () => {
+      if (initialDelayTimerRef.current) {
+        clearTimeout(initialDelayTimerRef.current);
+      }
+    };
   }, [backgroundMusicEnabled]);
 
   // Autoplay unlocker on first user interaction (click, touch, keydown)
@@ -225,6 +244,9 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
 
     // Immediately trigger playback if enabled by user click
     if (enabled && audioRef.current && audioRef.current.paused) {
+      if (initialDelayTimerRef.current) {
+        clearTimeout(initialDelayTimerRef.current);
+      }
       audioRef.current.volume = 0.15;
       audioRef.current.play().catch(() => {});
     }
