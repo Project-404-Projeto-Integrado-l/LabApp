@@ -201,7 +201,7 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     };
   }, [backgroundMusicEnabled]);
 
-  // Autoplay unlocker on first user interaction (click, touch, keydown)
+  // Autoplay unlocker on first user interaction (click, touch, keydown, pointerdown, scroll, mousemove)
   useEffect(() => {
     if (typeof window === "undefined") return;
 
@@ -215,11 +215,17 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     window.addEventListener("click", unlockAudio, { once: true });
     window.addEventListener("keydown", unlockAudio, { once: true });
     window.addEventListener("touchstart", unlockAudio, { once: true });
+    window.addEventListener("pointerdown", unlockAudio, { once: true });
+    window.addEventListener("scroll", unlockAudio, { once: true });
+    window.addEventListener("mousemove", unlockAudio, { once: true });
 
     return () => {
       window.removeEventListener("click", unlockAudio);
       window.removeEventListener("keydown", unlockAudio);
       window.removeEventListener("touchstart", unlockAudio);
+      window.removeEventListener("pointerdown", unlockAudio);
+      window.removeEventListener("scroll", unlockAudio);
+      window.removeEventListener("mousemove", unlockAudio);
     };
   }, []);
 
