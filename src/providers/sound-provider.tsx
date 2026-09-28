@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useRef, useState } from "react";
-import { playSound as playReactSound, setSoundEnabled } from "react-sounds";
+import { Howl } from "howler";
 
 interface SoundContextType {
   soundEffectsEnabled: boolean;
@@ -19,6 +19,30 @@ const SoundContext = createContext<SoundContextType | undefined>(undefined);
 
 const LS_SOUND_EFFECTS_KEY = "labapp_sound_effects";
 const LS_BG_MUSIC_KEY = "labapp_background_music";
+
+// Direct CDN audio maps to avoid 404 HEAD probing requests to localhost
+const SFX_MAP: Record<string, string> = {
+  "click": "https://reactsounds.sfo3.cdn.digitaloceanspaces.com/v1/ui/button_medium.f1076ea.mp3",
+  "open": "https://reactsounds.sfo3.cdn.digitaloceanspaces.com/v1/ui/popup_open.97597a8.mp3",
+  "close": "https://reactsounds.sfo3.cdn.digitaloceanspaces.com/v1/ui/popup_close.1bd2a1b.mp3",
+  "toggle_on": "https://reactsounds.sfo3.cdn.digitaloceanspaces.com/v1/ui/toggle_on.2f87bf7.mp3",
+  "toggle_off": "https://reactsounds.sfo3.cdn.digitaloceanspaces.com/v1/ui/toggle_off.7103845.mp3",
+};
+
+// Cache for Howl instances
+const howlCache: Record<string, Howl> = {};
+
+const getHowl = (key: string, url: string, volume = 0.5) => {
+  if (typeof window === "undefined") return null;
+  if (!howlCache[key]) {
+    howlCache[key] = new Howl({
+      src: [url],
+      html5: true,
+      volume: volume,
+    });
+  }
+  return howlCache[key];
+};
 
 // Fallback Web Audio API Sound Synthesizer for instant zero-latency UI sounds
 const playSynthSound = (type: "click" | "open" | "close" | "toggle") => {
@@ -124,22 +148,21 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   const soundEffectsEnabledRef = useRef<boolean>(soundEffectsEnabled);
   const backgroundMusicEnabledRef = useRef<boolean>(backgroundMusicEnabled);
 
-  // Sync ref and external library with state
+  // Sync ref with state
   useEffect(() => {
     soundEffectsEnabledRef.current = soundEffectsEnabled;
-    setSoundEnabled(soundEffectsEnabled);
   }, [soundEffectsEnabled]);
 
   useEffect(() => {
     backgroundMusicEnabledRef.current = backgroundMusicEnabled;
   }, [backgroundMusicEnabled]);
 
-  // Handle Background Music HTMLAudioElement
+  // Background Music Controller
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     if (!audioRef.current) {
-      const audio = new Audio();
+      const audio = new Audio("/audio/bg-music.mp3");
       audio.loop = true;
       audio.volume = 0.35;
       audioRef.current = audio;
@@ -147,39 +170,22 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
 
     const audio = audioRef.current;
 
-    const playBGM = async () => {
-      if (backgroundMusicEnabled) {
-        try {
-          if (!audio.src || audio.src === "") {
-            audio.src = "/audio/bg-music.mp3";
-          }
-          await audio.play();
-        } catch {
-          // Fallback check if user places file as trilha-sonora.mp3
-          if (audio.src.includes("bg-music.mp3")) {
-            audio.src = "/audio/trilha-sonora.mp3";
-            audio.play().catch(() => {
-              // Music file not yet provided by user
-            });
-          }
-        }
-      } else {
-        audio.pause();
-      }
-    };
-
-    playBGM();
+    if (backgroundMusicEnabled) {
+      audio.play().catch(() => {
+        // Autoplay policy prevented playback until user interaction
+      });
+    } else {
+      audio.pause();
+    }
   }, [backgroundMusicEnabled]);
 
-  // Autoplay unlocker on first user interaction
+  // Autoplay unlocker on first user interaction (click, touch, keydown)
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const unlockAudio = () => {
       if (backgroundMusicEnabledRef.current && audioRef.current && audioRef.current.paused) {
-        audioRef.current.play().catch(() => {
-          // Music file not present yet
-        });
+        audioRef.current.play().catch(() => {});
       }
     };
 
@@ -197,7 +203,6 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
   const setSoundEffectsEnabled = (enabled: boolean) => {
     setSoundEffectsEnabledState(enabled);
     soundEffectsEnabledRef.current = enabled;
-    setSoundEnabled(enabled);
     try {
       localStorage.setItem(LS_SOUND_EFFECTS_KEY, String(enabled));
     } catch {
@@ -213,36 +218,51 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     } catch {
       // ignore localStorage errors
     }
+
+    // Immediately trigger playback if enabled by user click
+    if (enabled && audioRef.current && audioRef.current.paused) {
+      audioRef.current.play().catch(() => {});
+    }
   };
 
   const playClick = () => {
     if (!soundEffectsEnabledRef.current) return;
     playSynthSound("click");
-    playReactSound("ui/button_medium", { volume: 0.5 }).catch(() => {});
+    const sound = getHowl("click", SFX_MAP.click, 0.5);
+    sound?.play();
   };
 
   const playPopupOpen = () => {
     if (!soundEffectsEnabledRef.current) return;
     playSynthSound("open");
-    playReactSound("ui/popup_open", { volume: 0.6 }).catch(() => {});
+    const sound = getHowl("open", SFX_MAP.open, 0.6);
+    sound?.play();
   };
 
   const playPopupClose = () => {
     if (!soundEffectsEnabledRef.current) return;
     playSynthSound("close");
-    playReactSound("ui/popup_close", { volume: 0.6 }).catch(() => {});
+    const sound = getHowl("close", SFX_MAP.close, 0.6);
+    sound?.play();
   };
 
   const playToggle = (on?: boolean) => {
     if (!soundEffectsEnabledRef.current) return;
     playSynthSound("toggle");
-    const soundName = on ? "ui/toggle_on" : "ui/toggle_off";
-    playReactSound(soundName, { volume: 0.5 }).catch(() => {});
+    const key = on ? "toggle_on" : "toggle_off";
+    const sound = getHowl(key, SFX_MAP[key], 0.5);
+    sound?.play();
   };
 
   const playSound = (soundName: string) => {
     if (!soundEffectsEnabledRef.current) return;
-    playReactSound(soundName, { volume: 0.5 }).catch(() => {});
+    const url = SFX_MAP[soundName];
+    if (url) {
+      const sound = getHowl(soundName, url, 0.5);
+      sound?.play();
+    } else {
+      playSynthSound("click");
+    }
   };
 
   // Global Click Event Interceptor for site-wide click sounds
@@ -273,7 +293,6 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
         }
 
         if (interactiveEl.getAttribute("role") === "switch") {
-          // Handled explicitly by toggle switch onClick
           return;
         }
 
