@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { 
   ArrowLeft, 
   ArrowRight, 
-  Sparkles, 
   RotateCcw, 
   HelpCircle, 
   CheckCircle2, 
@@ -250,8 +249,7 @@ export default function QuizPlayPage() {
               {currentQuestion.category || "Robótica Básica"}
             </span>
 
-            <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-full">
-              <Sparkles className="w-3.5 h-3.5 fill-amber-400 stroke-amber-400" />
+            <div className="flex items-center text-xs sm:text-sm font-bold text-amber-400 bg-amber-500/10 border border-amber-500/30 px-3 py-1 rounded-full">
               <span>+{totalXp} XP</span>
             </div>
           </div>

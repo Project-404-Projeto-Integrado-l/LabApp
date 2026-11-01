@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import Image from "next/image";
-import { CheckCircle2, XCircle, Sparkles, RotateCcw, ArrowLeft, Trophy } from "lucide-react";
+import { CheckCircle2, XCircle, RotateCcw, ArrowLeft, Trophy } from "lucide-react";
 import { useSoundEffects } from "@/providers/sound-provider";
 
 interface QuizResultModalProps {
@@ -124,7 +124,6 @@ export function QuizResultModal({
           {/* XP Ganho */}
           <div className="bg-[#2d2216] border border-amber-600/40 rounded-xl p-3 flex flex-col items-center justify-center text-center gap-1 shadow-inner">
             <div className="flex items-center gap-1.5 text-amber-400">
-              <Sparkles className="w-4 h-4 fill-amber-400" />
               <span className="text-xs font-semibold uppercase">XP Total</span>
             </div>
             <span className="text-2xl font-black text-amber-300">
