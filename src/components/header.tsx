@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BadgeHelp, Crown, Home as HomeIcon, Menu, Settings, X } from "lucide-react";
+import { BadgeHelp, Crown, Home as HomeIcon, Menu, Settings, X, Dices } from "lucide-react";
 import { RankingModal } from "@/components/modals/ranking-modal";
 import { ConfigModal } from "@/components/modals/config-modal";
 
@@ -15,6 +15,7 @@ export function Header() {
 
   const isHome = pathname === "/";
   const isAjuda = pathname === "/ajuda";
+  const isJogos = pathname.startsWith("/jogos");
 
   return (
     <header className="relative z-20 w-full border-b border-[#5a5a5a] bg-[#212121]">
@@ -44,6 +45,17 @@ export function Header() {
           >
             <HomeIcon className="w-6 h-6 text-white" />
             <span>Início</span>
+          </Link>
+          <Link
+            href="/jogos"
+            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity ${
+              isJogos
+                ? "border-b-2 border-[#883cec] font-semibold"
+                : "opacity-85 hover:opacity-100"
+            }`}
+          >
+            <Dices className="w-6 h-6 text-white" />
+            <span>Jogos</span>
           </Link>
           <button
             onClick={() => setIsConfigOpen(true)}
@@ -107,6 +119,19 @@ export function Header() {
           >
             <HomeIcon className="w-6 h-6 text-white" />
             <span>Início</span>
+          </Link>
+
+          <Link
+            href="/jogos"
+            onClick={() => setIsOpen(false)}
+            className={`flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors ${
+              isJogos
+                ? "bg-[#883cec]/20 border-l-4 border-[#883cec] font-semibold"
+                : "hover:bg-[#333333]"
+            }`}
+          >
+            <Dices className="w-6 h-6 text-white" />
+            <span>Jogos</span>
           </Link>
 
           <button

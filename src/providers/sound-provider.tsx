@@ -12,6 +12,8 @@ interface SoundContextType {
   playPopupOpen: () => void;
   playPopupClose: () => void;
   playToggle: (on?: boolean) => void;
+  playSuccess: () => void;
+  playError: () => void;
   playSound: (soundName: string) => void;
 }
 
@@ -27,6 +29,8 @@ const SFX_MAP: Record<string, string> = {
   "close": "https://reactsounds.sfo3.cdn.digitaloceanspaces.com/v1/ui/popup_close.1bd2a1b.mp3",
   "toggle_on": "https://reactsounds.sfo3.cdn.digitaloceanspaces.com/v1/ui/toggle_on.2f87bf7.mp3",
   "toggle_off": "https://reactsounds.sfo3.cdn.digitaloceanspaces.com/v1/ui/toggle_off.7103845.mp3",
+  "success": "https://reactsounds.sfo3.cdn.digitaloceanspaces.com/v1/ui/toggle_on.2f87bf7.mp3",
+  "error": "https://reactsounds.sfo3.cdn.digitaloceanspaces.com/v1/ui/toggle_off.7103845.mp3",
 };
 
 // Cache for Howl instances
@@ -47,7 +51,7 @@ const getHowl = (key: string, url: string, volume = 0.25) => {
 };
 
 // Fallback Web Audio API Sound Synthesizer for instant zero-latency UI sounds
-const playSynthSound = (type: "click" | "open" | "close" | "toggle") => {
+const playSynthSound = (type: "click" | "open" | "close" | "toggle" | "success" | "error") => {
   if (typeof window === "undefined") return;
   try {
     const AudioContextClass =
@@ -119,6 +123,34 @@ const playSynthSound = (type: "click" | "open" | "close" | "toggle") => {
       gain.connect(ctx.destination);
       osc.start(now);
       osc.stop(now + 0.05);
+    } else if (type === "success") {
+      const notes = [523.25, 659.25, 783.99, 1046.5];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "triangle";
+        osc.frequency.setValueAtTime(freq, now + idx * 0.07);
+        gain.gain.setValueAtTime(0.08, now + idx * 0.07);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.07 + 0.22);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + idx * 0.07);
+        osc.stop(now + idx * 0.07 + 0.22);
+      });
+    } else if (type === "error") {
+      const notes = [311.13, 233.08];
+      notes.forEach((freq, idx) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(freq, now + idx * 0.1);
+        gain.gain.setValueAtTime(0.05, now + idx * 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.1 + 0.2);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now + idx * 0.1);
+        osc.stop(now + idx * 0.1 + 0.2);
+      });
     }
   } catch {
     // Audio Context missing or disabled
@@ -287,6 +319,20 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
     sound?.play();
   };
 
+  const playSuccess = () => {
+    if (!soundEffectsEnabledRef.current) return;
+    playSynthSound("success");
+    const sound = getHowl("success", SFX_MAP.success, 0.35);
+    sound?.play();
+  };
+
+  const playError = () => {
+    if (!soundEffectsEnabledRef.current) return;
+    playSynthSound("error");
+    const sound = getHowl("error", SFX_MAP.error, 0.3);
+    sound?.play();
+  };
+
   const playSound = (soundName: string) => {
     if (!soundEffectsEnabledRef.current) return;
     const url = SFX_MAP[soundName];
@@ -348,6 +394,8 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
         playPopupOpen,
         playPopupClose,
         playToggle,
+        playSuccess,
+        playError,
         playSound,
       }}
     >
