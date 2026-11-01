@@ -57,15 +57,10 @@ export default function JogosPage() {
           </div>
 
           {/* Card 2: Jogo de Perguntas (Quiz) */}
-          <div className="bg-[#262626] border border-[#883cec] text-white h-[500px] flex flex-col justify-between p-8 rounded-lg shadow-xl ring-1 ring-[#883cec]/50">
+          <div className="bg-[#262626] border border-[#5e5e5e] text-white h-[500px] flex flex-col justify-between p-8 rounded-lg shadow-lg">
             <div className="flex flex-col items-start gap-8">
-              <BadgeHelp className="w-24 h-24 text-[#883cec] stroke-[1.5]" />
+              <BadgeHelp className="w-24 h-24 text-white stroke-[1.5]" />
               <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/40 px-2.5 py-0.5 rounded-full uppercase">
-                    Disponível
-                  </span>
-                </div>
                 <h2 className="text-2xl font-bold text-white">
                   Jogo de Perguntas (Quiz)
                 </h2>
@@ -80,7 +75,7 @@ export default function JogosPage() {
               <div>
                 <Link
                   href="/jogos/quiz"
-                  className="bg-[#883cec] hover:bg-[#782bdc] text-white px-8 py-4 rounded-lg font-bold text-base inline-flex items-center gap-2 transition-all shadow-lg shadow-[#883cec]/25 cursor-pointer active:scale-[0.98]"
+                  className="bg-[#883cec] hover:bg-[#782bdc] text-white px-8 py-4 rounded-lg font-bold text-base inline-flex items-center gap-2 transition-colors cursor-pointer active:scale-[0.98]"
                 >
                   <span>Jogar agora</span>
                   <ArrowRight className="w-5 h-5" />

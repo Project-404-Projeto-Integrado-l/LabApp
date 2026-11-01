@@ -25,9 +25,9 @@ export function QuizOption({
   const getContainerStyles = () => {
     switch (status) {
       case "correct":
-        return "border-emerald-500 bg-emerald-950/40 text-white shadow-lg shadow-emerald-950/30 ring-1 ring-emerald-500/60";
+        return "border-emerald-500 bg-emerald-950/40 text-white ring-1 ring-emerald-500/60";
       case "incorrect":
-        return "border-rose-500 bg-rose-950/40 text-white shadow-lg shadow-rose-950/30 ring-1 ring-rose-500/60";
+        return "border-rose-500 bg-rose-950/40 text-white ring-1 ring-rose-500/60";
       case "dimmed":
         return "border-[#383838] bg-[#222222] text-gray-500 opacity-45 cursor-not-allowed";
       case "default":
