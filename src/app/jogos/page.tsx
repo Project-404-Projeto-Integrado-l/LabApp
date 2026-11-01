@@ -118,9 +118,9 @@ export default function JogosPage() {
         </div>
       </main>
 
-      <footer className="relative z-10 border-t border-[#333333]">
-        <div className="max-w-[1216px] w-full mx-auto px-6 lg:px-0 py-6 text-center text-sm text-gray-400">
-          <p>LabApp — Projeto LABiNEC (UFC / SMD)</p>
+      <footer className="relative z-10 border-t border-[#333]">
+        <div className="max-w-[1216px] w-full mx-auto px-6 lg:px-0 py-6 text-center text-sm text-white">
+          <p>LabApp — Projeto LabiNEC (UFC / SMD)</p>
         </div>
       </footer>
     </div>
