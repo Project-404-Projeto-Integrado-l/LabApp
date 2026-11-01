@@ -174,7 +174,7 @@ export function QuizResultModal({
               playPopupClose();
               onRestart();
             }}
-            className="w-full sm:flex-1 py-3.5 px-5 bg-[#883cec] hover:bg-[#782bdc] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-[#883cec]/25 transition-all cursor-pointer active:scale-[0.99]"
+            className="w-full sm:flex-1 py-3.5 px-5 bg-[#883cec] hover:bg-[#782bdc] text-white rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer active:scale-[0.99]"
             data-sound="none"
           >
             <RotateCcw className="w-4 h-4" />

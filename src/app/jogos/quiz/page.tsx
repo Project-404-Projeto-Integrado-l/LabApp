@@ -352,7 +352,7 @@ export default function QuizPlayPage() {
                 <button
                   type="button"
                   onClick={handleNextQuestion}
-                  className="w-full sm:w-auto px-6 py-3.5 bg-[#883cec] hover:bg-[#782bdc] text-white rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 shadow-lg shadow-[#883cec]/25 transition-all cursor-pointer active:scale-[0.98]"
+                  className="w-full sm:w-auto px-6 py-3.5 bg-[#883cec] hover:bg-[#782bdc] text-white rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-colors cursor-pointer active:scale-[0.98]"
                 >
                   <span>{isLastQuestion ? "Ver Resultado" : "Próxima Pergunta"}</span>
                   <ArrowRight className="w-4 h-4" />
