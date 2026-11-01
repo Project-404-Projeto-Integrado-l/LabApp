@@ -79,15 +79,15 @@ A interface e as mecânicas foram desenhadas seguindo critérios rigorosos de Us
 | **RF02** | **Navegação Principal**: O usuário (aluno ou professor) deve ser capaz de navegar livremente entre as telas de Início, Catálogo de Jogos, Ranking e Configurações. | Alta | RF01 | `FEITO` |
 | **RF03** | **Central de Ajuda**: O usuário (aluno ou professor) deve conseguir acessar a central de suporte contendo instruções de "Como Jogar" e o Glossário de Termos. | Média | RF02 | `FEITO` |
 | **RF04** | **Gerenciamento de Conteúdo do Quiz**: O professor/administrador deve conseguir cadastrar, editar, listar e remover perguntas, alternativas e gabaritos para os quizzes. | Alta | Nenhum | `FEITO` |
-| **RF05** | **Apresentação de Questões**: O aluno deve visualizar as perguntas do quiz de forma individual com o enunciado e o indicador de progresso (ex.: "Pergunta 01/03"). | Alta | RF04 | `NÃO INICIADO` |
-| **RF06** | **Seleção Exclusiva de Resposta**: O aluno deve poder selecionar apenas uma única alternativa por pergunta no quiz. | Alta | RF05 | `NÃO INICIADO` |
-| **RF07** | **Feedback Imediato de Resposta**: O aluno deve receber validação automática e retorno visual imediato sobre a correção da resposta escolhida. | Alta | RF06 | `NÃO INICIADO` |
-| **RF08** | **Cálculo de Recompensa do Quiz**: O aluno deve receber a pontuação de XP computada ao final do quiz com base no seu desempenho. | Alta | RF07, RF22 | `NÃO INICIADO` |
-| **RF09** | **Catálogo de Componentes**: O aluno deve ter acesso a um catálogo com imagens, nomes e descrições dos componentes para o jogo de memorização. | Alta | Nenhum | `EM DESENVOLVIMENTO` |
-| **RF10** | **Seleção de Dificuldade de Memorização**: O aluno deve poder alternar livremente entre o "Modo Lúdico" e o "Modo Avançado" no jogo de memorização. | Média | RF09 | `NÃO INICIADO` |
-| **RF11** | **Interação com Flashcards**: O aluno deve ser capaz de acionar a ação "Virar Flashcard" para visualizar os detalhes e a imagem do componente. | Alta | RF09 | `NÃO INICIADO` |
-| **RF12** | **Associação de Hardware**: O aluno deve associar o componente apresentado em tela à sua opção de identificação correta. | Alta | RF09, RF11 | `NÃO INICIADO` |
-| **RF13** | **Prevenção de Submissão Nula**: O aluno deve ser impedido pelo sistema de confirmar respostas em branco, recebendo um aviso contextual. | Média | RF12 | `NÃO INICIADO` |
+| **RF05** | **Apresentação de Questões**: O aluno deve visualizar as perguntas do quiz de forma individual com o enunciado e o indicador de progresso (ex.: "Pergunta 01/03"). | Alta | RF04 | `FEITO` |
+| **RF06** | **Seleção Exclusiva de Resposta**: O aluno deve poder selecionar apenas uma única alternativa por pergunta no quiz. | Alta | RF05 | `FEITO` |
+| **RF07** | **Feedback Imediato de Resposta**: O aluno deve receber validação automática e retorno visual imediato sobre a correção da resposta escolhida. | Alta | RF06 | `FEITO` |
+| **RF08** | **Cálculo de Recompensa do Quiz**: O aluno deve receber a pontuação de XP computada ao final do quiz com base no seu desempenho. | Alta | RF07, RF22 | `FEITO` |
+| **RF09** | **Catálogo de Componentes**: O aluno deve ter acesso a um catálogo com imagens, nomes e descrições dos componentes para o jogo de memorização. | Alta | Nenhum | `FEITO` |
+| **RF10** | **Seleção de Dificuldade de Memorização**: O aluno deve poder alternar livremente entre o "Modo Lúdico" e o "Modo Avançado" no jogo de memorização. | Média | RF09 | `FEITO` |
+| **RF11** | **Interação com Flashcards**: O aluno deve ser capaz de acionar a ação "Virar Flashcard" para visualizar os detalhes e a imagem do componente. | Alta | RF09 | `FEITO` |
+| **RF12** | **Associação de Hardware**: O aluno deve associar o componente apresentado em tela à sua opção de identificação correta. | Alta | RF09, RF11 | `FEITO` |
+| **RF13** | **Prevenção de Submissão Nula**: O aluno deve ser impedido pelo sistema de confirmar respostas em branco, recebendo um aviso contextual. | Média | RF12 | `FEITO` |
 | **RF14** | **Apresentação de Desafio de Circuito**: O aluno deve visualizar o objetivo prático do circuito elétrico a ser montado na fase atual (ex.: "Ligar um LED com Arduino"). | Alta | Nenhum | `NÃO INICIADO` |
 | **RF15** | **Biblioteca de Componentes**: O aluno deve ter à disposição a lista de componentes virtuais disponíveis (Arduino Uno, LED, Resistor, Bateria 9V, Jumper). | Alta | Nenhum | `NÃO INICIADO` |
 | **RF16** | **Montagem na Bancada**: O aluno deve poder alocar peças selecionadas da biblioteca nos slots disponíveis na bancada virtual de montagem. | Alta | RF15 | `NÃO INICIADO` |
