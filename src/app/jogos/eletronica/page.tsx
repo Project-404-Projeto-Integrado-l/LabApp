@@ -7,15 +7,14 @@ import { useRouter } from "next/navigation";
 import { 
   ArrowLeft, 
   RotateCcw, 
-  Zap, 
+  Lightbulb, 
   HelpCircle, 
-  CheckCircle2, 
-  Sparkles, 
   Sliders, 
   X,
   Play,
   Layers,
-  Info
+  Info,
+  Zap
 } from "lucide-react";
 import { Header } from "@/components/header";
 import { QuizMascot, MascotPose } from "@/components/quiz/quiz-mascot";
@@ -43,6 +42,10 @@ export default function JogoEletronicaPage() {
   const [draggedComponentId, setDraggedComponentId] = useState<string | null>(null);
   const [activeHoverSlotId, setActiveHoverSlotId] = useState<string | null>(null);
 
+  // Active slot hint popover state (hover and click)
+  const [activeHintSlotId, setActiveHintSlotId] = useState<string | null>(null);
+  const [hoveredHintSlotId, setHoveredHintSlotId] = useState<string | null>(null);
+
   // Simulation & validation state
   const [isSimulating, setIsSimulating] = useState(false);
   const [isCircuitEnergized, setIsCircuitEnergized] = useState(false);
@@ -68,6 +71,8 @@ export default function JogoEletronicaPage() {
     setSelectedLibraryComponent(null);
     setIsCircuitEnergized(false);
     setIsSimulating(false);
+    setActiveHintSlotId(null);
+    setHoveredHintSlotId(null);
     setMascotPose("question");
     const target = circuits[index];
     setMascotSpeech(
@@ -138,6 +143,7 @@ export default function JogoEletronicaPage() {
       setActiveHoverSlotId(null);
       setDraggedComponentId(null);
       setSelectedLibraryComponent(null);
+      setActiveHintSlotId(null);
     }
   };
 
@@ -150,6 +156,7 @@ export default function JogoEletronicaPage() {
       }));
       playToggle(true);
       setSelectedLibraryComponent(null);
+      setActiveHintSlotId(null);
     }
   };
 
@@ -171,9 +178,10 @@ export default function JogoEletronicaPage() {
     setPlacedComponents({});
     setSelectedLibraryComponent(null);
     setIsCircuitEnergized(false);
+    setActiveHintSlotId(null);
   };
 
-  // Validate circuit (RF18, RF19, RF20, RF21)
+  // Validate circuit
   const handleValidateCircuit = () => {
     if (!currentCircuit || !isAllSlotsFilled) return;
 
@@ -195,19 +203,16 @@ export default function JogoEletronicaPage() {
     });
 
     if (errors.length === 0) {
-      // Success! Energize the circuit!
       setIsCircuitEnergized(true);
       setMascotPose("happy");
       setMascotSpeech("Circuito energizado com sucesso! Todas as conexões estão corretas! 🎉");
       playSuccess();
 
-      // Open success modal after brief celebration animation
       setTimeout(() => {
         setIsSuccessModalOpen(true);
         setIsSimulating(false);
       }, 900);
     } else {
-      // Failure! Pedagogical feedback
       setIsCircuitEnergized(false);
       setSimulationErrors(errors);
       setMascotPose("nervous");
@@ -255,7 +260,7 @@ export default function JogoEletronicaPage() {
 
       <Header />
 
-      <main className="relative z-10 flex-1 max-w-[1300px] w-full mx-auto px-4 sm:px-6 py-6 flex flex-col gap-6">
+      <main className="relative z-10 flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 py-6 flex flex-col gap-6">
         {/* Top Header Bar */}
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-[#3e3e3e]">
           <div className="flex items-center gap-4">
@@ -303,15 +308,15 @@ export default function JogoEletronicaPage() {
           </div>
         </div>
 
-        {/* Practical Objective Banner (RF14) */}
+        {/* Practical Objective Banner */}
         <div className="bg-[#262626] border border-[#5e5e5e] rounded-xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-lg">
           <div className="flex items-start gap-3">
-            <div className="p-2.5 rounded-lg bg-[#883cec]/20 border border-[#883cec]/40 text-[#a865f8]">
-              <Zap className="w-5 h-5 text-amber-400 fill-amber-400" />
+            <div className="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/35 text-amber-400">
+              <Lightbulb className="w-5 h-5 text-amber-400 fill-amber-400/25" />
             </div>
             <div className="flex flex-col">
               <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
-                Objetivo do Desafio (RF14)
+                Objetivo do Desafio
               </span>
               <p className="text-sm sm:text-base text-gray-100 font-medium leading-relaxed">
                 {currentCircuit.practicalObjective}
@@ -330,22 +335,86 @@ export default function JogoEletronicaPage() {
           </div>
         </div>
 
-        {/* Main Workbench Area */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
-          {/* Circuit Canvas Container (Col-span 3) */}
-          <div className="lg:col-span-3 flex flex-col gap-4">
-            {/* Interactive Circuit Board */}
-            <div className="relative bg-[#1a1a1a] border-2 border-[#4a4a4a] rounded-2xl overflow-hidden shadow-2xl p-4 sm:p-6 flex flex-col items-center justify-center min-h-[460px]">
+        {/* 3-Column Interactive Area: Left (Biblioteca) | Center (Circuito) | Right (Mascote/Info) */}
+        <div className="flex flex-col lg:flex-row items-start gap-5">
+          {/* 1. Component Library / Shelf on the LEFT side of circuit */}
+          <div className="w-full lg:w-72 xl:w-80 shrink-0 bg-[#262626] border border-[#5e5e5e] rounded-2xl p-4 flex flex-col gap-3 shadow-xl order-2 lg:order-1">
+            <div className="flex items-center justify-between border-b border-[#3e3e3e] pb-2.5">
+              <div className="flex items-center gap-2">
+                <Layers className="w-4 h-4 text-[#883cec]" />
+                <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+                  Biblioteca de Componentes
+                </h2>
+              </div>
+              <span className="text-[10px] text-gray-400 font-mono bg-[#1e1e1e] px-2 py-0.5 rounded border border-[#444]">
+                {availableComponentsList.length} itens
+              </span>
+            </div>
+
+            <p className="text-[11px] text-gray-400 leading-snug">
+              Arraste para os slots do circuito ou clique no componente para selecionar.
+            </p>
+
+            <div className="flex flex-col gap-2.5 max-h-[580px] overflow-y-auto pr-1">
+              {availableComponentsList.map((comp) => {
+                const isSelected = selectedLibraryComponent === comp.id;
+
+                return (
+                  <div
+                    key={comp.id}
+                    draggable
+                    onDragStart={(e) => handleDragStart(e, comp.id)}
+                    onDragEnd={handleDragEnd}
+                    onClick={() => {
+                      playClick();
+                      setSelectedLibraryComponent(isSelected ? null : comp.id);
+                    }}
+                    className={`relative bg-[#1e1e1e] border rounded-xl p-3 flex items-center gap-3 cursor-grab active:cursor-grabbing transition-all select-none hover:-translate-y-0.5 shadow-sm ${
+                      isSelected
+                        ? "border-[#883cec] bg-[#883cec]/20 ring-2 ring-[#883cec] shadow-md shadow-[#883cec]/25"
+                        : "border-[#444444] hover:border-[#777777] hover:bg-[#282828]"
+                    }`}
+                    title={`${comp.name} - ${comp.description}`}
+                  >
+                    <div className="relative w-14 h-14 shrink-0 flex items-center justify-center bg-black/30 rounded-lg p-1 border border-white/5">
+                      <Image
+                        src={comp.image_url}
+                        alt={comp.name}
+                        fill
+                        className="object-contain pointer-events-none p-1"
+                      />
+                    </div>
+
+                    <div className="flex flex-col overflow-hidden min-w-0">
+                      <span className="text-xs font-bold text-white truncate">
+                        {comp.name}
+                      </span>
+                      <span className="text-[10px] text-purple-300 font-medium truncate">
+                        {comp.category}
+                      </span>
+                      <p className="text-[10px] text-gray-400 line-clamp-1 mt-0.5">
+                        {comp.description}
+                      </p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* 2. Virtual Workbench / Circuit Canvas in the CENTER */}
+          <div className="flex-1 min-w-0 flex flex-col gap-4 order-1 lg:order-2 w-full">
+            <div className="relative bg-[#1a1a1a] border-2 border-[#4a4a4a] rounded-2xl overflow-hidden shadow-2xl p-4 sm:p-5 flex flex-col items-center justify-center">
               {/* Circuit Board Header Indicators */}
               <div className="w-full flex items-center justify-between text-xs text-gray-400 mb-2 border-b border-[#333333] pb-2">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="font-mono font-semibold tracking-wider uppercase text-gray-300">
+                  <span className="font-mono font-semibold tracking-wider uppercase text-gray-300 text-xs">
                     Bancada Virtual de Prototipagem
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="font-medium text-gray-400">
+                  <span className="font-medium text-gray-400 text-xs">
                     Slots: <strong className="text-white">{filledSlotsCount}</strong> / {totalSlots}
                   </span>
                   <button
@@ -360,7 +429,7 @@ export default function JogoEletronicaPage() {
               </div>
 
               {/* The Circuit Illustration with Absolute Overlay Slots */}
-              <div className="relative w-full max-w-[900px] aspect-[4/3] rounded-xl overflow-hidden border border-[#3a3a3a] bg-[#121212] shadow-inner flex items-center justify-center">
+              <div className="relative w-full max-w-[880px] aspect-[4/3] rounded-xl overflow-hidden border border-[#3a3a3a] bg-[#121212] shadow-inner flex items-center justify-center">
                 {/* Background Illustration */}
                 <div className={`relative w-full h-full transition-all duration-700 ${
                   isCircuitEnergized ? "filter drop-shadow-[0_0_25px_rgba(34,197,94,0.45)] brightness-110" : ""
@@ -373,22 +442,23 @@ export default function JogoEletronicaPage() {
                     priority
                   />
 
-                  {/* Simulated Energized Glow Overlay (RF19) */}
+                  {/* Simulated Energized Glow Overlay */}
                   {isCircuitEnergized && (
                     <div className="absolute inset-0 bg-emerald-500/10 pointer-events-none animate-pulse flex items-center justify-center">
                       <div className="absolute top-4 right-4 bg-emerald-950/80 border border-emerald-500/60 text-emerald-300 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg">
-                        <Sparkles className="w-3.5 h-3.5 fill-emerald-400" />
+                        <Zap className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400" />
                         <span>Circuito Ativo: 5V / 9V Corrente Estável</span>
                       </div>
                     </div>
                   )}
                 </div>
 
-                {/* Interactive Slots (RF16, RF17) */}
+                {/* Interactive Slots with Didactic Hint Icons */}
                 {currentCircuit.slots.map((slot, index) => {
                   const placedCompId = placedComponents[slot.id];
                   const placedComp = getComponentObj(placedCompId);
                   const isHovered = activeHoverSlotId === slot.id;
+                  const isHintActive = activeHintSlotId === slot.id || hoveredHintSlotId === slot.id;
 
                   return (
                     <div
@@ -404,7 +474,6 @@ export default function JogoEletronicaPage() {
                       onDragLeave={() => handleDragLeave(slot.id)}
                       onDrop={(e) => handleDrop(e, slot.id)}
                       onClick={() => handleSlotClick(slot.id)}
-                      title={`${slot.name}: ${slot.hint || slot.description}`}
                       className={`absolute rounded-xl flex flex-col items-center justify-center transition-all duration-200 cursor-pointer ${
                         placedComp
                           ? "bg-[#252525]/90 border-2 border-emerald-500/80 shadow-lg shadow-emerald-500/20 backdrop-blur-xs"
@@ -416,7 +485,7 @@ export default function JogoEletronicaPage() {
                       }`}
                     >
                       {placedComp ? (
-                        /* Filled Slot State (RF17) */
+                        /* Filled Slot State */
                         <div className="relative w-full h-full p-1 flex flex-col items-center justify-between group">
                           {/* Remove button */}
                           <button
@@ -441,17 +510,59 @@ export default function JogoEletronicaPage() {
                           </span>
                         </div>
                       ) : (
-                        /* Empty Slot State with Placeholder & Hints (RF17) */
-                        <div className="flex flex-col items-center justify-center text-center p-1 w-full h-full">
-                          <div className="w-5 h-5 rounded-full bg-[#383838] border border-[#555] text-gray-300 text-[11px] font-bold flex items-center justify-center mb-0.5">
+                        /* Challenging Empty Slot State with Interactive Hint Button */
+                        <div className="relative w-full h-full flex flex-col items-center justify-center p-1 text-center">
+                          {/* Slot Number Badge */}
+                          <div className="w-5 h-5 rounded-full bg-[#303030] border border-[#555] text-gray-300 text-[10px] font-bold flex items-center justify-center shadow-xs">
                             {index + 1}
                           </div>
-                          <span className="text-[10px] font-semibold text-gray-300 leading-tight line-clamp-1">
-                            {slot.hint || "Slot Vazio"}
+
+                          {/* Interactive Tip Icon Button */}
+                          <button
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              playClick();
+                              setActiveHintSlotId(activeHintSlotId === slot.id ? null : slot.id);
+                            }}
+                            onMouseEnter={() => setHoveredHintSlotId(slot.id)}
+                            onMouseLeave={() => setHoveredHintSlotId((prev) => (prev === slot.id ? null : prev))}
+                            className="mt-1 p-1 rounded-full bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/50 text-amber-300 transition-all hover:scale-110 shadow-sm cursor-pointer"
+                            title="Ver dica do componente desta área"
+                          >
+                            <Lightbulb className="w-3.5 h-3.5 text-amber-400 fill-amber-400/30 animate-pulse" />
+                          </button>
+                          
+                          <span className="text-[9px] text-gray-400 mt-0.5">
+                            Slot Vazio
                           </span>
-                          <span className="text-[9px] text-gray-400">
-                            Solte aqui
-                          </span>
+
+                          {/* Floating Hint Popover on Hover or Click */}
+                          {isHintActive && (
+                            <div 
+                              className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-48 sm:w-56 bg-[#262626] border border-amber-400/60 rounded-xl p-2.5 shadow-2xl z-40 text-left pointer-events-auto animate-scale-in"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              <div className="flex items-center justify-between text-amber-400 text-xs font-bold mb-1 border-b border-[#3e3e3e] pb-1">
+                                <div className="flex items-center gap-1.5">
+                                  <Lightbulb className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                                  <span>Dica do Slot {index + 1}</span>
+                                </div>
+                                {activeHintSlotId === slot.id && (
+                                  <button
+                                    onClick={() => setActiveHintSlotId(null)}
+                                    className="text-gray-400 hover:text-white text-xs cursor-pointer"
+                                  >
+                                    ×
+                                  </button>
+                                )}
+                              </div>
+                              <p className="text-[11px] text-gray-200 leading-snug">
+                                {slot.hint || slot.description || "Posicione o componente adequado nesta seção do circuito."}
+                              </p>
+                              <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-amber-400/60" />
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
@@ -471,7 +582,6 @@ export default function JogoEletronicaPage() {
                 </div>
 
                 <div className="flex items-center gap-3 w-full sm:w-auto">
-                  {/* Validate Button (RF18: disabled until minimum required components filled) */}
                   <button
                     type="button"
                     onClick={handleValidateCircuit}
@@ -483,73 +593,15 @@ export default function JogoEletronicaPage() {
                     }`}
                   >
                     <Play className="w-4 h-4 fill-current" />
-                    <span>Validar Circuito (RF18)</span>
+                    <span>Validar Circuito</span>
                   </button>
                 </div>
               </div>
             </div>
-
-            {/* Component Library / Shelf (RF15) */}
-            <div className="bg-[#262626] border border-[#5e5e5e] rounded-2xl p-4 sm:p-5 flex flex-col gap-3 shadow-lg">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-[#883cec]" />
-                  <h2 className="text-sm font-bold uppercase tracking-wider text-white">
-                    Biblioteca de Componentes Virtuais (RF15)
-                  </h2>
-                </div>
-                <span className="text-xs text-gray-400">
-                  Arraste para a bancada ou clique para selecionar
-                </span>
-              </div>
-
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3">
-                {availableComponentsList.map((comp) => {
-                  const isSelected = selectedLibraryComponent === comp.id;
-
-                  return (
-                    <div
-                      key={comp.id}
-                      draggable
-                      onDragStart={(e) => handleDragStart(e, comp.id)}
-                      onDragEnd={handleDragEnd}
-                      onClick={() => {
-                        playClick();
-                        setSelectedLibraryComponent(isSelected ? null : comp.id);
-                      }}
-                      className={`relative bg-[#1e1e1e] border rounded-xl p-3 flex flex-col items-center justify-between gap-2 h-32 cursor-grab active:cursor-grabbing transition-all select-none hover:-translate-y-0.5 ${
-                        isSelected
-                          ? "border-[#883cec] bg-[#883cec]/15 ring-2 ring-[#883cec] shadow-lg shadow-[#883cec]/25"
-                          : "border-[#444444] hover:border-[#666666] hover:bg-[#282828]"
-                      }`}
-                      title={`${comp.name} - ${comp.description}`}
-                    >
-                      <div className="relative w-full flex-1 flex items-center justify-center">
-                        <Image
-                          src={comp.image_url}
-                          alt={comp.name}
-                          fill
-                          className="object-contain pointer-events-none p-1"
-                        />
-                      </div>
-
-                      <div className="flex flex-col items-center text-center w-full">
-                        <span className="text-xs font-bold text-white truncate max-w-full">
-                          {comp.name}
-                        </span>
-                        <span className="text-[10px] text-gray-400">
-                          {comp.category}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
           </div>
 
-          {/* Sidebar: Mascot + Challenge Info (Col-span 1) */}
-          <div className="lg:col-span-1 flex flex-col gap-4">
+          {/* 3. Sidebar: Mascot + Theory/Info on the RIGHT side */}
+          <div className="w-full lg:w-72 xl:w-80 shrink-0 flex flex-col gap-4 order-3">
             {/* Mascot Advisor */}
             <div className="bg-[#262626] border border-[#5e5e5e] rounded-2xl p-4 flex flex-col items-center shadow-lg">
               <QuizMascot
@@ -570,10 +622,10 @@ export default function JogoEletronicaPage() {
               </p>
             </div>
 
-            {/* Pedagogical Hint Card */}
+            {/* Quick Tip Card */}
             <div className="bg-[#1f2620] border border-emerald-600/30 rounded-2xl p-4 flex flex-col gap-2 shadow-lg text-xs">
               <div className="flex items-center gap-1.5 text-emerald-400 font-bold">
-                <CheckCircle2 className="w-4 h-4" />
+                <Lightbulb className="w-4 h-4 text-amber-400" />
                 <span>Dica Rápida do Módulo</span>
               </div>
               <p className="text-gray-300 leading-relaxed">
