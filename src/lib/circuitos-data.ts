@@ -404,7 +404,7 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
   }
 ];
 
-const LOCAL_STORAGE_CIRCUITS_KEY = "labapp_circuitos_data";
+const LOCAL_STORAGE_CIRCUITS_KEY = "labapp_circuitos_data_v2";
 
 export function getStoredCircuits(): CircuitChallenge[] {
   if (typeof window === "undefined") {
