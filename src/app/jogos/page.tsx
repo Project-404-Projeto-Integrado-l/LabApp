@@ -46,12 +46,13 @@ export default function JogosPage() {
             <div className="flex flex-col gap-6 w-full">
               <div className="w-full border-t border-[#5e5e5e]" />
               <div>
-                <button
-                  type="button"
-                  className="bg-[#383838] text-gray-400 px-8 py-4 rounded-lg font-medium text-base flex items-center gap-2 cursor-not-allowed"
+                <Link
+                  href="/jogos/eletronica"
+                  className="bg-[#883cec] hover:bg-[#782bdc] text-white px-8 py-4 rounded-lg font-bold text-base inline-flex items-center gap-2 transition-colors cursor-pointer active:scale-[0.98]"
                 >
-                  <span>Em breve</span>
-                </button>
+                  <span>Jogar agora</span>
+                  <ArrowRight className="w-5 h-5" />
+                </Link>
               </div>
             </div>
           </div>
