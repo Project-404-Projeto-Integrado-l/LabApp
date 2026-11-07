@@ -1,18 +1,17 @@
 "use client";
 
-import React, { useState, useEffect, useMemo, useCallback } from "react";
+import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { 
   ArrowLeft, 
   RotateCcw, 
   Zap, 
   HelpCircle, 
   CheckCircle2, 
-  AlertCircle, 
   Sparkles, 
   Sliders, 
-  Maximize2, 
   X,
   Play,
   Layers,
@@ -25,16 +24,15 @@ import { CircuitoErrorModal, SlotValidationError } from "@/components/modals/cir
 import { useSoundEffects } from "@/providers/sound-provider";
 import { 
   CircuitChallenge, 
-  CircuitSlot, 
-  VirtualComponent, 
   AVAILABLE_COMPONENTS, 
   getStoredCircuits 
 } from "@/lib/circuitos-data";
 
 export default function JogoEletronicaPage() {
+  const router = useRouter();
   const { playClick, playSuccess, playError, playToggle } = useSoundEffects();
 
-  const [circuits, setCircuits] = useState<CircuitChallenge[]>([]);
+  const [circuits] = useState<CircuitChallenge[]>(() => getStoredCircuits());
   const [currentCircuitIndex, setCurrentCircuitIndex] = useState(0);
   const [placedComponents, setPlacedComponents] = useState<Record<string, string>>({});
   
@@ -54,31 +52,30 @@ export default function JogoEletronicaPage() {
 
   // Mascot state
   const [mascotPose, setMascotPose] = useState<MascotPose>("question");
-  const [mascotSpeech, setMascotSpeech] = useState<string>(
-    "Arraste as peças da bancada para os slots vazios no circuito ou clique para selecionar."
-  );
-
-  // Load circuits on mount
-  useEffect(() => {
-    const loaded = getStoredCircuits();
-    setCircuits(loaded);
-  }, []);
+  const [mascotSpeech, setMascotSpeech] = useState<string>(() => {
+    const initial = getStoredCircuits();
+    return initial[0]
+      ? `Desafio: ${initial[0].practicalObjective}`
+      : "Arraste as peças da bancada para os slots vazios no circuito ou clique para selecionar.";
+  });
 
   const currentCircuit = circuits[currentCircuitIndex] || null;
 
-  // Reset placed components when changing circuit
-  useEffect(() => {
+  // Switch circuit and reset workbench states
+  const switchCircuit = (index: number) => {
+    setCurrentCircuitIndex(index);
     setPlacedComponents({});
     setSelectedLibraryComponent(null);
     setIsCircuitEnergized(false);
     setIsSimulating(false);
     setMascotPose("question");
+    const target = circuits[index];
     setMascotSpeech(
-      currentCircuit
-        ? `Desafio: ${currentCircuit.practicalObjective}`
+      target
+        ? `Desafio: ${target.practicalObjective}`
         : "Selecione as peças para iniciar a montagem."
     );
-  }, [currentCircuitIndex, currentCircuit]);
+  };
 
   // Determine allowed components for the current challenge
   const availableComponentsList = useMemo(() => {
@@ -227,7 +224,7 @@ export default function JogoEletronicaPage() {
   const handleNextCircuit = () => {
     setIsSuccessModalOpen(false);
     if (currentCircuitIndex < circuits.length - 1) {
-      setCurrentCircuitIndex((prev) => prev + 1);
+      switchCircuit(currentCircuitIndex + 1);
     }
   };
 
@@ -292,7 +289,7 @@ export default function JogoEletronicaPage() {
                 key={c.id}
                 onClick={() => {
                   playClick();
-                  setCurrentCircuitIndex(idx);
+                  switchCircuit(idx);
                 }}
                 className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                   idx === currentCircuitIndex
@@ -601,7 +598,7 @@ export default function JogoEletronicaPage() {
         }}
         onBackToGames={() => {
           setIsSuccessModalOpen(false);
-          window.location.href = "/jogos";
+          router.push("/jogos");
         }}
       />
 
@@ -619,4 +616,3 @@ export default function JogoEletronicaPage() {
     </div>
   );
 }
-

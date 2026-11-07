@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import Image from "next/image";
-import { AlertCircle, RotateCcw, Lightbulb, XCircle, ArrowRight } from "lucide-react";
+import { AlertCircle, RotateCcw, Lightbulb, XCircle } from "lucide-react";
 import { useSoundEffects } from "@/providers/sound-provider";
 import { AVAILABLE_COMPONENTS } from "@/lib/circuitos-data";
 

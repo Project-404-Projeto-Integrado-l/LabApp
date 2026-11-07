@@ -19,7 +19,6 @@ export function MemorizacaoResultModal({
   isOpen,
   totalCards,
   correctAnswers,
-  incorrectAnswers,
   gameMode,
   onRestart,
   onBackToGames,

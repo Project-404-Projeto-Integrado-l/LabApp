@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { 
@@ -9,17 +9,13 @@ import {
   Trash2, 
   Save, 
   RotateCcw, 
-  Layers, 
   Move, 
   Sparkles, 
   Play, 
   CheckCircle2, 
   AlertCircle, 
   Info, 
-  Eye, 
   Settings2,
-  X,
-  HelpCircle,
   Cpu
 } from "lucide-react";
 import { Header } from "@/components/header";
@@ -42,12 +38,28 @@ const PRESET_CIRCUIT_IMAGES = [
   { label: "Circuito 05 - Motor DC com Arduino Uno", path: "/circuitos/circuito05.png" },
 ];
 
+let globalUniqueCounter = 0;
+function generateSlotId() {
+  globalUniqueCounter += 1;
+  return `slot-${globalUniqueCounter}-${Math.random().toString(36).substring(2, 8)}`;
+}
+function generateCircuitId() {
+  globalUniqueCounter += 1;
+  return `circuito-${globalUniqueCounter}-${Math.random().toString(36).substring(2, 8)}`;
+}
+
 export default function AdminCircuitosPage() {
   const { playClick, playSuccess, playError, playToggle } = useSoundEffects();
 
-  const [circuits, setCircuits] = useState<CircuitChallenge[]>([]);
-  const [selectedCircuitId, setSelectedCircuitId] = useState<string>("");
-  const [selectedSlotId, setSelectedSlotId] = useState<string | null>(null);
+  const [circuits, setCircuits] = useState<CircuitChallenge[]>(() => getStoredCircuits());
+  const [selectedCircuitId, setSelectedCircuitId] = useState<string>(() => {
+    const initial = getStoredCircuits();
+    return initial[0]?.id || "";
+  });
+  const [selectedSlotId, setSelectedSlotId] = useState<string | null>(() => {
+    const initial = getStoredCircuits();
+    return initial[0]?.slots[0]?.id || null;
+  });
 
   // Dragging slot on canvas
   const [isDraggingSlotOnCanvas, setIsDraggingSlotOnCanvas] = useState(false);
@@ -64,18 +76,6 @@ export default function AdminCircuitosPage() {
       setToastMessage(null);
     }, 4000);
   };
-
-  // Load circuits on mount
-  useEffect(() => {
-    const loaded = getStoredCircuits();
-    setCircuits(loaded);
-    if (loaded.length > 0) {
-      setSelectedCircuitId(loaded[0].id);
-      if (loaded[0].slots.length > 0) {
-        setSelectedSlotId(loaded[0].slots[0].id);
-      }
-    }
-  }, []);
 
   const currentCircuit = circuits.find((c) => c.id === selectedCircuitId) || null;
   const currentSlot = currentCircuit?.slots.find((s) => s.id === selectedSlotId) || null;
@@ -122,7 +122,7 @@ export default function AdminCircuitosPage() {
 
     // Create a new slot at this clicked position
     const newSlotNumber = currentCircuit.slots.length + 1;
-    const newSlotId = `slot-${Date.now()}`;
+    const newSlotId = generateSlotId();
     const newSlot: CircuitSlot = {
       id: newSlotId,
       name: `Slot ${newSlotNumber} - Novo Componente`,
@@ -163,7 +163,7 @@ export default function AdminCircuitosPage() {
     handleUpdateSlotField(slotId, "y", percentY);
   };
 
-  const handleSlotPointerUp = (e: React.PointerEvent) => {
+  const handleSlotPointerUp = () => {
     setIsDraggingSlotOnCanvas(false);
   };
 
@@ -182,7 +182,8 @@ export default function AdminCircuitosPage() {
   // Create new circuit challenge
   const handleCreateNewCircuit = () => {
     playClick();
-    const newId = `circuito-${Date.now()}`;
+    const newId = generateCircuitId();
+    const newSlotId = generateSlotId();
     const newCircuit: CircuitChallenge = {
       id: newId,
       title: `Novo Circuito ${circuits.length + 1}`,
@@ -199,7 +200,7 @@ export default function AdminCircuitosPage() {
       ],
       slots: [
         {
-          id: `slot-${Date.now()}-1`,
+          id: newSlotId,
           name: "Slot 1 - Componente Inicial",
           description: "Primeiro componente obrigatório do circuito.",
           hint: "Arraste o componente aqui",
@@ -749,4 +750,3 @@ export default function AdminCircuitosPage() {
     </div>
   );
 }
-

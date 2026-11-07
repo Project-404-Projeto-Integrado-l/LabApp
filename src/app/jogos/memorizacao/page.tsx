@@ -13,8 +13,7 @@ import {
   Eye, 
   Gamepad2, 
   Keyboard, 
-  Layers,
-  Sparkles
+  Layers
 } from "lucide-react";
 import { Header } from "@/components/header";
 import { Flashcard, FlashcardData } from "@/components/memorizacao/flashcard";
@@ -97,7 +96,7 @@ export default function MemorizacaoPage() {
   const router = useRouter();
   const { playSuccess, playError, playClick, playToggle } = useSoundEffects();
 
-  const [cards, setCards] = useState<FlashcardData[]>(MEMORIZATION_CARDS);
+  const [cards] = useState<FlashcardData[]>(MEMORIZATION_CARDS);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [gameMode, setGameMode] = useState<GameMode>("ludico");
   const [isFlipped, setIsFlipped] = useState(false);

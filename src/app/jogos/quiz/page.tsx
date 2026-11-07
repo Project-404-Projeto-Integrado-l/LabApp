@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { 
   ArrowLeft, 
   ArrowRight, 
-  RotateCcw, 
   HelpCircle, 
   CheckCircle2, 
   XCircle,
@@ -219,6 +218,17 @@ export default function QuizPlayPage() {
 
   const optionLabels = ["A", "B", "C", "D"];
   const progressPercent = totalQuestions > 0 ? Math.round(((currentIndex + 1) / totalQuestions) * 100) : 0;
+
+  if (loading) {
+    return (
+      <div className="relative min-h-screen bg-[#212121] text-white font-sans flex flex-col justify-between">
+        <Header />
+        <div className="flex-1 flex items-center justify-center">
+          <p className="text-gray-400">Carregando perguntas do quiz...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen bg-[#212121] text-white font-sans flex flex-col justify-between">
