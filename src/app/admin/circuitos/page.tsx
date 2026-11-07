@@ -10,7 +10,7 @@ import {
   Save, 
   RotateCcw, 
   Move, 
-  Sparkles, 
+  Lightbulb, 
   Play, 
   CheckCircle2, 
   AlertCircle, 
@@ -407,7 +407,7 @@ export default function AdminCircuitosPage() {
 
                   {/* Helper click guide banner */}
                   <div className="absolute top-3 left-3 bg-black/75 backdrop-blur-xs border border-white/10 px-3 py-1.5 rounded-lg text-[11px] text-gray-300 pointer-events-none flex items-center gap-1.5">
-                    <Sparkles className="w-3 h-3 text-[#883cec]" />
+                    <Lightbulb className="w-3.5 h-3.5 text-amber-400" />
                     <span>Clique na imagem para adicionar um slot onde desejar</span>
                   </div>
 
@@ -680,11 +680,11 @@ export default function AdminCircuitosPage() {
                     />
                   </div>
 
-                  {/* Practical Objective (RF14) */}
+                  {/* Practical Objective */}
                   <div className="flex flex-col gap-1.5">
                     <label className="text-xs font-semibold text-gray-300 flex items-center justify-between">
-                      <span>Objetivo Prático do Desafio (RF14)</span>
-                      <span className="text-[10px] text-amber-400">Requisito RF14</span>
+                      <span>Objetivo Prático do Desafio</span>
+                      <span className="text-[10px] text-purple-300">Meta Pedagógica</span>
                     </label>
                     <textarea
                       rows={2}

@@ -2,7 +2,7 @@
 
 import React, { useEffect } from "react";
 import Image from "next/image";
-import { CheckCircle2, RotateCcw, ArrowRight, ArrowLeft, Trophy, Star, Sparkles } from "lucide-react";
+import { CheckCircle2, RotateCcw, ArrowRight, ArrowLeft, Trophy, Star, Zap } from "lucide-react";
 import { useSoundEffects } from "@/providers/sound-provider";
 
 interface CircuitoResultModalProps {
@@ -67,7 +67,7 @@ export function CircuitoResultModal({
           </div>
 
           <div className="flex items-center gap-2 text-emerald-400">
-            <Sparkles className="w-5 h-5 fill-emerald-400" />
+            <Zap className="w-5 h-5 fill-emerald-400" />
             <span className="text-xs sm:text-sm font-bold tracking-wider uppercase">
               Circuito Energizado com Sucesso!
             </span>
