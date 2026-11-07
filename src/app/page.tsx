@@ -43,12 +43,12 @@ export default function Home() {
             <div className="flex flex-col gap-6 w-full">
               <div className="w-full border-t border-[#5e5e5e]" />
               <div>
-                <button className="bg-white text-black hover:bg-gray-100 px-8 py-4 rounded-lg font-medium text-base flex items-center gap-2 transition-colors cursor-pointer">
-                  <span className="text-black font-medium">Jogar agora</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="#000000" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+                <Link href="/jogos/eletronica" className="bg-[#883cec] hover:bg-[#782bdc] text-white px-8 py-4 rounded-lg font-medium text-base inline-flex items-center gap-2 transition-colors cursor-pointer">
+                  <span className="text-white font-medium">Jogar agora</span>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
                     <polygon points="6 3 20 12 6 21 6 3" fill="none" />
                   </svg>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
