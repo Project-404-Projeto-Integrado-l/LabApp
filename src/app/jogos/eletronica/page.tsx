@@ -558,7 +558,7 @@ export default function JogoEletronicaPage() {
                                 )}
                               </div>
                               <p className="text-[11px] text-gray-200 leading-snug">
-                                {slot.hint || slot.description || "Posicione o componente adequado nesta seção do circuito."}
+                                {slot.description || slot.hint || "Posicione o componente adequado nesta seção do circuito."}
                               </p>
                               <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-amber-400/60" />
                             </div>
