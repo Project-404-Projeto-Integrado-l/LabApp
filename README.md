@@ -88,20 +88,20 @@ A interface e as mecânicas foram desenhadas seguindo critérios rigorosos de Us
 | **RF11** | **Interação com Flashcards**: O aluno deve ser capaz de acionar a ação "Virar Flashcard" para visualizar os detalhes e a imagem do componente. | Alta | RF09 | `FEITO` |
 | **RF12** | **Associação de Hardware**: O aluno deve associar o componente apresentado em tela à sua opção de identificação correta. | Alta | RF09, RF11 | `FEITO` |
 | **RF13** | **Prevenção de Submissão Nula**: O aluno deve ser impedido pelo sistema de confirmar respostas em branco, recebendo um aviso contextual. | Média | RF12 | `FEITO` |
-| **RF14** | **Apresentação de Desafio de Circuito**: O aluno deve visualizar o objetivo prático do circuito elétrico a ser montado na fase atual (ex.: "Ligar um LED com Arduino"). | Alta | Nenhum | `NÃO INICIADO` |
-| **RF15** | **Biblioteca de Componentes**: O aluno deve ter à disposição a lista de componentes virtuais disponíveis (Arduino Uno, LED, Resistor, Bateria 9V, Jumper). | Alta | Nenhum | `NÃO INICIADO` |
-| **RF16** | **Montagem na Bancada**: O aluno deve poder alocar peças selecionadas da biblioteca nos slots disponíveis na bancada virtual de montagem. | Alta | RF15 | `NÃO INICIADO` |
-| **RF17** | **Status Visual dos Slots**: O aluno deve identificar visualmente o estado de cada posição da bancada (ex.: "Slot X Vazio" ou o ícone do componente alocado). | Média | RF16 | `NÃO INICIADO` |
-| **RF18** | **Bloqueio de Validação Incompleta**: O aluno deve ter o botão "Validar Circuito" habilitado apenas após preencher a quantidade mínima necessária de componentes. | Média | RF16, RF17 | `NÃO INICIADO` |
-| **RF19** | **Simulação e Checagem Eletrônica**: O aluno deve ter a coerência lógica e elétrica das conexões montadas na bancada avaliada pelo sistema. | Alta | RF18 | `NÃO INICIADO` |
-| **RF20** | **Recompensa por Conclusão de Circuito**: O aluno deve receber retorno de sucesso com estrelas de desempenho e concessão de +50XP ao concluir o circuito corretamente. | Alta | RF19, RF22 | `NÃO INICIADO` |
-| **RF21** | **Dicas de Recuperação Pedagógica**: O aluno deve receber dicas pedagógicas e orientações construtivas no modal de erro caso o circuito contenha falhas. | Alta | RF19 | `NÃO INICIADO` |
+| **RF14** | **Apresentação de Desafio de Circuito**: O aluno deve visualizar o objetivo prático do circuito elétrico a ser montado na fase atual (ex.: "Ligar um LED com Arduino"). | Alta | Nenhum | `FEITO` |
+| **RF15** | **Biblioteca de Componentes**: O aluno deve ter à disposição a lista de componentes virtuais disponíveis (Arduino Uno, LED, Resistor, Bateria 9V, Jumper). | Alta | Nenhum | `FEITO` |
+| **RF16** | **Montagem na Bancada**: O aluno deve poder alocar peças selecionadas da biblioteca nos slots disponíveis na bancada virtual de montagem. | Alta | RF15 | `FEITO` |
+| **RF17** | **Status Visual dos Slots**: O aluno deve identificar visualmente o estado de cada posição da bancada (ex.: "Slot X Vazio" ou o ícone do componente alocado). | Média | RF16 | `FEITO` |
+| **RF18** | **Bloqueio de Validação Incompleta**: O aluno deve ter o botão "Validar Circuito" habilitado apenas após preencher a quantidade mínima necessária de componentes. | Média | RF16, RF17 | `FEITO` |
+| **RF19** | **Simulação e Checagem Eletrônica**: O aluno deve ter a coerência lógica e elétrica das conexões montadas na bancada avaliada pelo sistema. | Alta | RF18 | `FEITO` |
+| **RF20** | **Recompensa por Conclusão de Circuito**: O aluno deve receber retorno de sucesso com estrelas de desempenho e concessão de +50XP ao concluir o circuito corretamente. | Alta | RF19, RF22 | `FEITO` |
+| **RF21** | **Dicas de Recuperação Pedagógica**: O aluno deve receber dicas pedagógicas e orientações construtivas no modal de erro caso o circuito contenha falhas. | Alta | RF19 | `FEITO` |
 | **RF22** | **Persistência de Dados**: O aluno deve ter o saldo total de XP conquistado acumulado e persistido no seu perfil ao término de cada atividade. | Alta | RF01 | `EM DESENVOLVIMENTO` |
 | **RF23** | **Visualização de Ranking**: O aluno ou professor deve conseguir visualizar a classificação geral (ranking) e o posicionamento dos estudantes. | Média | RF22 | `FEITO` |
 | **RF24** | **Relatório de Acompanhamento**: O professor deve ter acesso a um relatório com métricas de progresso, tempo investido e erros cometidos pelos alunos nas atividades. | Média | RF08, RF20, RF22 | `NÃO INICIADO` |
 | **RF25** | **Autenticação Simplificada**: O aluno deve poder realizar login utilizando um identificador único simples (ex.: apelido/matrícula + PIN de 4 dígitos ou seleção de avatar). | Alta | RF01 | `NÃO INICIADO` |
 | **RF26** | **Gestão de Turmas**: O professor deve conseguir criar turmas, gerar código de vinculação e associar alunos à sua respectiva sala. | Alta | RF01 | `NÃO INICIADO` |
-| **RF27** | **Gerenciamento da Bancada Didática**: O professor/administrador deve poder cadastrar novos componentes, imagens, descrições e metas de circuitos práticos. | Média | Nenhum | `NÃO INICIADO` |
+| **RF27** | **Gerenciamento da Bancada Didática**: O professor/administrador deve poder cadastrar novos componentes, imagens, descrições e metas de circuitos práticos. | Média | Nenhum | `FEITO` |
 | **RF28** | **Filtragem por Dificuldade**: O aluno ou professor deve conseguir selecionar e filtrar desafios e quizzes por nível pedagógico (Iniciante / Intermediário). | Alta | Nenhum | `NÃO INICIADO` |
 | **RF29** | **Histórico e Conquistas**: O aluno deve conseguir visualizar no seu perfil o histórico de tentativas, circuitos finalizados e estrelas obtidas. | Média | RF22, RF25 | `NÃO INICIADO` |
 

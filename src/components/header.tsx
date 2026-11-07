@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BadgeHelp, Crown, Home as HomeIcon, Menu, Settings, X, Dices } from "lucide-react";
+import { BadgeHelp, Crown, Home as HomeIcon, Menu, Settings, X, Dices, Cpu } from "lucide-react";
 import { RankingModal } from "@/components/modals/ranking-modal";
 import { ConfigModal } from "@/components/modals/config-modal";
 
@@ -34,64 +34,75 @@ export function Header() {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-8">
+        <nav className="hidden lg:flex items-center gap-7">
           <Link
             href="/"
-            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity ${
+            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-base font-normal transition-opacity ${
               isHome
                 ? "border-b-2 border-[#883cec] font-semibold"
                 : "opacity-85 hover:opacity-100"
             }`}
           >
-            <HomeIcon className="w-6 h-6 text-white" />
+            <HomeIcon className="w-5 h-5 text-white" />
             <span>Início</span>
           </Link>
           <Link
             href="/jogos"
-            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity ${
+            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-base font-normal transition-opacity ${
               isJogos
                 ? "border-b-2 border-[#883cec] font-semibold"
                 : "opacity-85 hover:opacity-100"
             }`}
           >
-            <Dices className="w-6 h-6 text-white" />
+            <Dices className="w-5 h-5 text-white" />
             <span>Jogos</span>
           </Link>
           <button
             onClick={() => setIsConfigOpen(true)}
-            className="flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity opacity-85 hover:opacity-100 cursor-pointer"
+            className="flex items-center gap-2 py-2 text-[#f6f6f9] text-base font-normal transition-opacity opacity-85 hover:opacity-100 cursor-pointer"
           >
-            <Settings className="w-6 h-6 text-white" />
+            <Settings className="w-5 h-5 text-white" />
             <span>Configurações</span>
           </button>
           <button
             onClick={() => setIsRankingOpen(true)}
-            className="flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity opacity-85 hover:opacity-100 cursor-pointer"
+            className="flex items-center gap-2 py-2 text-[#f6f6f9] text-base font-normal transition-opacity opacity-85 hover:opacity-100 cursor-pointer"
           >
-            <Crown className="w-6 h-6 text-white" />
+            <Crown className="w-5 h-5 text-white" />
             <span>Ranking</span>
           </button>
           <Link
             href="/ajuda"
-            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity ${
+            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-base font-normal transition-opacity ${
               isAjuda
                 ? "border-b-2 border-[#883cec] font-semibold"
                 : "opacity-85 hover:opacity-100"
             }`}
           >
-            <BadgeHelp className="w-6 h-6 text-white" />
-            <span>Ajuda / Como Jogar</span>
+            <BadgeHelp className="w-5 h-5 text-white" />
+            <span>Ajuda</span>
           </Link>
           <Link
-            href="/admin/quiz"
-            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-lg font-normal transition-opacity ${
-              pathname === "/admin/quiz"
-                ? "border-b-2 border-[#883cec] font-semibold"
+            href="/admin/circuitos"
+            className={`flex items-center gap-1.5 py-2 text-[#f6f6f9] text-base font-normal transition-opacity ${
+              pathname === "/admin/circuitos"
+                ? "border-b-2 border-[#883cec] font-semibold text-[#883cec]"
                 : "opacity-85 hover:opacity-100"
             }`}
           >
-            <Settings className="w-6 h-6 text-[#883cec]" />
-            <span>Gerenciar Quiz</span>
+            <Cpu className="w-5 h-5 text-[#883cec]" />
+            <span>Circuitos</span>
+          </Link>
+          <Link
+            href="/admin/quiz"
+            className={`flex items-center gap-1.5 py-2 text-[#f6f6f9] text-base font-normal transition-opacity ${
+              pathname === "/admin/quiz"
+                ? "border-b-2 border-[#883cec] font-semibold text-[#883cec]"
+                : "opacity-85 hover:opacity-100"
+            }`}
+          >
+            <Settings className="w-5 h-5 text-[#883cec]" />
+            <span>Quiz</span>
           </Link>
         </nav>
 
@@ -167,6 +178,19 @@ export function Header() {
           >
             <BadgeHelp className="w-6 h-6 text-white" />
             <span>Ajuda / Como Jogar</span>
+          </Link>
+
+          <Link
+            href="/admin/circuitos"
+            onClick={() => setIsOpen(false)}
+            className={`flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors ${
+              pathname === "/admin/circuitos"
+                ? "bg-[#883cec]/20 border-l-4 border-[#883cec] font-semibold"
+                : "hover:bg-[#333333]"
+            }`}
+          >
+            <Cpu className="w-6 h-6 text-[#883cec]" />
+            <span>Gerenciar Circuitos</span>
           </Link>
 
           <Link
