@@ -5,9 +5,9 @@ export interface CircuitSlot {
   width?: number; // Porcentagem horizontal do slot (ex: 12)
   height?: number; // Porcentagem vertical do slot (ex: 12)
   targetComponentId: string; // ID do componente esperado (ex: 'resistor')
-  name: string; // Ex: 'Slot 1 - Resistor Limitador'
-  description: string; // Descrição detalhada / Dica do slot
-  hint?: string; // Dica curta exibida no placeholder/tooltip
+  name: string; // Ex: 'Slot 1'
+  description: string; // Descrição conceitual do componente / função no circuito
+  hint?: string; // Descrição ou dica conceitual
 }
 
 export type CircuitDifficulty = "iniciante" | "intermediario" | "avancado";
@@ -15,15 +15,15 @@ export type CircuitDifficulty = "iniciante" | "intermediario" | "avancado";
 export interface CircuitChallenge {
   id: string;
   title: string;
-  practicalObjective: string; // RF14: Apresentação do objetivo prático do desafio
+  practicalObjective: string;
   description: string;
   difficulty: CircuitDifficulty;
   image_url: string;
   slots: CircuitSlot[];
-  allowedComponents: string[]; // Lista de IDs de componentes disponibilizados na bancada
+  allowedComponents: string[];
   explanation: string;
-  pedagogicalTips: string[]; // RF21: Dicas pedagógicas de recuperação construtiva
-  xpReward: number; // RF20: Padrão 50 XP
+  pedagogicalTips: string[];
+  xpReward: number;
   created_at?: string;
 }
 
@@ -121,9 +121,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
     slots: [
       {
         id: "slot-01-bat",
-        name: "Slot 1 - Fonte de Alimentação",
-        description: "Fonte de energia de corrente contínua responsável por alimentar todo o circuito.",
-        hint: "Arraste a Bateria de 9V aqui",
+        name: "Slot 1 - Alimentação",
+        description: "Fonte de energia portátil de corrente contínua (DC) com 9 Volts que fornece a diferença de potencial para o circuito.",
+        hint: "Fonte de energia portátil de corrente contínua (DC) com 9 Volts que fornece a diferença de potencial para o circuito.",
         targetComponentId: "bateria-9v",
         x: 88,
         y: 65,
@@ -133,8 +133,8 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       {
         id: "slot-01-led",
         name: "Slot 2 - Emissor de Luz",
-        description: "Componente semicondutor que emitirá luz quando a corrente passar.",
-        hint: "Arraste o LED Verde aqui",
+        description: "Componente semicondutor de sinalização óptica verde que emite fótons quando percorrido por corrente no sentido direto.",
+        hint: "Componente semicondutor de sinalização óptica verde que emite fótons quando percorrido por corrente no sentido direto.",
         targetComponentId: "led-verde",
         x: 15,
         y: 35,
@@ -143,9 +143,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-01-res",
-        name: "Slot 3 - Resistor de Proteção",
-        description: "Componente de proteção para limitar a corrente e evitar que o LED queime.",
-        hint: "Arraste o Resistor aqui",
+        name: "Slot 3 - Limitador de Corrente",
+        description: "Componente passivo ôhmico responsável por limitar a intensidade de corrente elétrica e evitar sobrecarga e queima.",
+        hint: "Componente passivo ôhmico responsável por limitar a intensidade de corrente elétrica e evitar sobrecarga e queima.",
         targetComponentId: "resistor",
         x: 20.5,
         y: 42,
@@ -172,9 +172,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
     slots: [
       {
         id: "slot-02-ard",
-        name: "Slot 1 - Placa Microcontroladora",
-        description: "O cérebro programável do projeto que processará as entradas e saídas.",
-        hint: "Arraste a Placa Arduino Uno aqui",
+        name: "Slot 1 - Unidade de Processamento",
+        description: "Placa microcontroladora programável dotada de pinos de entrada e saída digitais que executa o código de controle.",
+        hint: "Placa microcontroladora programável dotada de pinos de entrada e saída digitais que executa o código de controle.",
         targetComponentId: "arduino",
         x: 28,
         y: 55,
@@ -183,9 +183,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-02-led",
-        name: "Slot 2 - LED Indicador",
-        description: "Diodo semicondutor vermelho que acenderá ao comando do Arduino.",
-        hint: "Arraste o LED Vermelho aqui",
+        name: "Slot 2 - Indicador Óptico",
+        description: "Diodo semicondutor vermelho que acende para indicar visualmente a ativação do sinal digital comandado.",
+        hint: "Diodo semicondutor vermelho que acende para indicar visualmente a ativação do sinal digital comandado.",
         targetComponentId: "led-vermelho",
         x: 54,
         y: 54,
@@ -194,9 +194,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-02-btn",
-        name: "Slot 3 - Chave Táctil (Botão)",
-        description: "Botão de pressão para envio de sinal elétrico de ativação.",
-        hint: "Arraste o Botão Push-button aqui",
+        name: "Slot 3 - Chave Táctil",
+        description: "Dispositivo de acionamento mecânico normalmente aberto que fecha temporariamente o circuito elétrico sob pressão manual.",
+        hint: "Dispositivo de acionamento mecânico normalmente aberto que fecha temporariamente o circuito elétrico sob pressão manual.",
         targetComponentId: "botao",
         x: 59.5,
         y: 70,
@@ -205,9 +205,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-02-res",
-        name: "Slot 4 - Resistor de Estabilização",
-        description: "Resistor de pull-down para garantir nível lógico estável no pino digital.",
-        hint: "Arraste o Resistor aqui",
+        name: "Slot 4 - Resistor de Pull-Down",
+        description: "Componente passivo de referência utilizado para drenar ruídos e garantir nível lógico estável (0V) quando a chave está aberta.",
+        hint: "Componente passivo de referência utilizado para drenar ruídos e garantir nível lógico estável (0V) quando a chave está aberta.",
         targetComponentId: "resistor",
         x: 61,
         y: 77.5,
@@ -234,9 +234,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
     slots: [
       {
         id: "slot-03-ard",
-        name: "Slot 1 - Arduino Uno",
-        description: "Placa microcontroladora com portas digitais independentes.",
-        hint: "Arraste o Arduino Uno aqui",
+        name: "Slot 1 - Microcontrolador",
+        description: "Placa microcontroladora central com portas digitais programáveis independentes para orquestrar a sequência de sinais.",
+        hint: "Placa microcontroladora central com portas digitais programáveis independentes para orquestrar a sequência de sinais.",
         targetComponentId: "arduino",
         x: 25,
         y: 65,
@@ -245,9 +245,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-03-ledg",
-        name: "Slot 2 - LED Verde",
-        description: "Sinalizador visual da primeira fase do semáforo.",
-        hint: "Arraste o LED Verde aqui",
+        name: "Slot 2 - Sinalizador Verde",
+        description: "Emissor de luz visível verde utilizado para indicar condição permitida ou estado inicial no semáforo.",
+        hint: "Emissor de luz visível verde utilizado para indicar condição permitida ou estado inicial no semáforo.",
         targetComponentId: "led-verde",
         x: 54.5,
         y: 46.5,
@@ -256,9 +256,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-03-ledr",
-        name: "Slot 3 - LED Vermelho",
-        description: "Sinalizador visual da segunda fase do semáforo.",
-        hint: "Arraste o LED Vermelho aqui",
+        name: "Slot 3 - Sinalizador Vermelho",
+        description: "Emissor de luz visível vermelho utilizado para indicar condição de parada ou alerta na sinalização.",
+        hint: "Emissor de luz visível vermelho utilizado para indicar condição de parada ou alerta na sinalização.",
         targetComponentId: "led-vermelho",
         x: 60.5,
         y: 46.5,
@@ -267,9 +267,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-03-res1",
-        name: "Slot 4 - Resistor de Proteção 1",
-        description: "Resistor limitador de corrente para o LED verde.",
-        hint: "Arraste o Resistor aqui",
+        name: "Slot 4 - Resistor de Carga 1",
+        description: "Componente passivo para limitar a corrente no ramo do primeiro emissor luminoso.",
+        hint: "Componente passivo para limitar a corrente no ramo do primeiro emissor luminoso.",
         targetComponentId: "resistor",
         x: 55,
         y: 61.5,
@@ -278,9 +278,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-03-res2",
-        name: "Slot 5 - Resistor de Proteção 2",
-        description: "Resistor limitador de corrente para o LED vermelho.",
-        hint: "Arraste o Resistor aqui",
+        name: "Slot 5 - Resistor de Carga 2",
+        description: "Componente passivo para limitar a corrente no ramo do segundo emissor luminoso.",
+        hint: "Componente passivo para limitar a corrente no ramo do segundo emissor luminoso.",
         targetComponentId: "resistor",
         x: 61,
         y: 61.5,
@@ -307,9 +307,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
     slots: [
       {
         id: "slot-04-ard",
-        name: "Slot 1 - Arduino Uno",
-        description: "Placa microcontroladora que processa a leitura analógica.",
-        hint: "Arraste o Arduino Uno aqui",
+        name: "Slot 1 - Cérebro Digital",
+        description: "Placa microcontroladora com conversor analógico-digital (ADC) para amostragem de dados de sensores.",
+        hint: "Placa microcontroladora com conversor analógico-digital (ADC) para amostragem de dados de sensores.",
         targetComponentId: "arduino",
         x: 42,
         y: 54,
@@ -318,9 +318,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-04-ldr",
-        name: "Slot 2 - Sensor LDR (Fotoresistor)",
-        description: "Sensor sensível à radiação luminosa para medição ambiental.",
-        hint: "Arraste o Sensor LDR aqui",
+        name: "Slot 2 - Sensor Fotossensível",
+        description: "Componente cuja resistência interna decresce à medida que a intensidade da luz ambiente incidente aumenta.",
+        hint: "Componente cuja resistência interna decresce à medida que a intensidade da luz ambiente incidente aumenta.",
         targetComponentId: "sensor-ldr",
         x: 82.5,
         y: 33.5,
@@ -329,9 +329,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-04-led",
-        name: "Slot 3 - LED de Alerta",
-        description: "Indicador luminoso que acende em condições de baixa luminosidade.",
-        hint: "Arraste o LED Vermelho aqui",
+        name: "Slot 3 - Atuador de Alerta",
+        description: "Semicondutor óptico vermelho acionado quando o valor lido pelo transdutor luminoso atingir o limiar programado.",
+        hint: "Semicondutor óptico vermelho acionado quando o valor lido pelo transdutor luminoso atingir o limiar programado.",
         targetComponentId: "led-vermelho",
         x: 67.5,
         y: 33.5,
@@ -340,9 +340,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-04-res1",
-        name: "Slot 4 - Resistor do LED (220Ω)",
-        description: "Resistor para proteção do LED vermelho.",
-        hint: "Arraste o Resistor aqui",
+        name: "Slot 4 - Resistor de Proteção",
+        description: "Elemento de resistência ôhmica em série destinado a manter a corrente do atuador luminoso dentro da faixa segura.",
+        hint: "Elemento de resistência ôhmica em série destinado a manter a corrente do atuador luminoso dentro da faixa segura.",
         targetComponentId: "resistor",
         x: 67,
         y: 45,
@@ -351,9 +351,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-04-res2",
-        name: "Slot 5 - Resistor Divisor de Tensão (10kΩ)",
-        description: "Resistor que compõe o circuito divisor de tensão junto ao LDR.",
-        hint: "Arraste o Resistor aqui",
+        name: "Slot 5 - Resistor de Divisão",
+        description: "Componente resistor de valor fixo (10kΩ) que forma com o sensor um divisor de potencial elétrico para a leitura analógica.",
+        hint: "Componente resistor de valor fixo (10kΩ) que forma com o sensor um divisor de potencial elétrico para a leitura analógica.",
         targetComponentId: "resistor",
         x: 82.5,
         y: 45,
@@ -380,9 +380,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
     slots: [
       {
         id: "slot-05-ard",
-        name: "Slot 1 - Arduino Uno",
-        description: "Placa microcontroladora geradora dos sinais de acionamento.",
-        hint: "Arraste o Arduino Uno aqui",
+        name: "Slot 1 - Módulo Controlador",
+        description: "Placa microcontroladora que gera pulsos modulados em largura (PWM) para regular a potência entregue à carga mecânica.",
+        hint: "Placa microcontroladora que gera pulsos modulados em largura (PWM) para regular a potência entregue à carga mecânica.",
         targetComponentId: "arduino",
         x: 65,
         y: 68,
@@ -391,9 +391,9 @@ export const DEFAULT_CIRCUITS: CircuitChallenge[] = [
       },
       {
         id: "slot-05-mot",
-        name: "Slot 2 - Motor DC com Caixa de Redução",
-        description: "Atuador eletromecânico responsável pelo movimento mecânico do sistema.",
-        hint: "Arraste o Motor DC aqui",
+        name: "Slot 2 - Atuador Eletromecânico",
+        description: "Dispositivo que converte energia elétrica em força cinética rotacional através de engrenagens redutoras de velocidade.",
+        hint: "Dispositivo que converte energia elétrica em força cinética rotacional através de engrenagens redutoras de velocidade.",
         targetComponentId: "motor-dc",
         x: 59,
         y: 21,
@@ -438,4 +438,3 @@ export function resetStoredCircuits(): CircuitChallenge[] {
   }
   return DEFAULT_CIRCUITS;
 }
-
