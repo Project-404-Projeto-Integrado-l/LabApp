@@ -3,17 +3,17 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { 
-  ArrowLeft, 
-  ArrowRight, 
-  RotateCw, 
-  CheckCircle2, 
-  XCircle, 
-  AlertTriangle, 
-  Eye, 
-  Gamepad2, 
-  Keyboard, 
-  Layers
+import {
+  ArrowLeft,
+  ArrowRight,
+  RotateCw,
+  CheckCircle2,
+  XCircle,
+  AlertTriangle,
+  Eye,
+  Gamepad2,
+  Keyboard,
+  Layers,
 } from "lucide-react";
 import { Header } from "@/components/header";
 import { Flashcard, FlashcardData } from "@/components/memorizacao/flashcard";
@@ -87,7 +87,7 @@ const MEMORIZATION_CARDS: FlashcardData[] = [
     options: ["Pilha AA", "Bateria 9V", "Célula de Lítio", "Power Bank USB"],
     correctOptionIndex: 1,
     synonyms: ["bateria", "bateria 9v", "bateria de 9v", "bateria 9 volts", "fonte 9v", "pilha 9v"],
-  }
+  },
 ];
 
 type GameMode = "ludico" | "avancado";
@@ -151,7 +151,6 @@ export default function MemorizacaoPage() {
     setIsFlipped((prev) => !prev);
   };
 
-  // Helper to normalize strings for advanced mode answer check
   const normalize = (text: string) => {
     return text
       .trim()
@@ -165,7 +164,6 @@ export default function MemorizacaoPage() {
     setValidationWarning(null);
 
     if (gameMode === "ludico") {
-      // Estado de quando tentar confirmar resposta sem selecionar uma alternativa (node-id=92-1755)
       if (selectedOption === null) {
         setValidationWarning("Selecione uma alternativa antes de confirmar a resposta!");
         playError();
@@ -188,7 +186,6 @@ export default function MemorizacaoPage() {
         playError();
       }
     } else {
-      // Modo Avançado (node-id=84-2118)
       if (!typedAnswer.trim()) {
         setValidationWarning("Digite o nome do componente antes de confirmar!");
         playError();
@@ -255,38 +252,29 @@ export default function MemorizacaoPage() {
   const optionLabels = ["A", "B", "C", "D"];
 
   return (
-    <div className="relative min-h-screen bg-[#212121] text-white font-sans flex flex-col justify-between">
-      
-      <div 
-        className="absolute inset-0 opacity-15 pointer-events-none"
-        style={{
-          backgroundImage: "radial-gradient(#cccccc 1.5px, transparent 1.5px)",
-          backgroundSize: "24px 24px"
-        }}
-      />
+    <div className="relative min-h-screen bg-lab-canvas text-lab-text font-sans flex flex-col justify-between">
+      <div className="absolute inset-0 opacity-55 dark:opacity-35 pointer-events-none lab-dot-grid" />
 
       <Header />
 
       <main className="relative z-10 flex-1 max-w-[1216px] w-full mx-auto px-4 sm:px-6 lg:px-0 py-6 sm:py-8 flex flex-col gap-6">
-        
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-[#3a3a3a]">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4 border-b border-lab-border">
           <Link
             href="/jogos"
-            className="flex items-center gap-2 text-sm text-gray-300 hover:text-white transition-colors cursor-pointer group"
+            className="flex items-center gap-2 text-sm font-bold text-lab-muted hover:text-lab-text transition-colors cursor-pointer group"
           >
             <ArrowLeft className="w-4 h-4 transition-transform group-hover:-translate-x-1" />
             <span>Voltar para Jogos</span>
           </Link>
 
-          
-          <div className="flex items-center gap-2 bg-[#1a1a1a] p-1 rounded-xl border border-[#444444]">
+          <div className="flex items-center gap-1.5 bg-lab-tint p-1.5 rounded-2xl border border-lab-border">
             <button
               type="button"
               onClick={() => handleModeChange("ludico")}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors cursor-pointer ${
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-colors cursor-pointer ${
                 gameMode === "ludico"
-                  ? "bg-[#883cec] text-white"
-                  : "text-gray-400 hover:text-white hover:bg-[#282828]"
+                  ? "bg-lab-primary-strong text-white dark:bg-lab-primary dark:text-[#121926]"
+                  : "text-lab-muted hover:text-lab-text hover:bg-lab-surface"
               }`}
             >
               <Gamepad2 className="w-4 h-4" />
@@ -296,10 +284,10 @@ export default function MemorizacaoPage() {
             <button
               type="button"
               onClick={() => handleModeChange("avancado")}
-              className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-colors cursor-pointer ${
+              className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition-colors cursor-pointer ${
                 gameMode === "avancado"
-                  ? "bg-[#883cec] text-white"
-                  : "text-gray-400 hover:text-white hover:bg-[#282828]"
+                  ? "bg-lab-primary-strong text-white dark:bg-lab-primary dark:text-[#121926]"
+                  : "text-lab-muted hover:text-lab-text hover:bg-lab-surface"
               }`}
             >
               <Keyboard className="w-4 h-4" />
@@ -308,38 +296,34 @@ export default function MemorizacaoPage() {
           </div>
         </div>
 
-        
         <div className="flex flex-col gap-2 w-full">
           <div className="flex items-center justify-between text-xs sm:text-sm">
-            <span className="font-bold text-white tracking-wide">
+            <span className="font-extrabold text-lab-text tracking-wide">
               Flashcard {String(currentIndex + 1).padStart(2, "0")} / {String(totalCards).padStart(2, "0")}
             </span>
-            <span className="text-gray-400">
+            <span className="text-lab-muted font-semibold">
               Progresso do Módulo: {progressPercent}%
             </span>
           </div>
 
-          <div className="w-full h-2 bg-[#2a2a2a] rounded-full overflow-hidden border border-[#444444]">
+          <div className="w-full h-2.5 bg-lab-tint rounded-full overflow-hidden border border-lab-border">
             <div
-              className="h-full bg-gradient-to-r from-[#883cec] to-emerald-400 rounded-full transition-all duration-500 ease-out"
+              className="h-full bg-gradient-to-r from-lab-primary to-lab-secondary rounded-full transition-all duration-500 ease-out"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
         </div>
 
-        
         {validationWarning && (
-          <div className="p-4 rounded-xl bg-amber-950/40 border border-amber-500/70 text-amber-200 flex items-center gap-3 animate-fade-in">
-            <AlertTriangle className="w-5 h-5 text-amber-400" />
-            <span className="text-sm font-medium">
+          <div className="p-4 rounded-2xl bg-lab-amber-bg border border-lab-amber-border text-lab-amber-text flex items-center gap-3 animate-fade-in">
+            <AlertTriangle className="w-5 h-5 shrink-0" />
+            <span className="text-sm font-bold">
               {validationWarning}
             </span>
           </div>
         )}
 
-        
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start my-auto">
-          
           <div className="lg:col-span-5 flex flex-col items-center justify-center w-full">
             <Flashcard
               card={currentCard}
@@ -347,47 +331,42 @@ export default function MemorizacaoPage() {
               onFlip={handleFlipCard}
             />
 
-            
             <button
               type="button"
               onClick={handleFlipCard}
-              className="mt-3 text-xs text-gray-300 hover:text-white flex items-center gap-1.5 px-4 py-2 rounded-lg bg-[#262626] border border-[#444444] hover:bg-[#333333] transition-colors cursor-pointer"
+              className="mt-3 text-xs font-bold text-lab-muted hover:text-lab-text flex items-center gap-1.5 px-4 py-2 rounded-xl bg-lab-surface border border-lab-border hover:bg-lab-tint transition-colors cursor-pointer"
             >
-              <RotateCw className="w-3.5 h-3.5 text-[#883cec]" />
+              <RotateCw className="w-3.5 h-3.5 text-lab-primary-strong" />
               <span>{isFlipped ? "Voltar para imagem frontal" : "Virar card para consultar detalhes"}</span>
             </button>
           </div>
 
-          
           <div className="lg:col-span-4 flex flex-col gap-5 w-full">
-            
             {gameMode === "ludico" && (
               <div className="flex flex-col gap-3">
-                <span className="text-xs font-semibold uppercase tracking-wider text-gray-400">
+                <span className="text-xs font-extrabold uppercase tracking-wider text-lab-muted">
                   Selecione a resposta correta:
                 </span>
 
                 {currentCard.options.map((opt, idx) => {
-                  let buttonStyle = "bg-[#262626] border-[#444444] text-white hover:border-[#883cec] hover:bg-[#2d2d2d]";
-                  let badgeStyle = "bg-[#333333] text-gray-200 border-[#555555]";
+                  let buttonStyle = "bg-lab-surface border-lab-border text-lab-text hover:border-lab-primary hover:bg-lab-tint/60";
+                  let badgeStyle = "bg-lab-tint text-lab-text border-lab-border font-bold";
 
                   if (!isAnswered && selectedOption === idx) {
-                    buttonStyle = "bg-[#2d2438] border-[#883cec] text-white ring-1 ring-[#883cec]";
-                    badgeStyle = "bg-[#883cec] text-white border-[#883cec]";
+                    buttonStyle = "bg-lab-tint border-lab-primary text-lab-text ring-1 ring-lab-primary";
+                    badgeStyle = "bg-lab-primary-strong text-white dark:bg-lab-primary dark:text-[#121926] border-transparent font-extrabold";
                   }
 
                   if (isAnswered) {
                     if (idx === currentCard.correctOptionIndex) {
-                      // Correct state (node-id=85-962)
-                      buttonStyle = "border-emerald-500 bg-emerald-950/40 text-white ring-1 ring-emerald-500/60";
-                      badgeStyle = "bg-emerald-500 text-white border-emerald-400 font-bold";
+                      buttonStyle = "border-lab-success-border bg-lab-success-bg text-lab-text ring-1 ring-lab-success-border";
+                      badgeStyle = "bg-lab-secondary text-[#121926] border-lab-success-border font-extrabold";
                     } else if (idx === selectedOption) {
-                      // Incorrect state (node-id=85-1573)
-                      buttonStyle = "border-rose-500 bg-rose-950/40 text-white ring-1 ring-rose-500/60";
-                      badgeStyle = "bg-rose-500 text-white border-rose-400 font-bold";
+                      buttonStyle = "border-lab-error-border bg-lab-error-bg text-lab-text ring-1 ring-lab-error-border";
+                      badgeStyle = "bg-lab-coral text-[#121926] border-lab-error-border font-extrabold";
                     } else {
-                      buttonStyle = "border-[#383838] bg-[#222222] text-gray-500 opacity-40 cursor-not-allowed";
-                      badgeStyle = "bg-[#333333] text-gray-500 border-[#444444]";
+                      buttonStyle = "border-lab-border bg-lab-tint/40 text-lab-muted opacity-50 cursor-not-allowed";
+                      badgeStyle = "bg-lab-tint text-lab-muted border-lab-border";
                     }
                   }
 
@@ -401,23 +380,23 @@ export default function MemorizacaoPage() {
                         setValidationWarning(null);
                         playClick();
                       }}
-                      className={`w-full min-h-[58px] p-4 rounded-xl border text-left transition-colors flex items-center justify-between gap-3 select-none cursor-pointer ${buttonStyle}`}
+                      className={`w-full min-h-[58px] p-4 rounded-2xl border text-left transition-colors flex items-center justify-between gap-3 select-none cursor-pointer ${buttonStyle}`}
                     >
                       <div className="flex items-center gap-3 flex-1">
-                        <span className={`w-8 h-8 rounded-lg flex items-center justify-center text-xs border ${badgeStyle}`}>
+                        <span className={`w-8 h-8 rounded-xl flex items-center justify-center text-xs border ${badgeStyle}`}>
                           {optionLabels[idx]}
                         </span>
-                        <span className="text-sm font-medium leading-snug">
+                        <span className="text-sm font-semibold leading-snug">
                           {opt}
                         </span>
                       </div>
 
                       {isAnswered && idx === currentCard.correctOptionIndex && (
-                        <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                        <CheckCircle2 className="w-5 h-5 text-lab-success-text" />
                       )}
 
                       {isAnswered && idx === selectedOption && idx !== currentCard.correctOptionIndex && (
-                        <XCircle className="w-5 h-5 text-rose-400" />
+                        <XCircle className="w-5 h-5 text-lab-error-text" />
                       )}
                     </button>
                   );
@@ -425,11 +404,10 @@ export default function MemorizacaoPage() {
               </div>
             )}
 
-            
             {gameMode === "avancado" && (
-              <div className="bg-[#262626] border border-[#5e5e5e] rounded-2xl p-6 flex flex-col gap-4">
+              <div className="bg-lab-surface border border-lab-border rounded-2xl p-6 flex flex-col gap-4 shadow-sm">
                 <div>
-                  <label htmlFor="component-input" className="text-xs font-semibold uppercase tracking-wider text-gray-400 block mb-2">
+                  <label htmlFor="component-input" className="text-xs font-extrabold uppercase tracking-wider text-lab-muted block mb-2">
                     Digite o nome do componente:
                   </label>
                   <input
@@ -447,20 +425,20 @@ export default function MemorizacaoPage() {
                       }
                     }}
                     placeholder="Ex: Resistor, LED, Arduino..."
-                    className="w-full bg-[#1b1b1b] border border-[#444444] focus:border-[#883cec] focus:outline-none rounded-xl px-4 py-3.5 text-sm text-white placeholder-gray-500 transition-colors"
+                    className="w-full bg-lab-tint border border-lab-border focus:border-lab-primary focus:outline-none rounded-xl px-4 py-3.5 text-sm text-lab-text placeholder-lab-muted transition-colors"
                   />
                 </div>
 
                 {isAnswered && (
                   <div className={`p-4 rounded-xl border text-xs leading-relaxed ${
                     isCorrect
-                      ? "bg-emerald-950/40 border-emerald-500/50 text-emerald-200"
-                      : "bg-rose-950/40 border-rose-500/50 text-rose-200"
+                      ? "bg-lab-success-bg border-lab-success-border text-lab-success-text"
+                      : "bg-lab-error-bg border-lab-error-border text-lab-error-text"
                   }`}>
                     <span className="font-bold block mb-1">
                       {isCorrect ? "Correto! Resposta precisa." : "Nome correto do componente:"}
                     </span>
-                    <span className="text-sm font-semibold text-white">
+                    <span className="text-sm font-extrabold text-lab-text">
                       {currentCard.name}
                     </span>
                   </div>
@@ -468,13 +446,12 @@ export default function MemorizacaoPage() {
               </div>
             )}
 
-            
             <div className="flex flex-col gap-3">
               {!isAnswered ? (
                 <button
                   type="button"
                   onClick={handleConfirmAnswer}
-                  className="w-full py-4 bg-[#883cec] hover:bg-[#782bdc] text-white rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-colors cursor-pointer active:scale-[0.98]"
+                  className="w-full py-4 bg-lab-primary-strong hover:bg-lab-primary dark:bg-lab-primary dark:hover:bg-lab-primary-strong text-white dark:text-[#121926] rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-colors cursor-pointer active:scale-[0.98]"
                 >
                   <span>Confirmar Resposta</span>
                   <CheckCircle2 className="w-5 h-5" />
@@ -483,26 +460,24 @@ export default function MemorizacaoPage() {
                 <button
                   type="button"
                   onClick={handleNextCard}
-                  className="w-full py-4 bg-[#883cec] hover:bg-[#782bdc] text-white rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-colors cursor-pointer active:scale-[0.98]"
+                  className="w-full py-4 bg-lab-primary-strong hover:bg-lab-primary dark:bg-lab-primary dark:hover:bg-lab-primary-strong text-white dark:text-[#121926] rounded-xl font-bold text-sm sm:text-base flex items-center justify-center gap-2 transition-colors cursor-pointer active:scale-[0.98]"
                 >
                   <span>{isLastCard ? "Ver Resumo da Prática" : "Próximo Flashcard"}</span>
                   <ArrowRight className="w-5 h-5" />
                 </button>
               )}
 
-              
               <button
                 type="button"
                 onClick={handleFlipCard}
-                className="w-full py-3 bg-[#333333] hover:bg-[#3d3d3d] text-gray-200 border border-[#555555] rounded-xl font-medium text-xs sm:text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                className="w-full py-3 bg-lab-tint hover:bg-lab-border/70 text-lab-text border border-lab-border rounded-xl font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-colors cursor-pointer"
               >
-                <Eye className="w-4 h-4 text-[#883cec]" />
+                <Eye className="w-4 h-4 text-lab-primary-strong" />
                 <span>{isFlipped ? "Ver imagem do componente" : "Virar card e conferir resposta"}</span>
               </button>
             </div>
           </div>
 
-          
           <div className="lg:col-span-3 flex flex-col items-center justify-center p-2">
             <div className="sticky top-28 w-full flex flex-col items-center">
               <QuizMascot
@@ -511,9 +486,9 @@ export default function MemorizacaoPage() {
                 className="w-full max-w-[280px]"
               />
 
-              <div className="mt-4 w-full max-w-[260px] bg-[#262626] border border-[#444444] rounded-xl p-3 text-xs text-gray-300 flex items-start gap-2">
-                <Layers className="w-4 h-4 text-[#883cec] mt-0.5" />
-                <span className="leading-relaxed">
+              <div className="mt-4 w-full max-w-[260px] bg-lab-surface border border-lab-border rounded-2xl p-3.5 text-xs text-lab-muted flex items-start gap-2 shadow-sm">
+                <Layers className="w-4 h-4 text-lab-primary-strong mt-0.5 shrink-0" />
+                <span className="leading-relaxed font-semibold">
                   Dica: Você pode virar o card a qualquer momento para memorizar a função técnica do componente!
                 </span>
               </div>
@@ -522,14 +497,12 @@ export default function MemorizacaoPage() {
         </div>
       </main>
 
-      
-      <footer className="relative z-10 border-t border-[#333]">
-        <div className="max-w-[1216px] w-full mx-auto px-6 lg:px-0 py-6 text-center text-sm text-white">
+      <footer className="relative z-10 border-t border-lab-border bg-lab-surface/60">
+        <div className="max-w-[1216px] w-full mx-auto px-6 lg:px-0 py-6 text-center text-sm font-semibold text-lab-muted">
           <p>LabApp — Projeto LabiNEC (UFC / SMD)</p>
         </div>
       </footer>
 
-      
       <MemorizacaoResultModal
         isOpen={isCompletedModalOpen}
         totalCards={totalCards}

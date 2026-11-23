@@ -3,12 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BadgeHelp, Crown, Home as HomeIcon, Menu, Settings, X, Dices, Cpu } from "lucide-react";
+import { BadgeHelp, Crown, Home as HomeIcon, Menu, Settings, X, Dices, Cpu, Sun, Moon } from "lucide-react";
 import { RankingModal } from "@/components/modals/ranking-modal";
 import { ConfigModal } from "@/components/modals/config-modal";
+import { LabAppLogo } from "@/components/brand/labapp-logo";
+import { useTheme } from "@/providers/theme-provider";
 
 export function Header() {
   const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
   const [isRankingOpen, setIsRankingOpen] = useState(false);
   const [isConfigOpen, setIsConfigOpen] = useState(false);
@@ -18,130 +21,156 @@ export function Header() {
   const isJogos = pathname.startsWith("/jogos");
 
   return (
-    <header className="relative z-20 w-full border-b border-[#5a5a5a] bg-[#212121]">
-      <div className="max-w-[1216px] w-full mx-auto px-6 lg:px-0 h-24 flex items-center justify-between">
-        <Link href="/" className="flex items-center gap-4">
-          <div className="w-12 h-10 relative flex items-center justify-center">
-            <svg viewBox="0 0 71 62" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full">
-              <path d="M35.5 0C15.8954 0 0 13.8792 0 31C0 48.1208 15.8954 62 35.5 62C55.1046 62 71 48.1208 71 31C71 13.8792 55.1046 0 35.5 0ZM35.5 48C24.4543 48 15.5 39.0457 15.5 28C15.5 16.9543 24.4543 8 35.5 8C46.5457 8 55.5 16.9543 55.5 28C55.5 39.0457 46.5457 48 35.5 48Z" fill="#883CEC" />
-              <circle cx="35.5" cy="31" r="14" fill="#FFFFFF" />
-            </svg>
-          </div>
-          <span className="text-3xl tracking-tight text-white">
-            <strong className="font-bold italic">Lab</strong>
-            <span className="font-light italic">App</span>
-          </span>
+    <header className="relative z-20 w-full border-b border-lab-border bg-lab-surface transition-colors">
+      <div className="max-w-[1216px] w-full mx-auto px-6 lg:px-0 h-24 flex items-center justify-between gap-4">
+        <Link href="/" className="flex items-center shrink-0" aria-label="LabApp — Página inicial">
+          <LabAppLogo />
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-7">
+        <nav className="hidden lg:flex items-center gap-6">
           <Link
             href="/"
-            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-base font-normal transition-opacity ${
+            className={`flex items-center gap-2 py-2 text-base transition-colors ${
               isHome
-                ? "border-b-2 border-[#883cec] font-semibold"
-                : "opacity-85 hover:opacity-100"
+                ? "border-b-2 border-lab-primary-strong text-lab-primary-strong font-bold"
+                : "text-lab-muted hover:text-lab-text font-semibold"
             }`}
           >
-            <HomeIcon className="w-5 h-5 text-white" />
+            <HomeIcon className="w-5 h-5" />
             <span>Início</span>
           </Link>
           <Link
             href="/jogos"
-            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-base font-normal transition-opacity ${
+            className={`flex items-center gap-2 py-2 text-base transition-colors ${
               isJogos
-                ? "border-b-2 border-[#883cec] font-semibold"
-                : "opacity-85 hover:opacity-100"
+                ? "border-b-2 border-lab-primary-strong text-lab-primary-strong font-bold"
+                : "text-lab-muted hover:text-lab-text font-semibold"
             }`}
           >
-            <Dices className="w-5 h-5 text-white" />
+            <Dices className="w-5 h-5" />
             <span>Jogos</span>
           </Link>
           <button
             onClick={() => setIsConfigOpen(true)}
-            className="flex items-center gap-2 py-2 text-[#f6f6f9] text-base font-normal transition-opacity opacity-85 hover:opacity-100 cursor-pointer"
+            className="flex items-center gap-2 py-2 text-lab-muted hover:text-lab-text text-base font-semibold transition-colors cursor-pointer"
           >
-            <Settings className="w-5 h-5 text-white" />
+            <Settings className="w-5 h-5" />
             <span>Configurações</span>
           </button>
           <button
             onClick={() => setIsRankingOpen(true)}
-            className="flex items-center gap-2 py-2 text-[#f6f6f9] text-base font-normal transition-opacity opacity-85 hover:opacity-100 cursor-pointer"
+            className="flex items-center gap-2 py-2 text-lab-muted hover:text-lab-text text-base font-semibold transition-colors cursor-pointer"
           >
-            <Crown className="w-5 h-5 text-white" />
+            <Crown className="w-5 h-5" />
             <span>Ranking</span>
           </button>
           <Link
             href="/ajuda"
-            className={`flex items-center gap-2 py-2 text-[#f6f6f9] text-base font-normal transition-opacity ${
+            className={`flex items-center gap-2 py-2 text-base transition-colors ${
               isAjuda
-                ? "border-b-2 border-[#883cec] font-semibold"
-                : "opacity-85 hover:opacity-100"
+                ? "border-b-2 border-lab-primary-strong text-lab-primary-strong font-bold"
+                : "text-lab-muted hover:text-lab-text font-semibold"
             }`}
           >
-            <BadgeHelp className="w-5 h-5 text-white" />
+            <BadgeHelp className="w-5 h-5" />
             <span>Ajuda</span>
           </Link>
           <Link
             href="/admin/circuitos"
-            className={`flex items-center gap-1.5 py-2 text-[#f6f6f9] text-base font-normal transition-opacity ${
+            className={`flex items-center gap-1.5 py-2 text-base transition-colors ${
               pathname === "/admin/circuitos"
-                ? "border-b-2 border-[#883cec] font-semibold text-[#883cec]"
-                : "opacity-85 hover:opacity-100"
+                ? "border-b-2 border-lab-lavender text-lab-lavender-text font-bold"
+                : "text-lab-muted hover:text-lab-text font-semibold"
             }`}
           >
-            <Cpu className="w-5 h-5 text-[#883cec]" />
+            <Cpu className="w-5 h-5 text-lab-lavender-text" />
             <span>Circuitos</span>
           </Link>
           <Link
             href="/admin/quiz"
-            className={`flex items-center gap-1.5 py-2 text-[#f6f6f9] text-base font-normal transition-opacity ${
+            className={`flex items-center gap-1.5 py-2 text-base transition-colors ${
               pathname === "/admin/quiz"
-                ? "border-b-2 border-[#883cec] font-semibold text-[#883cec]"
-                : "opacity-85 hover:opacity-100"
+                ? "border-b-2 border-lab-lavender text-lab-lavender-text font-bold"
+                : "text-lab-muted hover:text-lab-text font-semibold"
             }`}
           >
-            <Settings className="w-5 h-5 text-[#883cec]" />
+            <Settings className="w-5 h-5 text-lab-lavender-text" />
             <span>Quiz</span>
           </Link>
+
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"}
+            title={theme === "dark" ? "Mudar para Light Mode" : "Mudar para Dark Mode"}
+            className="ml-1 inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-lab-tint hover:bg-lab-border/60 border border-lab-border text-lab-text text-sm font-bold transition-colors cursor-pointer"
+          >
+            {theme === "dark" ? (
+              <>
+                <Sun className="w-4 h-4 text-lab-amber" />
+                <span>Light</span>
+              </>
+            ) : (
+              <>
+                <Moon className="w-4 h-4 text-lab-primary-strong" />
+                <span>Dark</span>
+              </>
+            )}
+          </button>
         </nav>
 
-        {/* Tablet & Mobile Hamburger Toggle Button */}
-        <button
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Alternar menu"
-          className="lg:hidden p-2 text-white hover:text-gray-300 focus:outline-none cursor-pointer rounded-lg bg-[#262626] border border-[#5e5e5e]"
-        >
-          {isOpen ? <X className="w-7 h-7 text-white" /> : <Menu className="w-7 h-7 text-white" />}
-        </button>
+        {/* Tablet & Mobile Actions */}
+        <div className="lg:hidden flex items-center gap-2">
+          <button
+            type="button"
+            onClick={toggleTheme}
+            aria-label={theme === "dark" ? "Ativar modo claro" : "Ativar modo escuro"}
+            className="p-2.5 text-lab-text rounded-xl bg-lab-tint border border-lab-border hover:bg-lab-border/60 transition-colors cursor-pointer"
+          >
+            {theme === "dark" ? (
+              <Sun className="w-5 h-5 text-lab-amber" />
+            ) : (
+              <Moon className="w-5 h-5 text-lab-primary-strong" />
+            )}
+          </button>
+
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            aria-label="Alternar menu"
+            className="p-2 text-lab-text focus:outline-none cursor-pointer rounded-xl bg-lab-tint border border-lab-border"
+          >
+            {isOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
+          </button>
+        </div>
       </div>
 
       {/* Dropdown Menu for Tablet and Mobile */}
       {isOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full bg-[#262626] border-b border-[#5e5e5e] px-6 py-4 shadow-xl z-30 flex flex-col gap-2">
+        <div className="lg:hidden absolute top-full left-0 w-full bg-lab-surface border-b border-lab-border px-6 py-4 shadow-xl z-30 flex flex-col gap-2">
           <Link
             href="/"
             onClick={() => setIsOpen(false)}
-            className={`flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors ${
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base transition-colors ${
               isHome
-                ? "bg-[#883cec]/20 border-l-4 border-[#883cec] font-semibold"
-                : "hover:bg-[#333333]"
+                ? "bg-lab-tint border-l-4 border-lab-primary-strong text-lab-primary-strong font-bold"
+                : "text-lab-text hover:bg-lab-tint font-semibold"
             }`}
           >
-            <HomeIcon className="w-6 h-6 text-white" />
+            <HomeIcon className="w-6 h-6" />
             <span>Início</span>
           </Link>
 
           <Link
             href="/jogos"
             onClick={() => setIsOpen(false)}
-            className={`flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors ${
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base transition-colors ${
               isJogos
-                ? "bg-[#883cec]/20 border-l-4 border-[#883cec] font-semibold"
-                : "hover:bg-[#333333]"
+                ? "bg-lab-tint border-l-4 border-lab-primary-strong text-lab-primary-strong font-bold"
+                : "text-lab-text hover:bg-lab-tint font-semibold"
             }`}
           >
-            <Dices className="w-6 h-6 text-white" />
+            <Dices className="w-6 h-6" />
             <span>Jogos</span>
           </Link>
 
@@ -150,9 +179,9 @@ export function Header() {
               setIsOpen(false);
               setIsConfigOpen(true);
             }}
-            className="flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors hover:bg-[#333333] cursor-pointer text-left w-full"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-lab-text text-base font-semibold transition-colors hover:bg-lab-tint cursor-pointer text-left w-full"
           >
-            <Settings className="w-6 h-6 text-white" />
+            <Settings className="w-6 h-6" />
             <span>Configurações</span>
           </button>
 
@@ -161,48 +190,48 @@ export function Header() {
               setIsOpen(false);
               setIsRankingOpen(true);
             }}
-            className="flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors hover:bg-[#333333] cursor-pointer text-left w-full"
+            className="flex items-center gap-3 px-4 py-3 rounded-xl text-lab-text text-base font-semibold transition-colors hover:bg-lab-tint cursor-pointer text-left w-full"
           >
-            <Crown className="w-6 h-6 text-white" />
+            <Crown className="w-6 h-6" />
             <span>Ranking</span>
           </button>
 
           <Link
             href="/ajuda"
             onClick={() => setIsOpen(false)}
-            className={`flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors ${
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base transition-colors ${
               isAjuda
-                ? "bg-[#883cec]/20 border-l-4 border-[#883cec] font-semibold"
-                : "hover:bg-[#333333]"
+                ? "bg-lab-tint border-l-4 border-lab-primary-strong text-lab-primary-strong font-bold"
+                : "text-lab-text hover:bg-lab-tint font-semibold"
             }`}
           >
-            <BadgeHelp className="w-6 h-6 text-white" />
+            <BadgeHelp className="w-6 h-6" />
             <span>Ajuda / Como Jogar</span>
           </Link>
 
           <Link
             href="/admin/circuitos"
             onClick={() => setIsOpen(false)}
-            className={`flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors ${
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base transition-colors ${
               pathname === "/admin/circuitos"
-                ? "bg-[#883cec]/20 border-l-4 border-[#883cec] font-semibold"
-                : "hover:bg-[#333333]"
+                ? "bg-lab-lavender-bg border-l-4 border-lab-lavender text-lab-lavender-text font-bold"
+                : "text-lab-text hover:bg-lab-tint font-semibold"
             }`}
           >
-            <Cpu className="w-6 h-6 text-[#883cec]" />
+            <Cpu className="w-6 h-6 text-lab-lavender-text" />
             <span>Gerenciar Circuitos</span>
           </Link>
 
           <Link
             href="/admin/quiz"
             onClick={() => setIsOpen(false)}
-            className={`flex items-center gap-3 px-4 py-3 rounded-md text-[#f6f6f9] text-base font-normal transition-colors ${
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl text-base transition-colors ${
               pathname === "/admin/quiz"
-                ? "bg-[#883cec]/20 border-l-4 border-[#883cec] font-semibold"
-                : "hover:bg-[#333333]"
+                ? "bg-lab-lavender-bg border-l-4 border-lab-lavender text-lab-lavender-text font-bold"
+                : "text-lab-text hover:bg-lab-tint font-semibold"
             }`}
           >
-            <Settings className="w-6 h-6 text-[#883cec]" />
+            <Settings className="w-6 h-6 text-lab-lavender-text" />
             <span>Gerenciar Quiz</span>
           </Link>
         </div>

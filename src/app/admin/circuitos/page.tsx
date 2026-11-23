@@ -3,31 +3,31 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { 
-  ArrowLeft, 
-  Plus, 
-  Trash2, 
-  Save, 
-  RotateCcw, 
-  Move, 
-  Lightbulb, 
-  Play, 
-  CheckCircle2, 
-  AlertCircle, 
-  Info, 
+import {
+  ArrowLeft,
+  Plus,
+  Trash2,
+  Save,
+  RotateCcw,
+  Move,
+  Lightbulb,
+  Play,
+  CheckCircle2,
+  AlertCircle,
+  Info,
   Settings2,
-  Cpu
+  Cpu,
 } from "lucide-react";
 import { Header } from "@/components/header";
 import { useSoundEffects } from "@/providers/sound-provider";
-import { 
-  CircuitChallenge, 
-  CircuitSlot, 
+import {
+  CircuitChallenge,
+  CircuitSlot,
   CircuitDifficulty,
-  AVAILABLE_COMPONENTS, 
-  getStoredCircuits, 
-  saveStoredCircuits, 
-  resetStoredCircuits 
+  AVAILABLE_COMPONENTS,
+  getStoredCircuits,
+  saveStoredCircuits,
+  resetStoredCircuits,
 } from "@/lib/circuitos-data";
 
 const PRESET_CIRCUIT_IMAGES = [
@@ -61,11 +61,9 @@ export default function AdminCircuitosPage() {
     return initial[0]?.slots[0]?.id || null;
   });
 
-  // Dragging slot on canvas
   const [isDraggingSlotOnCanvas, setIsDraggingSlotOnCanvas] = useState(false);
   const canvasRef = useRef<HTMLDivElement>(null);
 
-  // Toast feedback
   const [toastMessage, setToastMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
 
   const showToast = (text: string, type: "success" | "error" = "success") => {
@@ -80,7 +78,6 @@ export default function AdminCircuitosPage() {
   const currentCircuit = circuits.find((c) => c.id === selectedCircuitId) || null;
   const currentSlot = currentCircuit?.slots.find((s) => s.id === selectedSlotId) || null;
 
-  // Update circuit fields
   const handleUpdateCircuitField = <K extends keyof CircuitChallenge>(
     field: K,
     value: CircuitChallenge[K]
@@ -91,7 +88,6 @@ export default function AdminCircuitosPage() {
     );
   };
 
-  // Update slot fields
   const handleUpdateSlotField = <K extends keyof CircuitSlot>(
     slotId: string,
     field: K,
@@ -104,11 +100,9 @@ export default function AdminCircuitosPage() {
     handleUpdateCircuitField("slots", updatedSlots);
   };
 
-  // Canvas click to add or reposition slot
   const handleCanvasClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!canvasRef.current || !currentCircuit || isDraggingSlotOnCanvas) return;
-    
-    // Ignore clicks if clicking directly on a slot pin
+
     if ((e.target as HTMLElement).closest("[data-slot-pin='true']")) {
       return;
     }
@@ -120,7 +114,6 @@ export default function AdminCircuitosPage() {
     const percentX = Math.round((clickX / rect.width) * 1000) / 10;
     const percentY = Math.round((clickY / rect.height) * 1000) / 10;
 
-    // Create a new slot at this clicked position
     const newSlotNumber = currentCircuit.slots.length + 1;
     const newSlotId = generateSlotId();
     const newSlot: CircuitSlot = {
@@ -142,7 +135,6 @@ export default function AdminCircuitosPage() {
     showToast(`Slot ${newSlotNumber} adicionado na posição X: ${percentX}%, Y: ${percentY}%`);
   };
 
-  // Handle slot drag on canvas
   const handleSlotPointerDown = (slotId: string, e: React.PointerEvent) => {
     e.stopPropagation();
     setSelectedSlotId(slotId);
@@ -167,7 +159,6 @@ export default function AdminCircuitosPage() {
     setIsDraggingSlotOnCanvas(false);
   };
 
-  // Delete slot
   const handleDeleteSlot = (slotId: string) => {
     if (!currentCircuit) return;
     playClick();
@@ -179,7 +170,6 @@ export default function AdminCircuitosPage() {
     showToast("Slot removido com sucesso.");
   };
 
-  // Create new circuit challenge
   const handleCreateNewCircuit = () => {
     playClick();
     const newId = generateCircuitId();
@@ -196,7 +186,7 @@ export default function AdminCircuitosPage() {
       explanation: "Explicação teórica de como o circuito funciona.",
       pedagogicalTips: [
         "Preste atenção à polaridade dos componentes.",
-        "Resistores são essenciais para evitar sobrecarga de corrente."
+        "Resistores são essenciais para evitar sobrecarga de corrente.",
       ],
       slots: [
         {
@@ -208,9 +198,9 @@ export default function AdminCircuitosPage() {
           x: 50,
           y: 50,
           width: 12,
-          height: 14
-        }
-      ]
+          height: 14,
+        },
+      ],
     };
 
     const updated = [...circuits, newCircuit];
@@ -220,7 +210,6 @@ export default function AdminCircuitosPage() {
     showToast("Novo circuito criado! Configure os slots e objetivos.");
   };
 
-  // Delete circuit
   const handleDeleteCircuit = (id: string) => {
     if (circuits.length <= 1) {
       showToast("Não é possível remover todos os circuitos. Pelo menos um deve permanecer.", "error");
@@ -235,14 +224,12 @@ export default function AdminCircuitosPage() {
     showToast("Circuito excluído.");
   };
 
-  // Save changes
   const handleSaveAll = () => {
     playClick();
     saveStoredCircuits(circuits);
     showToast("Todos os circuitos e slots foram salvos com sucesso!");
   };
 
-  // Reset to default
   const handleResetToDefaults = () => {
     if (confirm("Deseja restaurar os circuitos e slots para os 5 padrões originais do sistema? Todas as alterações personalizadas serão redefinidas.")) {
       playClick();
@@ -255,41 +242,33 @@ export default function AdminCircuitosPage() {
   };
 
   return (
-    <div className="relative min-h-screen bg-[#212121] text-white font-sans flex flex-col justify-between">
-      {/* Background dot grid */}
-      <div 
-        className="absolute inset-0 opacity-15 pointer-events-none"
-        style={{
-          backgroundImage: "radial-gradient(#cccccc 1.5px, transparent 1.5px)",
-          backgroundSize: "24px 24px"
-        }}
-      />
+    <div className="relative min-h-screen bg-lab-canvas text-lab-text font-sans flex flex-col justify-between">
+      <div className="absolute inset-0 opacity-55 dark:opacity-35 pointer-events-none lab-dot-grid" />
 
       <Header />
 
       <main className="relative z-10 flex-1 max-w-[1340px] w-full mx-auto px-4 sm:px-6 py-6 flex flex-col gap-6">
-        {/* Toast Alert */}
         {toastMessage && (
-          <div className={`fixed top-24 right-6 z-50 p-4 rounded-xl border shadow-2xl flex items-center gap-3 animate-fade-in ${
+          <div className={`fixed top-24 right-6 z-50 p-4 rounded-2xl border shadow-2xl flex items-center gap-3 animate-fade-in ${
             toastMessage.type === "success"
-              ? "bg-[#183120] border-emerald-500/50 text-emerald-200"
-              : "bg-[#331c22] border-rose-500/50 text-rose-200"
+              ? "bg-lab-success-bg border-lab-success-border text-lab-success-text"
+              : "bg-lab-error-bg border-lab-error-border text-lab-error-text"
           }`}>
             {toastMessage.type === "success" ? (
-              <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+              <CheckCircle2 className="w-5 h-5" />
             ) : (
-              <AlertCircle className="w-5 h-5 text-rose-400" />
+              <AlertCircle className="w-5 h-5" />
             )}
-            <span className="text-sm font-semibold">{toastMessage.text}</span>
+            <span className="text-sm font-bold">{toastMessage.text}</span>
           </div>
         )}
 
         {/* Top Header & Global Actions */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-3 border-b border-[#3e3e3e]">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-3 border-b border-lab-border">
           <div className="flex items-center gap-4">
             <Link
               href="/jogos"
-              className="p-2.5 rounded-xl bg-[#2a2a2a] hover:bg-[#383838] border border-[#5e5e5e] text-gray-300 hover:text-white transition-all flex items-center gap-2 text-sm font-semibold cursor-pointer active:scale-95"
+              className="p-2.5 rounded-xl bg-lab-surface hover:bg-lab-tint border border-lab-border text-lab-muted hover:text-lab-text transition-all flex items-center gap-2 text-sm font-bold cursor-pointer active:scale-95"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Voltar aos Jogos</span>
@@ -297,23 +276,23 @@ export default function AdminCircuitosPage() {
 
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <span className="text-xs uppercase font-extrabold tracking-wider text-[#883cec] bg-[#883cec]/15 px-2.5 py-0.5 rounded-md border border-[#883cec]/30">
+                <span className="text-xs uppercase font-extrabold tracking-wider text-lab-lavender-text bg-lab-lavender-bg px-2.5 py-0.5 rounded-lg border border-lab-lavender-border">
                   Painel de Gestão Pedagógica
                 </span>
-                <span className="text-xs text-gray-400 font-medium">
+                <span className="text-xs text-lab-muted font-semibold">
                   {circuits.length} Circuitos Cadastrados
                 </span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-1">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-lab-text tracking-tight mt-1">
                 Gerenciador de Circuitos e Slots Interativos
               </h1>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-3">
             <Link
               href="/jogos/eletronica"
-              className="bg-[#2a2a2a] hover:bg-[#353535] text-purple-300 border border-[#883cec]/50 px-4 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 transition-all cursor-pointer active:scale-98"
+              className="bg-lab-surface hover:bg-lab-tint text-lab-primary-strong border border-lab-border px-4 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 transition-all cursor-pointer active:scale-98"
             >
               <Play className="w-4 h-4 fill-current" />
               <span>Testar no Jogo</span>
@@ -321,7 +300,7 @@ export default function AdminCircuitosPage() {
 
             <button
               onClick={handleResetToDefaults}
-              className="bg-[#2b2b2b] hover:bg-[#383838] text-gray-300 border border-[#555] px-3.5 py-2.5 rounded-xl font-semibold text-xs flex items-center gap-1.5 transition-all cursor-pointer"
+              className="bg-lab-surface hover:bg-lab-tint text-lab-muted hover:text-lab-text border border-lab-border px-3.5 py-2.5 rounded-xl font-bold text-xs flex items-center gap-1.5 transition-all cursor-pointer"
               title="Restaurar circuitos para os 5 desafios de fábrica"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -330,7 +309,7 @@ export default function AdminCircuitosPage() {
 
             <button
               onClick={handleSaveAll}
-              className="bg-[#883cec] hover:bg-[#782bdc] text-white px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 transition-all shadow-lg shadow-[#883cec]/30 cursor-pointer active:scale-98"
+              className="bg-lab-primary-strong hover:bg-lab-primary dark:bg-lab-primary dark:hover:bg-lab-primary-strong text-white dark:text-[#121926] px-5 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 transition-all shadow-md cursor-pointer active:scale-98"
             >
               <Save className="w-4 h-4" />
               <span>Salvar Alterações</span>
@@ -351,12 +330,16 @@ export default function AdminCircuitosPage() {
                 }}
                 className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer whitespace-nowrap ${
                   c.id === selectedCircuitId
-                    ? "bg-[#883cec] text-white shadow-md shadow-[#883cec]/30"
-                    : "bg-[#282828] text-gray-300 hover:bg-[#333333] border border-[#444]"
+                    ? "bg-lab-primary-strong text-white dark:bg-lab-primary dark:text-[#121926] shadow-sm"
+                    : "bg-lab-surface text-lab-muted hover:bg-lab-tint hover:text-lab-text border border-lab-border"
                 }`}
               >
                 <span>{`#${idx + 1} ${c.title.slice(0, 24)}...`}</span>
-                <span className="text-[10px] bg-black/40 px-1.5 py-0.5 rounded-full font-mono">
+                <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${
+                  c.id === selectedCircuitId
+                    ? "bg-white/20 dark:bg-black/20"
+                    : "bg-lab-tint text-lab-muted"
+                }`}>
                   {c.slots.length} slots
                 </span>
               </button>
@@ -365,7 +348,7 @@ export default function AdminCircuitosPage() {
 
           <button
             onClick={handleCreateNewCircuit}
-            className="bg-[#2a3a2e] hover:bg-[#344b3a] text-emerald-300 border border-emerald-500/40 px-3.5 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer shrink-0"
+            className="bg-lab-success-bg hover:opacity-90 text-lab-success-text border border-lab-success-border px-3.5 py-2 rounded-xl text-xs font-extrabold flex items-center gap-1.5 cursor-pointer shrink-0"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Novo Circuito</span>
@@ -376,15 +359,15 @@ export default function AdminCircuitosPage() {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
             {/* Visual Canvas Area (7 Cols) */}
             <div className="lg:col-span-7 flex flex-col gap-4">
-              <div className="bg-[#1b1b1b] border-2 border-[#444444] rounded-2xl p-4 sm:p-5 flex flex-col gap-3 shadow-2xl">
-                <div className="flex items-center justify-between text-xs text-gray-300 border-b border-[#333] pb-2">
+              <div className="bg-lab-surface border border-lab-border rounded-2xl p-4 sm:p-5 flex flex-col gap-3 shadow-sm">
+                <div className="flex items-center justify-between text-xs text-lab-muted border-b border-lab-border pb-2.5">
                   <div className="flex items-center gap-2">
-                    <Move className="w-4 h-4 text-[#883cec]" />
-                    <span className="font-bold uppercase tracking-wider text-gray-200">
+                    <Move className="w-4 h-4 text-lab-primary-strong" />
+                    <span className="font-extrabold uppercase tracking-wider text-lab-text">
                       Bancada Visual: Clique na imagem para criar slots ou arraste-os
                     </span>
                   </div>
-                  <span className="text-[11px] text-gray-400">
+                  <span className="text-[11px] text-lab-muted font-semibold">
                     Posicionamento Relativo (0% a 100%)
                   </span>
                 </div>
@@ -393,10 +376,9 @@ export default function AdminCircuitosPage() {
                 <div
                   ref={canvasRef}
                   onClick={handleCanvasClick}
-                  className="relative w-full aspect-[4/3] rounded-xl overflow-hidden border-2 border-dashed border-[#555] bg-[#121212] cursor-crosshair select-none group"
+                  className="relative w-full aspect-[4/3] rounded-2xl overflow-hidden border-2 border-dashed border-lab-border bg-[#121926] cursor-crosshair select-none group"
                   title="Clique em qualquer lugar da imagem do circuito para posicionar um novo slot"
                 >
-                  {/* Circuit Background Illustration */}
                   <Image
                     src={currentCircuit.image_url}
                     alt={currentCircuit.title}
@@ -405,13 +387,11 @@ export default function AdminCircuitosPage() {
                     priority
                   />
 
-                  {/* Helper click guide banner */}
-                  <div className="absolute top-3 left-3 bg-black/75 backdrop-blur-xs border border-white/10 px-3 py-1.5 rounded-lg text-[11px] text-gray-300 pointer-events-none flex items-center gap-1.5">
-                    <Lightbulb className="w-3.5 h-3.5 text-amber-400" />
+                  <div className="absolute top-3 left-3 bg-[#121926]/85 backdrop-blur-xs border border-[#2E3E5C] px-3 py-1.5 rounded-xl text-[11px] text-[#F1F6FC] pointer-events-none flex items-center gap-1.5 font-semibold">
+                    <Lightbulb className="w-3.5 h-3.5 text-[#FFD166]" />
                     <span>Clique na imagem para adicionar um slot onde desejar</span>
                   </div>
 
-                  {/* Interactive Visual Slots */}
                   {currentCircuit.slots.map((slot, index) => {
                     const isSelected = slot.id === selectedSlotId;
                     const comp = AVAILABLE_COMPONENTS.find((c) => c.id === slot.targetComponentId);
@@ -437,12 +417,12 @@ export default function AdminCircuitosPage() {
                         }}
                         className={`absolute rounded-xl flex flex-col items-center justify-between p-1.5 cursor-grab active:cursor-grabbing transition-shadow z-20 ${
                           isSelected
-                            ? "bg-[#883cec]/80 border-2 border-white shadow-2xl ring-4 ring-[#883cec]/50 scale-105"
-                            : "bg-[#242424]/85 border-2 border-amber-400/80 hover:border-white shadow-lg"
+                            ? "bg-[#3B82D6]/85 border-2 border-[#FFFFFF] shadow-2xl ring-4 ring-[#64A8F5]/50 scale-105"
+                            : "bg-[#1B2538]/90 border-2 border-[#FFD166]/85 hover:border-white shadow-lg"
                         }`}
                       >
                         <div className="w-full flex items-center justify-between">
-                          <span className="text-[10px] font-black px-1.5 py-0.2 rounded bg-black/70 text-white">
+                          <span className="text-[10px] font-extrabold px-1.5 py-0.2 rounded bg-[#121926]/80 text-[#F1F6FC]">
                             #{index + 1}
                           </span>
                           <button
@@ -451,7 +431,7 @@ export default function AdminCircuitosPage() {
                               e.stopPropagation();
                               handleDeleteSlot(slot.id);
                             }}
-                            className="w-4 h-4 rounded-full bg-rose-600/90 hover:bg-rose-500 text-white flex items-center justify-center text-[10px] cursor-pointer"
+                            className="w-4 h-4 rounded-full bg-[#F78C8C] hover:bg-[#FA9E9E] text-[#121926] font-extrabold flex items-center justify-center text-[10px] cursor-pointer"
                             title="Remover slot"
                           >
                             ×
@@ -469,7 +449,7 @@ export default function AdminCircuitosPage() {
                           </div>
                         )}
 
-                        <span className="text-[9px] font-bold text-center truncate w-full text-white bg-black/60 rounded px-0.5">
+                        <span className="text-[9px] font-bold text-center truncate w-full text-[#F1F6FC] bg-[#121926]/75 rounded px-0.5">
                           {comp ? comp.name.split(" ")[0] : "Slot"}
                         </span>
                       </div>
@@ -478,8 +458,8 @@ export default function AdminCircuitosPage() {
                 </div>
 
                 {/* Slots Overview List */}
-                <div className="flex flex-col gap-2 pt-2 border-t border-[#333]">
-                  <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                <div className="flex flex-col gap-2 pt-2 border-t border-lab-border">
+                  <span className="text-xs font-extrabold text-lab-muted uppercase tracking-wider">
                     Slots Configurados Neste Circuito ({currentCircuit.slots.length})
                   </span>
 
@@ -498,16 +478,16 @@ export default function AdminCircuitosPage() {
                           }}
                           className={`p-2.5 rounded-xl border text-left flex items-center gap-2 transition-all cursor-pointer ${
                             isSelected
-                              ? "bg-[#883cec]/20 border-[#883cec] text-white shadow-sm"
-                              : "bg-[#252525] border-[#444] text-gray-300 hover:bg-[#2d2d2d]"
+                              ? "bg-lab-tint border-lab-primary text-lab-text shadow-xs"
+                              : "bg-lab-tint/40 border-lab-border text-lab-muted hover:bg-lab-tint"
                           }`}
                         >
-                          <span className="w-5 h-5 rounded-full bg-black/40 text-[10px] font-bold flex items-center justify-center shrink-0">
+                          <span className="w-5 h-5 rounded-full bg-lab-surface border border-lab-border text-[10px] font-extrabold text-lab-text flex items-center justify-center shrink-0">
                             {idx + 1}
                           </span>
                           <div className="flex flex-col overflow-hidden">
-                            <span className="text-xs font-bold truncate text-white">{s.name}</span>
-                            <span className="text-[10px] text-gray-400 truncate">
+                            <span className="text-xs font-bold truncate text-lab-text">{s.name}</span>
+                            <span className="text-[10px] text-lab-muted truncate">
                               {comp ? comp.name : "Nenhum"} • ({s.x}%, {s.y}%)
                             </span>
                           </div>
@@ -521,12 +501,11 @@ export default function AdminCircuitosPage() {
 
             {/* Inspector and Circuit Form (5 Cols) */}
             <div className="lg:col-span-5 flex flex-col gap-4">
-              {/* Selected Slot Inspector */}
-              <div className="bg-[#262626] border border-[#5e5e5e] rounded-2xl p-5 flex flex-col gap-4 shadow-xl">
-                <div className="flex items-center justify-between border-b border-[#3e3e3e] pb-3">
+              <div className="bg-lab-surface border border-lab-border rounded-2xl p-5 flex flex-col gap-4 shadow-sm">
+                <div className="flex items-center justify-between border-b border-lab-border pb-3">
                   <div className="flex items-center gap-2">
-                    <Settings2 className="w-4 h-4 text-[#883cec]" />
-                    <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+                    <Settings2 className="w-4 h-4 text-lab-primary-strong" />
+                    <h2 className="text-sm font-extrabold uppercase tracking-wider text-lab-text">
                       Configuração do Slot Selecionado
                     </h2>
                   </div>
@@ -535,7 +514,7 @@ export default function AdminCircuitosPage() {
                     <button
                       type="button"
                       onClick={() => handleDeleteSlot(currentSlot.id)}
-                      className="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1 cursor-pointer"
+                      className="text-xs font-bold text-lab-error-text hover:opacity-80 flex items-center gap-1 cursor-pointer"
                     >
                       <Trash2 className="w-3.5 h-3.5" />
                       <span>Excluir Slot</span>
@@ -545,9 +524,8 @@ export default function AdminCircuitosPage() {
 
                 {currentSlot ? (
                   <div className="flex flex-col gap-4">
-                    {/* Slot Name */}
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-semibold text-gray-300">
+                      <label className="text-xs font-bold text-lab-text">
                         Nome / Rótulo do Slot
                       </label>
                       <input
@@ -555,20 +533,19 @@ export default function AdminCircuitosPage() {
                         value={currentSlot.name}
                         onChange={(e) => handleUpdateSlotField(currentSlot.id, "name", e.target.value)}
                         placeholder="Ex: Slot 1 - Resistor de Proteção"
-                        className="w-full bg-[#1e1e1e] border border-[#4a4a4a] focus:border-[#883cec] rounded-xl px-3 py-2 text-sm text-white outline-none"
+                        className="w-full bg-lab-tint border border-lab-border focus:border-lab-primary rounded-xl px-3 py-2 text-sm text-lab-text outline-none"
                       />
                     </div>
 
-                    {/* Target Component */}
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-semibold text-gray-300 flex items-center justify-between">
+                      <label className="text-xs font-bold text-lab-text flex items-center justify-between">
                         <span>Componente Obrigatório / Esperado</span>
-                        <span className="text-[10px] text-purple-400">Verificação Lógica</span>
+                        <span className="text-[10px] text-lab-lavender-text font-bold">Verificação Lógica</span>
                       </label>
                       <select
                         value={currentSlot.targetComponentId}
                         onChange={(e) => handleUpdateSlotField(currentSlot.id, "targetComponentId", e.target.value)}
-                        className="w-full bg-[#1e1e1e] border border-[#4a4a4a] focus:border-[#883cec] rounded-xl px-3 py-2 text-sm text-white outline-none cursor-pointer"
+                        className="w-full bg-lab-tint border border-lab-border focus:border-lab-primary rounded-xl px-3 py-2 text-sm text-lab-text outline-none cursor-pointer"
                       >
                         {AVAILABLE_COMPONENTS.map((comp) => (
                           <option key={comp.id} value={comp.id}>
@@ -578,27 +555,25 @@ export default function AdminCircuitosPage() {
                       </select>
                     </div>
 
-                    {/* Placeholder Hint (Dica no Placeholder) */}
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-semibold text-gray-300 flex items-center justify-between">
+                      <label className="text-xs font-bold text-lab-text flex items-center justify-between">
                         <span>Dica do Placeholder do Slot</span>
-                        <span className="text-[10px] text-amber-400">Visível no Jogo</span>
+                        <span className="text-[10px] text-lab-amber-text font-bold">Visível no Jogo</span>
                       </label>
                       <input
                         type="text"
                         value={currentSlot.hint || ""}
                         onChange={(e) => handleUpdateSlotField(currentSlot.id, "hint", e.target.value)}
                         placeholder="Ex: Arraste o Resistor aqui (limita a corrente)"
-                        className="w-full bg-[#1e1e1e] border border-[#4a4a4a] focus:border-[#883cec] rounded-xl px-3 py-2 text-sm text-white outline-none"
+                        className="w-full bg-lab-tint border border-lab-border focus:border-lab-primary rounded-xl px-3 py-2 text-sm text-lab-text outline-none"
                       />
-                      <span className="text-[11px] text-gray-400">
+                      <span className="text-[11px] text-lab-muted">
                         Texto curto exibido no centro do slot vazio para orientar o aluno.
                       </span>
                     </div>
 
-                    {/* Slot Detailed Description */}
                     <div className="flex flex-col gap-1.5">
-                      <label className="text-xs font-semibold text-gray-300">
+                      <label className="text-xs font-bold text-lab-text">
                         Descrição Pedagógica / Feedback de Erro
                       </label>
                       <textarea
@@ -606,14 +581,13 @@ export default function AdminCircuitosPage() {
                         value={currentSlot.description}
                         onChange={(e) => handleUpdateSlotField(currentSlot.id, "description", e.target.value)}
                         placeholder="Ex: O resistor protege o LED contra corrente excessiva."
-                        className="w-full bg-[#1e1e1e] border border-[#4a4a4a] focus:border-[#883cec] rounded-xl px-3 py-2 text-sm text-white outline-none resize-none"
+                        className="w-full bg-lab-tint border border-lab-border focus:border-lab-primary rounded-xl px-3 py-2 text-sm text-lab-text outline-none resize-none"
                       />
                     </div>
 
-                    {/* Slot Coordinates Fine-tuning */}
-                    <div className="grid grid-cols-2 gap-3 pt-2 border-t border-[#3e3e3e]">
+                    <div className="grid grid-cols-2 gap-3 pt-2 border-t border-lab-border">
                       <div className="flex flex-col gap-1">
-                        <label className="text-xs text-gray-400">Posição X (%)</label>
+                        <label className="text-xs font-bold text-lab-muted">Posição X (%)</label>
                         <input
                           type="number"
                           step="0.5"
@@ -621,11 +595,11 @@ export default function AdminCircuitosPage() {
                           max="100"
                           value={currentSlot.x}
                           onChange={(e) => handleUpdateSlotField(currentSlot.id, "x", parseFloat(e.target.value) || 0)}
-                          className="w-full bg-[#1e1e1e] border border-[#4a4a4a] rounded-xl px-3 py-1.5 text-sm text-white outline-none"
+                          className="w-full bg-lab-tint border border-lab-border rounded-xl px-3 py-1.5 text-sm text-lab-text outline-none"
                         />
                       </div>
                       <div className="flex flex-col gap-1">
-                        <label className="text-xs text-gray-400">Posição Y (%)</label>
+                        <label className="text-xs font-bold text-lab-muted">Posição Y (%)</label>
                         <input
                           type="number"
                           step="0.5"
@@ -633,25 +607,25 @@ export default function AdminCircuitosPage() {
                           max="100"
                           value={currentSlot.y}
                           onChange={(e) => handleUpdateSlotField(currentSlot.id, "y", parseFloat(e.target.value) || 0)}
-                          className="w-full bg-[#1e1e1e] border border-[#4a4a4a] rounded-xl px-3 py-1.5 text-sm text-white outline-none"
+                          className="w-full bg-lab-tint border border-lab-border rounded-xl px-3 py-1.5 text-sm text-lab-text outline-none"
                         />
                       </div>
                     </div>
                   </div>
                 ) : (
-                  <div className="py-8 text-center text-gray-400 text-xs flex flex-col items-center gap-2">
-                    <Info className="w-5 h-5 text-gray-500" />
+                  <div className="py-8 text-center text-lab-muted text-xs flex flex-col items-center gap-2">
+                    <Info className="w-5 h-5" />
                     <span>Nenhum slot selecionado. Clique em um slot no painel ao lado ou na imagem para editar.</span>
                   </div>
                 )}
               </div>
 
               {/* Circuit General Metadata Settings */}
-              <div className="bg-[#262626] border border-[#5e5e5e] rounded-2xl p-5 flex flex-col gap-4 shadow-xl">
-                <div className="flex items-center justify-between border-b border-[#3e3e3e] pb-3">
+              <div className="bg-lab-surface border border-lab-border rounded-2xl p-5 flex flex-col gap-4 shadow-sm">
+                <div className="flex items-center justify-between border-b border-lab-border pb-3">
                   <div className="flex items-center gap-2">
-                    <Cpu className="w-4 h-4 text-[#883cec]" />
-                    <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+                    <Cpu className="w-4 h-4 text-lab-primary-strong" />
+                    <h2 className="text-sm font-extrabold uppercase tracking-wider text-lab-text">
                       Dados Gerais do Circuito
                     </h2>
                   </div>
@@ -659,7 +633,7 @@ export default function AdminCircuitosPage() {
                   <button
                     type="button"
                     onClick={() => handleDeleteCircuit(currentCircuit.id)}
-                    className="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1 cursor-pointer"
+                    className="text-xs font-bold text-lab-error-text hover:opacity-80 flex items-center gap-1 cursor-pointer"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                     <span>Excluir Circuito</span>
@@ -667,43 +641,40 @@ export default function AdminCircuitosPage() {
                 </div>
 
                 <div className="flex flex-col gap-3">
-                  {/* Circuit Title */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-gray-300">
+                    <label className="text-xs font-bold text-lab-text">
                       Título do Desafio
                     </label>
                     <input
                       type="text"
                       value={currentCircuit.title}
                       onChange={(e) => handleUpdateCircuitField("title", e.target.value)}
-                      className="w-full bg-[#1e1e1e] border border-[#4a4a4a] focus:border-[#883cec] rounded-xl px-3 py-2 text-sm text-white outline-none"
+                      className="w-full bg-lab-tint border border-lab-border focus:border-lab-primary rounded-xl px-3 py-2 text-sm text-lab-text outline-none"
                     />
                   </div>
 
-                  {/* Practical Objective */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-gray-300 flex items-center justify-between">
+                    <label className="text-xs font-bold text-lab-text flex items-center justify-between">
                       <span>Objetivo Prático do Desafio</span>
-                      <span className="text-[10px] text-purple-300">Meta Pedagógica</span>
+                      <span className="text-[10px] text-lab-lavender-text font-bold">Meta Pedagógica</span>
                     </label>
                     <textarea
                       rows={2}
                       value={currentCircuit.practicalObjective}
                       onChange={(e) => handleUpdateCircuitField("practicalObjective", e.target.value)}
                       placeholder="Ex: Ligar um LED com Bateria 9V protegendo com Resistor."
-                      className="w-full bg-[#1e1e1e] border border-[#4a4a4a] focus:border-[#883cec] rounded-xl px-3 py-2 text-sm text-white outline-none resize-none"
+                      className="w-full bg-lab-tint border border-lab-border focus:border-lab-primary rounded-xl px-3 py-2 text-sm text-lab-text outline-none resize-none"
                     />
                   </div>
 
-                  {/* Circuit Illustration Image */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-gray-300">
+                    <label className="text-xs font-bold text-lab-text">
                       Ilustração do Circuito (Pasta circuitos/)
                     </label>
                     <select
                       value={currentCircuit.image_url}
                       onChange={(e) => handleUpdateCircuitField("image_url", e.target.value)}
-                      className="w-full bg-[#1e1e1e] border border-[#4a4a4a] focus:border-[#883cec] rounded-xl px-3 py-2 text-sm text-white outline-none cursor-pointer"
+                      className="w-full bg-lab-tint border border-lab-border focus:border-lab-primary rounded-xl px-3 py-2 text-sm text-lab-text outline-none cursor-pointer"
                     >
                       {PRESET_CIRCUIT_IMAGES.map((img) => (
                         <option key={img.path} value={img.path}>
@@ -713,15 +684,14 @@ export default function AdminCircuitosPage() {
                     </select>
                   </div>
 
-                  {/* Difficulty */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-gray-300">
+                    <label className="text-xs font-bold text-lab-text">
                       Nível de Dificuldade
                     </label>
                     <select
                       value={currentCircuit.difficulty}
                       onChange={(e) => handleUpdateCircuitField("difficulty", e.target.value as CircuitDifficulty)}
-                      className="w-full bg-[#1e1e1e] border border-[#4a4a4a] focus:border-[#883cec] rounded-xl px-3 py-2 text-sm text-white outline-none cursor-pointer"
+                      className="w-full bg-lab-tint border border-lab-border focus:border-lab-primary rounded-xl px-3 py-2 text-sm text-lab-text outline-none cursor-pointer"
                     >
                       <option value="iniciante">Iniciante</option>
                       <option value="intermediario">Intermediário</option>
@@ -729,16 +699,15 @@ export default function AdminCircuitosPage() {
                     </select>
                   </div>
 
-                  {/* Circuit Theoretical Explanation */}
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-xs font-semibold text-gray-300">
+                    <label className="text-xs font-bold text-lab-text">
                       Explicação Teórica de Funcionamento
                     </label>
                     <textarea
                       rows={2}
                       value={currentCircuit.explanation}
                       onChange={(e) => handleUpdateCircuitField("explanation", e.target.value)}
-                      className="w-full bg-[#1e1e1e] border border-[#4a4a4a] focus:border-[#883cec] rounded-xl px-3 py-2 text-sm text-white outline-none resize-none"
+                      className="w-full bg-lab-tint border border-lab-border focus:border-lab-primary rounded-xl px-3 py-2 text-sm text-lab-text outline-none resize-none"
                     />
                   </div>
                 </div>
