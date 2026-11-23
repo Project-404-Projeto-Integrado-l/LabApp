@@ -51,6 +51,7 @@ A plataforma é construída sobre uma arquitetura moderna, escalável, performá
   * **[Tailwind CSS v4](https://tailwindcss.com/):** Estilização moderna e utilitária para layouts responsivos e acessíveis.
   * **[shadcn/ui](https://ui.shadcn.com/) & Base UI:** Componentes de interface acessíveis e customizáveis.
   * **[Lucide React](https://lucide.dev/):** Biblioteca de ícones.
+  * **Identidade Visual Oficial:** Documentada em [`docs/identidade-visual/`](docs/identidade-visual/logo-design-document.md), com suporte nativo a Light Mode e Dark Mode, tipografia **Nunito** (interface) e **JetBrains Mono** (blocos de código Arduino), tokens em [`tokens/theme-colors.css`](docs/identidade-visual/tokens/theme-colors.css) e [`tokens/design-tokens.json`](docs/identidade-visual/tokens/design-tokens.json), e logotipo oficial **LabBot** em `public/brand/`.
 * **Backend, Banco de Dados & Autenticação:**
   * **[Supabase](https://supabase.com/):** Plataforma Backend as a Service (BaaS) responsável por:
     * **Autenticação (Supabase Auth):** Gestão segura de contas e sessões de usuários (Alunos e Professores).

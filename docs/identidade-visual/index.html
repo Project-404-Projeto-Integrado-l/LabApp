@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Identidade Visual · LabApp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --fonte-titulo: "Nunito", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+      --fonte-texto: "Nunito", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+      --fonte-codigo: "JetBrains Mono", monospace;
+    }
+    body, button {
+      font-family: var(--fonte-texto);
+    }
+    h1, h2, .colunas b, .tipo .amostra, .tipo .Aa, .assets b {
+      font-family: var(--fonte-titulo);
+    }
+    code, pre, .bloco-codigo {
+      font-family: var(--fonte-codigo);
+    }
+  </style>
+</head>
+<body>
+  <div class="barra-controle">
+    <div class="barra-marca">
+      <svg viewBox="0 0 64 64" width="28" height="28" role="img" aria-label="LabApp">
+        <path d="M 6.5 31 L 7.5 16.5 C 7.7 14.6 9.1 13.6 10.7 14.2 L 12 14.7 C 12.8 15 13 15.8 13 17 L 13 31 Z" fill="#6CD9B4"/>
+        <path d="M 57.5 31 L 56.5 16.5 C 56.3 14.6 54.9 13.6 53.3 14.2 L 52 14.7 C 51.2 15 51 15.8 51 17 L 51 31 Z" fill="#6CD9B4"/>
+        <path d="M 24 19 L 25.5 12.8 C 26 11.2 27.4 10.5 29 10.5 L 35 10.5 C 36.6 10.5 38 11.2 38.5 12.8 L 40 19 Z" fill="#64A8F5"/>
+        <rect x="4" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+        <circle cx="6.8" cy="35.75" r="1.9" fill="#1E2B3C"/>
+        <rect x="52" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+        <circle cx="57.2" cy="35.75" r="1.9" fill="#1E2B3C"/>
+        <path d="M 32 17 C 46.5 17 55 25 55 36 C 55 46.5 46.5 53 32 53 C 17.5 53 9 46.5 9 36 C 9 25 17.5 17 32 17 Z" fill="#64A8F5"/>
+        <path d="M 32 24 C 43.5 24 50 28 50 36 C 50 43.5 44.5 47.5 38.5 47.5 C 35.5 47.5 33.8 46 32 46 C 30.2 46 28.5 47.5 25.5 47.5 C 19.5 47.5 14 43.5 14 36 C 14 28 20.5 24 32 24 Z" fill="#235BB5"/>
+        <path d="M 20.5 37.2 Q 24.2 32.2 27.9 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+        <path d="M 36.1 37.2 Q 39.8 32.2 43.5 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+      </svg>
+      <span>LabApp • Brand Guidelines (11 Slides)</span>
+    </div>
+    <div class="barra-acoes">
+      <button id="theme-toggle-btn" class="btn-controle" type="button">
+        <span id="theme-toggle-label">Dark Mode</span>
+      </button>
+      <button id="pdf-export-btn" class="btn-controle" type="button">Salvar PDF 16:9</button>
+    </div>
+  </div>
+
+  <main class="deck">
+    <section class="slide escuro capa">
+      <div class="dentro">
+        <div class="topo"><span>Apresentação de Identidade Visual</span><span>2026 · v1.0</span></div>
+        <div class="capa-centro">
+          <h1>Identidade<br>Visual<span class="acento">.</span></h1>
+          <svg viewBox="0 0 220 64" style="width: 28cqw; height: auto;" role="img" aria-label="LabApp Logotipo Oficial">
+            <g transform="translate(4, 4) scale(0.875)">
+              <path d="M 6.5 31 L 7.5 16.5 C 7.7 14.6 9.1 13.6 10.7 14.2 L 12 14.7 C 12.8 15 13 15.8 13 17 L 13 31 Z" fill="#7CE6C2"/>
+              <path d="M 57.5 31 L 56.5 16.5 C 56.3 14.6 54.9 13.6 53.3 14.2 L 52 14.7 C 51.2 15 51 15.8 51 17 L 51 31 Z" fill="#7CE6C2"/>
+              <path d="M 24 19 L 25.5 12.8 C 26 11.2 27.4 10.5 29 10.5 L 35 10.5 C 36.6 10.5 38 11.2 38.5 12.8 L 40 19 Z" fill="#7BB8FA"/>
+              <rect x="4" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+              <circle cx="6.8" cy="35.75" r="1.9" fill="#121926"/>
+              <rect x="52" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+              <circle cx="57.2" cy="35.75" r="1.9" fill="#121926"/>
+              <path d="M 32 17 C 46.5 17 55 25 55 36 C 55 46.5 46.5 53 32 53 C 17.5 53 9 46.5 9 36 C 9 25 17.5 17 32 17 Z" fill="#7BB8FA"/>
+              <path d="M 32 24 C 43.5 24 50 28 50 36 C 50 43.5 44.5 47.5 38.5 47.5 C 35.5 47.5 33.8 46 32 46 C 30.2 46 28.5 47.5 25.5 47.5 C 19.5 47.5 14 43.5 14 36 C 14 28 20.5 24 32 24 Z" fill="#121926"/>
+              <path d="M 37.5 26.6 C 42.5 27.2 45.8 29.5 46.8 32.8" fill="none" stroke="#9AC9FC" stroke-opacity="0.25" stroke-width="2" stroke-linecap="round"/>
+              <path d="M 20.5 37.2 Q 24.2 32.2 27.9 37.2" fill="none" stroke="#7CE6C2" stroke-width="3.4" stroke-linecap="round"/>
+              <path d="M 36.1 37.2 Q 39.8 32.2 43.5 37.2" fill="none" stroke="#7CE6C2" stroke-width="3.4" stroke-linecap="round"/>
+            </g>
+            <text x="70" y="44" font-size="34" font-weight="800" letter-spacing="-0.5" fill="#F1F6FC">Lab<tspan fill="#7BB8FA">App</tspan></text>
+          </svg>
+        </div>
+        <div class="rodape" style="margin-top: 3cqw">
+          <span>Web &amp; Aplicativo Mobile · LabApp (EdTech)</span>
+          <span>Programação &amp; Robótica com Arduino para 8–14 anos</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="dentro">
+        <div class="topo"><span>Objetivo e Público</span><span>02 / 11</span></div>
+        <h2>Ensinar código e Arduino com <span class="acento">leveza e calma visual.</span></h2>
+        <p class="apoio">Para crianças e pré-adolescentes de 8 a 14 anos em plataformas web e aplicativos móveis, unindo o ritmo gamificado do Duolingo à clareza minimalista.</p>
+        <div class="colunas base" style="--n: 3">
+          <div>
+            <span class="num">01</span>
+            <b>Descontraído</b>
+            <p>Traços arredondados e expressão acolhedora que eliminam a frieza técnica.</p>
+          </div>
+          <div>
+            <span class="num">02</span>
+            <b>Moderno &amp; Minimalista</b>
+            <p>Design flat pastel sem ruído, preparado nativamente para Light e Dark Mode.</p>
+          </div>
+          <div>
+            <span class="num">03</span>
+            <b>Calmo e Tecnológico</b>
+            <p>Azul primário para transmitir foco, tranquilidade e conexão com tecnologia.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide cor">
+      <div class="dentro">
+        <div class="topo"><span>Conceito Criativo</span><span>03 / 11</span></div>
+        <h2 class="gigante" style="margin-top: auto">Tecnologia amigável,<br>sem formalidade.</h2>
+        <div class="colunas" style="--n: 4; margin-top: 4cqw">
+          <div><span class="rotulo">01</span><b>Cabeça Robô LabBot</b></div>
+          <div><span class="rotulo">02</span><b>Ref. Duolingo</b></div>
+          <div><span class="rotulo">03</span><b>Zero Serifas</b></div>
+          <div><span class="rotulo">04</span><b>Light &amp; Dark</b></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide escuro">
+      <div class="dentro">
+        <div class="topo"><span>Símbolo e Logo Suite</span><span>04 / 11</span></div>
+        <div class="mood">
+          <div style="display: flex; flex-direction: column">
+            <h2>A cabeça do<br>robô <span class="acento">LabBot.</span></h2>
+            <div class="lista">
+              <div><span>01 · Formato Oval "Deitado"</span>Proporção larga (46×36) que evita achatamento lateral e dá presença amigável.</div>
+              <div><span>02 · Visor &amp; Olhos ^ ^</span>Visor esculpido em azul profundo com olhos em arco sorridente e antenas Menta.</div>
+              <div><span>03 · Wordmark Bicolor</span>CamelCase em Nunito 800 diferenciando "Lab" e "App" em qualquer fundo.</div>
+            </div>
+          </div>
+
+          <div class="mosaico">
+            <figure>
+              <svg viewBox="0 0 64 64" style="width: 15cqw; height: 15cqw;" role="img" aria-label="Símbolo LabBot">
+                <path d="M 6.5 31 L 7.5 16.5 C 7.7 14.6 9.1 13.6 10.7 14.2 L 12 14.7 C 12.8 15 13 15.8 13 17 L 13 31 Z" fill="#6CD9B4"/>
+                <path d="M 57.5 31 L 56.5 16.5 C 56.3 14.6 54.9 13.6 53.3 14.2 L 52 14.7 C 51.2 15 51 15.8 51 17 L 51 31 Z" fill="#6CD9B4"/>
+                <path d="M 24 19 L 25.5 12.8 C 26 11.2 27.4 10.5 29 10.5 L 35 10.5 C 36.6 10.5 38 11.2 38.5 12.8 L 40 19 Z" fill="#64A8F5"/>
+                <rect x="4" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+                <circle cx="6.8" cy="35.75" r="1.9" fill="#121926"/>
+                <rect x="52" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+                <circle cx="57.2" cy="35.75" r="1.9" fill="#121926"/>
+                <path d="M 32 17 C 46.5 17 55 25 55 36 C 55 46.5 46.5 53 32 53 C 17.5 53 9 46.5 9 36 C 9 25 17.5 17 32 17 Z" fill="#64A8F5"/>
+                <path d="M 32 24 C 43.5 24 50 28 50 36 C 50 43.5 44.5 47.5 38.5 47.5 C 35.5 47.5 33.8 46 32 46 C 30.2 46 28.5 47.5 25.5 47.5 C 19.5 47.5 14 43.5 14 36 C 14 28 20.5 24 32 24 Z" fill="#235BB5"/>
+                <path d="M 37.5 26.6 C 42.5 27.2 45.8 29.5 46.8 32.8" fill="none" stroke="#FFFFFF" stroke-opacity="0.22" stroke-width="2" stroke-linecap="round"/>
+                <path d="M 20.5 37.2 Q 24.2 32.2 27.9 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+                <path d="M 36.1 37.2 Q 39.8 32.2 43.5 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+              </svg>
+              <figcaption>01 · Símbolo Principal</figcaption>
+            </figure>
+
+            <figure class="clara">
+              <svg viewBox="0 0 220 64" style="width: 17cqw; height: auto;" role="img" aria-label="Versão Light">
+                <g transform="translate(4, 4) scale(0.875)">
+                  <path d="M 6.5 31 L 7.5 16.5 C 7.7 14.6 9.1 13.6 10.7 14.2 L 12 14.7 C 12.8 15 13 15.8 13 17 L 13 31 Z" fill="#6CD9B4"/>
+                  <path d="M 57.5 31 L 56.5 16.5 C 56.3 14.6 54.9 13.6 53.3 14.2 L 52 14.7 C 51.2 15 51 15.8 51 17 L 51 31 Z" fill="#6CD9B4"/>
+                  <path d="M 24 19 L 25.5 12.8 C 26 11.2 27.4 10.5 29 10.5 L 35 10.5 C 36.6 10.5 38 11.2 38.5 12.8 L 40 19 Z" fill="#64A8F5"/>
+                  <rect x="4" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+                  <circle cx="6.8" cy="35.75" r="1.9" fill="#1E2B3C"/>
+                  <rect x="52" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+                  <circle cx="57.2" cy="35.75" r="1.9" fill="#1E2B3C"/>
+                  <path d="M 32 17 C 46.5 17 55 25 55 36 C 55 46.5 46.5 53 32 53 C 17.5 53 9 46.5 9 36 C 9 25 17.5 17 32 17 Z" fill="#64A8F5"/>
+                  <path d="M 32 24 C 43.5 24 50 28 50 36 C 50 43.5 44.5 47.5 38.5 47.5 C 35.5 47.5 33.8 46 32 46 C 30.2 46 28.5 47.5 25.5 47.5 C 19.5 47.5 14 43.5 14 36 C 14 28 20.5 24 32 24 Z" fill="#235BB5"/>
+                  <path d="M 20.5 37.2 Q 24.2 32.2 27.9 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+                  <path d="M 36.1 37.2 Q 39.8 32.2 43.5 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+                </g>
+                <text x="70" y="44" font-size="34" font-weight="800" letter-spacing="-0.5" fill="#1E2B3C">Lab<tspan fill="#3B82D6">App</tspan></text>
+              </svg>
+              <figcaption>02 · Light Mode</figcaption>
+            </figure>
+
+            <figure>
+              <svg viewBox="0 0 220 64" style="width: 17cqw; height: auto;" role="img" aria-label="Versão Dark">
+                <g transform="translate(4, 4) scale(0.875)">
+                  <path d="M 6.5 31 L 7.5 16.5 C 7.7 14.6 9.1 13.6 10.7 14.2 L 12 14.7 C 12.8 15 13 15.8 13 17 L 13 31 Z" fill="#7CE6C2"/>
+                  <path d="M 57.5 31 L 56.5 16.5 C 56.3 14.6 54.9 13.6 53.3 14.2 L 52 14.7 C 51.2 15 51 15.8 51 17 L 51 31 Z" fill="#7CE6C2"/>
+                  <path d="M 24 19 L 25.5 12.8 C 26 11.2 27.4 10.5 29 10.5 L 35 10.5 C 36.6 10.5 38 11.2 38.5 12.8 L 40 19 Z" fill="#7BB8FA"/>
+                  <rect x="4" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+                  <circle cx="6.8" cy="35.75" r="1.9" fill="#121926"/>
+                  <rect x="52" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+                  <circle cx="57.2" cy="35.75" r="1.9" fill="#121926"/>
+                  <path d="M 32 17 C 46.5 17 55 25 55 36 C 55 46.5 46.5 53 32 53 C 17.5 53 9 46.5 9 36 C 9 25 17.5 17 32 17 Z" fill="#7BB8FA"/>
+                  <path d="M 32 24 C 43.5 24 50 28 50 36 C 50 43.5 44.5 47.5 38.5 47.5 C 35.5 47.5 33.8 46 32 46 C 30.2 46 28.5 47.5 25.5 47.5 C 19.5 47.5 14 43.5 14 36 C 14 28 20.5 24 32 24 Z" fill="#121926"/>
+                  <path d="M 20.5 37.2 Q 24.2 32.2 27.9 37.2" fill="none" stroke="#7CE6C2" stroke-width="3.4" stroke-linecap="round"/>
+                  <path d="M 36.1 37.2 Q 39.8 32.2 43.5 37.2" fill="none" stroke="#7CE6C2" stroke-width="3.4" stroke-linecap="round"/>
+                </g>
+                <text x="70" y="44" font-size="34" font-weight="800" letter-spacing="-0.5" fill="#F1F6FC">Lab<tspan fill="#7BB8FA">App</tspan></text>
+              </svg>
+              <figcaption>03 · Dark Mode</figcaption>
+            </figure>
+
+            <figure class="clara">
+              <svg viewBox="0 0 128 128" style="width: 5cqw; height: 5cqw;" role="img" aria-label="App Icon">
+                <rect x="4" y="4" width="120" height="120" rx="28" fill="#EAF2FD" stroke="#DCE6F4" stroke-width="2"/>
+                <g transform="translate(22, 22) scale(1.3125)">
+                  <path d="M 6.5 31 L 7.5 16.5 C 7.7 14.6 9.1 13.6 10.7 14.2 L 12 14.7 C 12.8 15 13 15.8 13 17 L 13 31 Z" fill="#6CD9B4"/>
+                  <path d="M 57.5 31 L 56.5 16.5 C 56.3 14.6 54.9 13.6 53.3 14.2 L 52 14.7 C 51.2 15 51 15.8 51 17 L 51 31 Z" fill="#6CD9B4"/>
+                  <path d="M 24 19 L 25.5 12.8 C 26 11.2 27.4 10.5 29 10.5 L 35 10.5 C 36.6 10.5 38 11.2 38.5 12.8 L 40 19 Z" fill="#64A8F5"/>
+                  <rect x="4" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+                  <rect x="52" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+                  <path d="M 32 17 C 46.5 17 55 25 55 36 C 55 46.5 46.5 53 32 53 C 17.5 53 9 46.5 9 36 C 9 25 17.5 17 32 17 Z" fill="#64A8F5"/>
+                  <path d="M 32 24 C 43.5 24 50 28 50 36 C 50 43.5 44.5 47.5 38.5 47.5 C 35.5 47.5 33.8 46 32 46 C 30.2 46 28.5 47.5 25.5 47.5 C 19.5 47.5 14 43.5 14 36 C 14 28 20.5 24 32 24 Z" fill="#235BB5"/>
+                  <path d="M 20.5 37.2 Q 24.2 32.2 27.9 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+                  <path d="M 36.1 37.2 Q 39.8 32.2 43.5 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+                </g>
+              </svg>
+            </figure>
+
+            <figure style="background: #64A8F5;">
+              <svg viewBox="0 0 220 64" style="width: 11cqw; height: auto;" role="img" aria-label="Versão Monocromática">
+                <g transform="translate(4, 4) scale(0.875)">
+                  <path d="M 6.5 31 L 7.5 16.5 C 7.7 14.6 9.1 13.6 10.7 14.2 L 12 14.7 C 12.8 15 13 15.8 13 17 L 13 31 Z" fill="#FFFFFF"/>
+                  <path d="M 57.5 31 L 56.5 16.5 C 56.3 14.6 54.9 13.6 53.3 14.2 L 52 14.7 C 51.2 15 51 15.8 51 17 L 51 31 Z" fill="#FFFFFF"/>
+                  <path d="M 24 19 L 25.5 12.8 C 26 11.2 27.4 10.5 29 10.5 L 35 10.5 C 36.6 10.5 38 11.2 38.5 12.8 L 40 19 Z" fill="#FFFFFF"/>
+                  <rect x="4" y="28.5" width="8" height="14.5" rx="4" fill="#FFFFFF"/>
+                  <rect x="52" y="28.5" width="8" height="14.5" rx="4" fill="#FFFFFF"/>
+                  <path d="M 32 17 C 46.5 17 55 25 55 36 C 55 46.5 46.5 53 32 53 C 17.5 53 9 46.5 9 36 C 9 25 17.5 17 32 17 Z" fill="#FFFFFF"/>
+                  <path d="M 32 24 C 43.5 24 50 28 50 36 C 50 43.5 44.5 47.5 38.5 47.5 C 35.5 47.5 33.8 46 32 46 C 30.2 46 28.5 47.5 25.5 47.5 C 19.5 47.5 14 43.5 14 36 C 14 28 20.5 24 32 24 Z" fill="#64A8F5"/>
+                  <path d="M 20.5 37.2 Q 24.2 32.2 27.9 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+                  <path d="M 36.1 37.2 Q 39.8 32.2 43.5 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+                </g>
+                <text x="70" y="44" font-size="34" font-weight="800" letter-spacing="-0.5" fill="#FFFFFF">LabApp</text>
+              </svg>
+              <figcaption>Monocromático</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="dentro">
+        <div class="topo"><span>Construção e Respiro</span><span>05 / 11</span></div>
+        <h2>Proporção modular e <span class="acento">área de proteção 1x.</span></h2>
+
+        <div class="grid-palco">
+          <svg viewBox="0 0 320 128" style="width: 44cqw; height: auto;" role="img" aria-label="Grid 64x64 e Área de Proteção 1x">
+            <rect x="0" y="0" width="320" height="128" rx="12" fill="#F7FAFE"/>
+            <rect x="16" y="16" width="288" height="96" fill="none" stroke="#A799F5" stroke-width="1" stroke-dasharray="4 4"/>
+            <rect x="32" y="32" width="256" height="64" fill="#EAF2FD" fill-opacity="0.55" stroke="#64A8F5" stroke-width="1"/>
+            <rect x="16" y="16" width="16" height="16" fill="#6CD9B4" fill-opacity="0.35"/>
+            <rect x="288" y="16" width="16" height="16" fill="#6CD9B4" fill-opacity="0.35"/>
+            <rect x="16" y="96" width="16" height="16" fill="#6CD9B4" fill-opacity="0.35"/>
+            <rect x="288" y="96" width="16" height="16" fill="#6CD9B4" fill-opacity="0.35"/>
+            <line x1="64" y1="32" x2="64" y2="96" stroke="#DCE6F4" stroke-width="1"/>
+            <line x1="96" y1="32" x2="96" y2="96" stroke="#DCE6F4" stroke-width="1"/>
+            <line x1="32" y1="64" x2="288" y2="64" stroke="#DCE6F4" stroke-width="1"/>
+            <g transform="translate(36, 36) scale(0.875)">
+              <path d="M 6.5 31 L 7.5 16.5 C 7.7 14.6 9.1 13.6 10.7 14.2 L 12 14.7 C 12.8 15 13 15.8 13 17 L 13 31 Z" fill="#6CD9B4"/>
+              <path d="M 57.5 31 L 56.5 16.5 C 56.3 14.6 54.9 13.6 53.3 14.2 L 52 14.7 C 51.2 15 51 15.8 51 17 L 51 31 Z" fill="#6CD9B4"/>
+              <path d="M 24 19 L 25.5 12.8 C 26 11.2 27.4 10.5 29 10.5 L 35 10.5 C 36.6 10.5 38 11.2 38.5 12.8 L 40 19 Z" fill="#64A8F5"/>
+              <rect x="4" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+              <circle cx="6.8" cy="35.75" r="1.9" fill="#1E2B3C"/>
+              <rect x="52" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+              <circle cx="57.2" cy="35.75" r="1.9" fill="#1E2B3C"/>
+              <path d="M 32 17 C 46.5 17 55 25 55 36 C 55 46.5 46.5 53 32 53 C 17.5 53 9 46.5 9 36 C 9 25 17.5 17 32 17 Z" fill="#64A8F5"/>
+              <path d="M 32 24 C 43.5 24 50 28 50 36 C 50 43.5 44.5 47.5 38.5 47.5 C 35.5 47.5 33.8 46 32 46 C 30.2 46 28.5 47.5 25.5 47.5 C 19.5 47.5 14 43.5 14 36 C 14 28 20.5 24 32 24 Z" fill="#235BB5"/>
+              <path d="M 20.5 37.2 Q 24.2 32.2 27.9 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+              <path d="M 36.1 37.2 Q 39.8 32.2 43.5 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+            </g>
+            <text x="108" y="76" font-size="34" font-weight="800" letter-spacing="-0.5" fill="#1E2B3C">Lab<tspan fill="#3B82D6">App</tspan></text>
+            <text x="20" y="27" font-size="9" font-weight="700" fill="#5C6F87">1x</text>
+            <text x="292" y="107" font-size="9" font-weight="700" fill="#5C6F87">1x</text>
+          </svg>
+        </div>
+
+        <div class="colunas" style="--n: 4">
+          <div><span class="num">120 px</span><b>Horizontal</b><p>Mínimo digital (32 mm impresso)</p></div>
+          <div><span class="num">88 px</span><b>Vertical</b><p>Mínimo digital (24 mm impresso)</p></div>
+          <div><span class="num">24 px</span><b>Símbolo UI</b><p>Mínimo em interface (8 mm)</p></div>
+          <div><span class="num">16 px</span><b>Favicon</b><p>Apenas símbolo isolado</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="dentro">
+        <div class="topo"><span>Cores · Light Mode (Clique para copiar HEX)</span><span>06 / 11</span></div>
+        <h2>Azul calmo no centro, apoiado por pastéis suaves.</h2>
+        <div class="cores" style="--n: 8">
+          <div class="maior" data-hex="#F7FAFE">
+            <i style="background: #F7FAFE"></i>
+            <b>Cloud White <span>#F7FAFE</span></b>
+            <p><span>Canvas</span><span>RGB 247, 250, 254</span><span>CMYK 3, 2, 0, 0</span></p>
+          </div>
+          <div data-hex="#64A8F5">
+            <i style="background: #64A8F5"></i>
+            <b>Calm Blue <span>#64A8F5</span></b>
+            <p><span>Primária</span><span>RGB 100, 168, 245</span><span>CMYK 59, 31, 0, 4</span></p>
+          </div>
+          <div data-hex="#3B82D6">
+            <i style="background: #3B82D6"></i>
+            <b>Blue Deep <span>#3B82D6</span></b>
+            <p><span>"App"</span><span>RGB 59, 130, 214</span><span>CMYK 72, 39, 0, 16</span></p>
+          </div>
+          <div data-hex="#6CD9B4">
+            <i style="background: #6CD9B4"></i>
+            <b>Arduino Mint <span>#6CD9B4</span></b>
+            <p><span>LED</span><span>RGB 108, 217, 180</span><span>CMYK 50, 0, 17, 15</span></p>
+          </div>
+          <div data-hex="#A799F5">
+            <i style="background: #A799F5"></i>
+            <b>Lavender <span>#A799F5</span></b>
+            <p><span>Lógica</span><span>RGB 167, 153, 245</span><span>CMYK 32, 38, 0, 4</span></p>
+          </div>
+          <div data-hex="#FFD166">
+            <i style="background: #FFD166"></i>
+            <b>Sunny Amber <span>#FFD166</span></b>
+            <p><span>XP</span><span>RGB 255, 209, 102</span><span>CMYK 0, 18, 60, 0</span></p>
+          </div>
+          <div data-hex="#F78C8C">
+            <i style="background: #F78C8C"></i>
+            <b>Soft Coral <span>#F78C8C</span></b>
+            <p><span>Alerta</span><span>RGB 247, 140, 140</span><span>CMYK 0, 43, 43, 3</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide escuro">
+      <div class="dentro">
+        <div class="topo"><span>Cores · Dark Mode (Clique para copiar HEX)</span><span>07 / 11</span></div>
+        <h2>Contraste confortável para estudar à noite.</h2>
+        <div class="cores" style="--n: 8">
+          <div class="maior" data-hex="#121926">
+            <i style="background: #121926"></i>
+            <b>Midnight Lab <span>#121926</span></b>
+            <p><span>Canvas</span><span>RGB 18, 25, 38</span><span>CMYK 53, 34, 0, 85</span></p>
+          </div>
+          <div data-hex="#1B2538">
+            <i style="background: #1B2538"></i>
+            <b>Deep Slate <span>#1B2538</span></b>
+            <p><span>Cards</span><span>RGB 27, 37, 56</span><span>CMYK 52, 34, 0, 78</span></p>
+          </div>
+          <div data-hex="#7BB8FA">
+            <i style="background: #7BB8FA"></i>
+            <b>Sky Luminous <span>#7BB8FA</span></b>
+            <p><span>Primária</span><span>RGB 123, 184, 250</span><span>CMYK 51, 26, 0, 2</span></p>
+          </div>
+          <div data-hex="#7CE6C2">
+            <i style="background: #7CE6C2"></i>
+            <b>Mint Glow <span>#7CE6C2</span></b>
+            <p><span>LED/Olhos</span><span>RGB 124, 230, 194</span><span>CMYK 46, 0, 16, 10</span></p>
+          </div>
+          <div data-hex="#B9AEFA">
+            <i style="background: #B9AEFA"></i>
+            <b>Soft Violet <span>#B9AEFA</span></b>
+            <p><span>Lógica</span><span>RGB 185, 174, 250</span><span>CMYK 26, 30, 0, 2</span></p>
+          </div>
+          <div data-hex="#FFE08A">
+            <i style="background: #FFE08A"></i>
+            <b>Warm Glow <span>#FFE08A</span></b>
+            <p><span>XP</span><span>RGB 255, 224, 138</span><span>CMYK 0, 12, 46, 0</span></p>
+          </div>
+          <div data-hex="#F1F6FC">
+            <i style="background: #F1F6FC"></i>
+            <b>Soft Moon <span>#F1F6FC</span></b>
+            <p><span>Texto</span><span>RGB 241, 246, 252</span><span>CMYK 4, 2, 0, 1</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="dentro">
+        <div class="topo"><span>Tipografia e Sistema</span><span>08 / 11</span></div>
+        <div class="tipo">
+          <div style="display: flex; flex-direction: column">
+            <p class="amostra">Aprenda Arduino criando robôs de verdade.</p>
+            <p class="texto">Nunito traz terminações arredondadas e abertura limpa para leitura fluida entre 8 e 14 anos, sem formalidade nem serifas.</p>
+            <pre class="bloco-codigo"><code><span style="color:#7BB8FA">void</span> <span style="color:#7CE6C2">setup</span>() { <span style="color:#7CE6C2">pinMode</span>(<span style="color:#FFE08A">13</span>, <span style="color:#B9AEFA">OUTPUT</span>); }
+<span style="color:#7BB8FA">void</span> <span style="color:#7CE6C2">loop</span>()  { <span style="color:#7CE6C2">digitalWrite</span>(<span style="color:#FFE08A">13</span>, <span style="color:#B9AEFA">HIGH</span>); }</code></pre>
+          </div>
+          <div style="display: flex; flex-direction: column">
+            <div class="Aa">Aa</div>
+            <div class="ficha">
+              <div><span>Títulos</span><span>Nunito ExtraBold (800) · 28–36 px</span></div>
+              <div><span>Texto</span><span>Nunito SemiBold (600) / Regular · 16 px</span></div>
+              <div><span>Código</span><span>JetBrains Mono (distingue 0/O e 1/l/I)</span></div>
+              <div><span>Grid</span><span>Malha 64×64 · Área livre mínima 1x</span></div>
+              <div><span>Formas</span><span>Cantos arredondados de 12 px a 24 px</span></div>
+              <div><span>Restrição</span><span>Proibido fontes serifadas ou condensadas</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="dentro">
+        <div class="topo"><span>Assinatura e Restrições</span><span>09 / 11</span></div>
+        <h2>Consistência visual em cada <span class="acento">ponto de contato.</span></h2>
+        <div class="pares">
+          <div>
+            <p class="rotulo">O que sustenta a direção</p>
+            <ul>
+              <li>Usar sempre os vetores oficiais sem distorcer proporções</li>
+              <li>Respeitar a zona livre mínima de 1x em todo layout</li>
+              <li>Alternar Light Mode e Dark Mode conforme contraste</li>
+              <li>Manter a grafia oficial CamelCase: LabApp</li>
+            </ul>
+          </div>
+          <div class="fora">
+            <p class="rotulo">O que fica de fora</p>
+            <ul>
+              <li>Fontes serifadas, condensadas rígidas ou manuscritas</li>
+              <li>Preto puro (#000000), neons ou gradientes arco-íris</li>
+              <li>Sombras projetadas duras, relevo 3D ou contornos grossos</li>
+              <li>Remover antenas, ear-pods, visor ou olhos ^ ^ do robô</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide">
+      <div class="dentro">
+        <div class="topo"><span>Aplicações e Assets</span><span>10 / 11</span></div>
+        <h2>Onde o LabBot ganha vida no web e mobile.</h2>
+        <div class="assets">
+          <div>
+            <div>
+              <span>Mobile · iOS &amp; Android</span>
+              <b>App Icon Squircle (1024px)</b>
+              <p>Símbolo ocupando 62%–68% da zona segura em fundo #EAF2FD.</p>
+            </div>
+            <svg viewBox="0 0 128 128" style="width: 5.5cqw; height: 5.5cqw;" role="img" aria-label="App Icon">
+              <rect x="4" y="4" width="120" height="120" rx="28" fill="#EAF2FD" stroke="#DCE6F4" stroke-width="2"/>
+              <g transform="translate(22, 22) scale(1.3125)">
+                <path d="M 6.5 31 L 7.5 16.5 C 7.7 14.6 9.1 13.6 10.7 14.2 L 12 14.7 C 12.8 15 13 15.8 13 17 L 13 31 Z" fill="#6CD9B4"/>
+                <path d="M 57.5 31 L 56.5 16.5 C 56.3 14.6 54.9 13.6 53.3 14.2 L 52 14.7 C 51.2 15 51 15.8 51 17 L 51 31 Z" fill="#6CD9B4"/>
+                <path d="M 24 19 L 25.5 12.8 C 26 11.2 27.4 10.5 29 10.5 L 35 10.5 C 36.6 10.5 38 11.2 38.5 12.8 L 40 19 Z" fill="#64A8F5"/>
+                <rect x="4" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+                <rect x="52" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+                <path d="M 32 17 C 46.5 17 55 25 55 36 C 55 46.5 46.5 53 32 53 C 17.5 53 9 46.5 9 36 C 9 25 17.5 17 32 17 Z" fill="#64A8F5"/>
+                <path d="M 32 24 C 43.5 24 50 28 50 36 C 50 43.5 44.5 47.5 38.5 47.5 C 35.5 47.5 33.8 46 32 46 C 30.2 46 28.5 47.5 25.5 47.5 C 19.5 47.5 14 43.5 14 36 C 14 28 20.5 24 32 24 Z" fill="#235BB5"/>
+                <path d="M 20.5 37.2 Q 24.2 32.2 27.9 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+                <path d="M 36.1 37.2 Q 39.8 32.2 43.5 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+              </g>
+            </svg>
+          </div>
+
+          <div>
+            <div>
+              <span>Web · Navegador</span>
+              <b>Favicon &amp; Navbar Toggle</b>
+              <p>Símbolo isolado em 16×16 px; logo alterna entre Light e Dark.</p>
+            </div>
+            <div style="padding: 0.6cqw 1cqw; border-radius: 0.8cqw; border: 1px solid var(--fio); display: flex; align-items: center; gap: 0.6cqw; font-size: 0.85cqw; font-weight: 800;">
+              <svg viewBox="0 0 64 64" style="width: 1.4cqw; height: 1.4cqw;" role="img" aria-label="Favicon">
+                <path d="M 6.5 31 L 7.5 16.5 C 7.7 14.6 9.1 13.6 10.7 14.2 L 12 14.7 C 12.8 15 13 15.8 13 17 L 13 31 Z" fill="#6CD9B4"/>
+                <path d="M 57.5 31 L 56.5 16.5 C 56.3 14.6 54.9 13.6 53.3 14.2 L 52 14.7 C 51.2 15 51 15.8 51 17 L 51 31 Z" fill="#6CD9B4"/>
+                <path d="M 32 17 C 46.5 17 55 25 55 36 C 55 46.5 46.5 53 32 53 C 17.5 53 9 46.5 9 36 C 9 25 17.5 17 32 17 Z" fill="#64A8F5"/>
+                <path d="M 32 24 C 43.5 24 50 28 50 36 C 50 43.5 44.5 47.5 38.5 47.5 C 35.5 47.5 33.8 46 32 46 C 30.2 46 28.5 47.5 25.5 47.5 C 19.5 47.5 14 43.5 14 36 C 14 28 20.5 24 32 24 Z" fill="#235BB5"/>
+                <path d="M 20.5 37.2 Q 24.2 32.2 27.9 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+                <path d="M 36.1 37.2 Q 39.8 32.2 43.5 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+              </svg>
+              <span>LabApp</span>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              <span>Motion · Ref. Duolingo</span>
+              <b>Microinterações do LabBot</b>
+              <p>Antenas pulsam ao conectar Arduino; olhos ^ ^ piscam no loading.</p>
+              <div style="display: flex; gap: 0.5cqw; margin-top: 0.7cqw;">
+                <button id="btn-pulse-led" class="btn-mini" type="button">Pulsar Antenas</button>
+                <button id="btn-blink-eyes" class="btn-mini" type="button">Piscar Olhos</button>
+              </div>
+            </div>
+            <svg viewBox="0 0 64 64" style="width: 5cqw; height: 5cqw;" role="img" aria-label="LabBot Interativo">
+              <path class="interactive-antenna" d="M 6.5 31 L 7.5 16.5 C 7.7 14.6 9.1 13.6 10.7 14.2 L 12 14.7 C 12.8 15 13 15.8 13 17 L 13 31 Z" fill="#6CD9B4"/>
+              <path class="interactive-antenna" d="M 57.5 31 L 56.5 16.5 C 56.3 14.6 54.9 13.6 53.3 14.2 L 52 14.7 C 51.2 15 51 15.8 51 17 L 51 31 Z" fill="#6CD9B4"/>
+              <path d="M 24 19 L 25.5 12.8 C 26 11.2 27.4 10.5 29 10.5 L 35 10.5 C 36.6 10.5 38 11.2 38.5 12.8 L 40 19 Z" fill="#64A8F5"/>
+              <rect x="4" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+              <rect x="52" y="28.5" width="8" height="14.5" rx="4" fill="#3B82D6"/>
+              <path d="M 32 17 C 46.5 17 55 25 55 36 C 55 46.5 46.5 53 32 53 C 17.5 53 9 46.5 9 36 C 9 25 17.5 17 32 17 Z" fill="#64A8F5"/>
+              <path d="M 32 24 C 43.5 24 50 28 50 36 C 50 43.5 44.5 47.5 38.5 47.5 C 35.5 47.5 33.8 46 32 46 C 30.2 46 28.5 47.5 25.5 47.5 C 19.5 47.5 14 43.5 14 36 C 14 28 20.5 24 32 24 Z" fill="#235BB5"/>
+              <path class="interactive-eye" d="M 20.5 37.2 Q 24.2 32.2 27.9 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+              <path class="interactive-eye" d="M 36.1 37.2 Q 39.8 32.2 43.5 37.2" fill="none" stroke="#FFFFFF" stroke-width="3.4" stroke-linecap="round"/>
+            </svg>
+          </div>
+
+          <div>
+            <div>
+              <span>Produto · Lições</span>
+              <b>Gamificação &amp; Código</b>
+              <p>Badges Sunny Amber (+50 XP) e alertas gentis Soft Coral (#F78C8C).</p>
+            </div>
+            <span style="padding: 0.45cqw 0.9cqw; border-radius: 999px; background: rgba(255,209,102,0.28); color: #9A6700; font-size: 0.95cqw; font-weight: 800;">+50 XP</span>
+          </div>
+        </div>
+        <p class="assets-fora">Fica de fora: ilustrações 3D pesadas no logotipo, engrenagens industriais rígidas e gradientes metálicos.</p>
+      </div>
+    </section>
+
+    <section class="slide escuro">
+      <div class="dentro">
+        <div class="topo"><span>Entregáveis e Próximos Passos</span><span>11 / 11</span></div>
+        <h2>Da identidade aprovada<br>ao produto no ar.</h2>
+        <div class="colunas base" style="--n: 3">
+          <div>
+            <span class="num">01</span>
+            <b>Ativos Vetoriais (SVG)</b>
+            <p>Símbolo LabBot, versões Light/Dark, vertical, grid e App Icon.</p>
+            <a class="link-arquivo" href="assets/labapp-logo-light.svg" target="_blank">Abrir Logo Light →</a>
+          </div>
+          <div>
+            <span class="num">02</span>
+            <b>Tokens Light &amp; Dark</b>
+            <p>Variáveis CSS e JSON prontas para implementar o switch de tema no site.</p>
+            <a class="link-arquivo" href="tokens/theme-colors.css" target="_blank">Abrir CSS Tokens →</a>
+          </div>
+          <div>
+            <span class="num">03</span>
+            <b>Documento Completo</b>
+            <p>Especificação técnica em Markdown com regras, cores e tipografia.</p>
+            <a class="link-arquivo" href="logo-design-document.md" target="_blank">Abrir Documento →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="copy-toast" class="lab-toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

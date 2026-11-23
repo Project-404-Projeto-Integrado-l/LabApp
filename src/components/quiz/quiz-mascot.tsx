@@ -40,25 +40,31 @@ export function QuizMascot({ pose, dialogueText, className = "" }: QuizMascotPro
   return (
     <div className={`flex flex-col items-center justify-end relative select-none ${className}`}>
       {/* Speech bubble */}
-      <div className="relative mb-3 max-w-[260px] bg-[#2a2a2a] border border-[#5e5e5e] text-white px-4 py-3 rounded-2xl shadow-xl transition-all duration-300 animate-fade-in">
-        <p className="text-xs sm:text-sm font-medium leading-snug text-gray-200">
+      <div className="relative mb-3 max-w-[260px] bg-lab-surface border border-lab-border text-lab-text px-4 py-3 rounded-2xl shadow-md transition-all duration-300 animate-fade-in">
+        <p className="text-xs sm:text-sm font-semibold leading-snug text-lab-text">
           {speech}
         </p>
         {/* Tail of speech bubble */}
-        <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px] border-t-[#5e5e5e]" />
-        <div className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-t-[7px] border-t-[#2a2a2a]" />
+        <div
+          className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[8px]"
+          style={{ borderTopColor: "var(--lab-border-subtle)" }}
+        />
+        <div
+          className="absolute -bottom-[7px] left-1/2 -translate-x-1/2 w-0 h-0 border-l-[7px] border-l-transparent border-r-[7px] border-r-transparent border-t-[7px]"
+          style={{ borderTopColor: "var(--lab-bg-surface)" }}
+        />
       </div>
 
       {/* Mascot character container */}
       <div className="relative w-44 sm:w-52 h-64 sm:h-72 flex items-center justify-center">
         {/* Background ambient circular glow behind character */}
         <div
-          className={`absolute inset-4 rounded-full blur-xl transition-colors duration-500 opacity-25 ${
+          className={`absolute inset-4 rounded-full blur-xl transition-colors duration-500 opacity-30 ${
             pose === "happy"
-              ? "bg-emerald-500"
+              ? "bg-lab-secondary"
               : pose === "nervous"
-              ? "bg-rose-500"
-              : "bg-[#883cec]"
+              ? "bg-lab-coral"
+              : "bg-lab-primary"
           }`}
         />
 
@@ -76,4 +82,3 @@ export function QuizMascot({ pose, dialogueText, className = "" }: QuizMascotPro
     </div>
   );
 }
-

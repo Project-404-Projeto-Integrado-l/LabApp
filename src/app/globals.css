@@ -2,14 +2,46 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark *, [data-theme="dark"] *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-exo-2);
-  --font-mono: var(--font-geist-mono);
-  --font-heading: var(--font-exo-2);
+  --font-sans: var(--font-nunito), "Quicksand", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), monospace;
+  --font-heading: var(--font-nunito), "Quicksand", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+
+  /* LabApp Official Brand Tokens */
+  --color-lab-primary: var(--lab-color-primary);
+  --color-lab-primary-strong: var(--lab-color-primary-strong);
+  --color-lab-primary-hover: var(--lab-primary-hover);
+  --color-lab-primary-btn-text: var(--lab-primary-btn-text);
+  --color-lab-secondary: var(--lab-color-secondary);
+  --color-lab-lavender: var(--lab-color-accent-lavender);
+  --color-lab-amber: var(--lab-color-accent-amber);
+  --color-lab-coral: var(--lab-color-feedback-coral);
+  --color-lab-canvas: var(--lab-bg-canvas);
+  --color-lab-surface: var(--lab-bg-surface);
+  --color-lab-tint: var(--lab-bg-tint);
+  --color-lab-border: var(--lab-border-subtle);
+  --color-lab-text: var(--lab-text-primary);
+  --color-lab-muted: var(--lab-text-secondary);
+  --color-lab-success-bg: var(--lab-success-bg);
+  --color-lab-success-border: var(--lab-success-border);
+  --color-lab-success-text: var(--lab-success-text);
+  --color-lab-error-bg: var(--lab-error-bg);
+  --color-lab-error-border: var(--lab-error-border);
+  --color-lab-error-text: var(--lab-error-text);
+  --color-lab-amber-bg: var(--lab-amber-bg);
+  --color-lab-amber-border: var(--lab-amber-border);
+  --color-lab-amber-text: var(--lab-amber-text);
+  --color-lab-lavender-bg: var(--lab-lavender-bg);
+  --color-lab-lavender-border: var(--lab-lavender-border);
+  --color-lab-lavender-text: var(--lab-lavender-text);
+  --color-lab-code-bg: var(--lab-code-bg);
+  --color-lab-code-border: var(--lab-code-border);
+  --color-lab-code-text: var(--lab-code-text);
+
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -42,79 +74,152 @@
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --radius-xl: calc(var(--radius) * 1.25);
+  --radius-2xl: calc(var(--radius) * 1.5);
+  --radius-3xl: calc(var(--radius) * 2);
+  --radius-4xl: calc(var(--radius) * 2.5);
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Official Light Mode Tokens (docs/identidade-visual/tokens/theme-colors.css) */
+  --lab-color-primary: #64A8F5;
+  --lab-color-primary-strong: #3B82D6;
+  --lab-color-secondary: #6CD9B4;
+  --lab-color-accent-lavender: #A799F5;
+  --lab-color-accent-amber: #FFD166;
+  --lab-color-feedback-coral: #F78C8C;
+  --lab-bg-canvas: #F7FAFE;
+  --lab-bg-surface: #FFFFFF;
+  --lab-bg-tint: #EAF2FD;
+  --lab-border-subtle: #DCE6F4;
+  --lab-text-primary: #1E2B3C;
+  --lab-text-secondary: #5C6F87;
+  --lab-icon-face: #FFFFFF;
+  --lab-icon-visor: #235BB5;
+
+  /* Derived UI & Semantic States (Light Mode) */
+  --lab-primary-btn-text: #FFFFFF;
+  --lab-primary-hover: #3B82D6;
+  --lab-success-bg: #E8F9F3;
+  --lab-success-border: #6CD9B4;
+  --lab-success-text: #146C50;
+  --lab-error-bg: #FEF1F1;
+  --lab-error-border: #F78C8C;
+  --lab-error-text: #A83535;
+  --lab-amber-bg: #FFF7E0;
+  --lab-amber-border: #FFD166;
+  --lab-amber-text: #8C5C00;
+  --lab-lavender-bg: #F1EFFD;
+  --lab-lavender-border: #A799F5;
+  --lab-lavender-text: #4F42A3;
+  --lab-dot-color: #C5D6EC;
+  --lab-code-bg: #121926;
+  --lab-code-border: #2E3E5C;
+  --lab-code-text: #F1F6FC;
+
+  --background: var(--lab-bg-canvas);
+  --foreground: var(--lab-text-primary);
+  --card: var(--lab-bg-surface);
+  --card-foreground: var(--lab-text-primary);
+  --popover: var(--lab-bg-surface);
+  --popover-foreground: var(--lab-text-primary);
+  --primary: var(--lab-color-primary);
+  --primary-foreground: var(--lab-primary-btn-text);
+  --secondary: var(--lab-bg-tint);
+  --secondary-foreground: var(--lab-text-primary);
+  --muted: var(--lab-bg-tint);
+  --muted-foreground: var(--lab-text-secondary);
+  --accent: var(--lab-bg-tint);
+  --accent-foreground: var(--lab-text-primary);
+  --destructive: var(--lab-color-feedback-coral);
+  --border: var(--lab-border-subtle);
+  --input: var(--lab-border-subtle);
+  --ring: var(--lab-color-primary);
+  --chart-1: #64A8F5;
+  --chart-2: #6CD9B4;
+  --chart-3: #A799F5;
+  --chart-4: #FFD166;
+  --chart-5: #F78C8C;
+  --radius: 1rem;
+  --sidebar: var(--lab-bg-surface);
+  --sidebar-foreground: var(--lab-text-primary);
+  --sidebar-primary: var(--lab-color-primary);
+  --sidebar-primary-foreground: var(--lab-primary-btn-text);
+  --sidebar-accent: var(--lab-bg-tint);
+  --sidebar-accent-foreground: var(--lab-text-primary);
+  --sidebar-border: var(--lab-border-subtle);
+  --sidebar-ring: var(--lab-color-primary);
 }
 
+[data-theme="dark"],
 .dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+  /* Official Dark Mode Tokens (docs/identidade-visual/tokens/theme-colors.css) */
+  --lab-color-primary: #7BB8FA;
+  --lab-color-primary-strong: #9AC9FC;
+  --lab-color-secondary: #7CE6C2;
+  --lab-color-accent-lavender: #B9AEFA;
+  --lab-color-accent-amber: #FFE08A;
+  --lab-color-feedback-coral: #FA9E9E;
+  --lab-bg-canvas: #121926;
+  --lab-bg-surface: #1B2538;
+  --lab-bg-tint: #24324A;
+  --lab-border-subtle: #2E3E5C;
+  --lab-text-primary: #F1F6FC;
+  --lab-text-secondary: #9FB2CC;
+  --lab-icon-face: #121926;
+  --lab-icon-visor: #121926;
+
+  /* Derived UI & Semantic States (Dark Mode) */
+  --lab-primary-btn-text: #121926;
+  --lab-primary-hover: #9AC9FC;
+  --lab-success-bg: rgba(124, 230, 194, 0.12);
+  --lab-success-border: rgba(124, 230, 194, 0.45);
+  --lab-success-text: #7CE6C2;
+  --lab-error-bg: rgba(250, 158, 158, 0.12);
+  --lab-error-border: rgba(250, 158, 158, 0.45);
+  --lab-error-text: #FA9E9E;
+  --lab-amber-bg: rgba(255, 224, 138, 0.12);
+  --lab-amber-border: rgba(255, 224, 138, 0.45);
+  --lab-amber-text: #FFE08A;
+  --lab-lavender-bg: rgba(185, 174, 250, 0.14);
+  --lab-lavender-border: rgba(185, 174, 250, 0.45);
+  --lab-lavender-text: #B9AEFA;
+  --lab-dot-color: #2E3E5C;
+  --lab-code-bg: #0D131F;
+  --lab-code-border: #2E3E5C;
+  --lab-code-text: #F1F6FC;
+
+  --background: var(--lab-bg-canvas);
+  --foreground: var(--lab-text-primary);
+  --card: var(--lab-bg-surface);
+  --card-foreground: var(--lab-text-primary);
+  --popover: var(--lab-bg-surface);
+  --popover-foreground: var(--lab-text-primary);
+  --primary: var(--lab-color-primary);
+  --primary-foreground: var(--lab-primary-btn-text);
+  --secondary: var(--lab-bg-tint);
+  --secondary-foreground: var(--lab-text-primary);
+  --muted: var(--lab-bg-tint);
+  --muted-foreground: var(--lab-text-secondary);
+  --accent: var(--lab-bg-tint);
+  --accent-foreground: var(--lab-text-primary);
+  --destructive: var(--lab-color-feedback-coral);
+  --border: var(--lab-border-subtle);
+  --input: var(--lab-border-subtle);
+  --ring: var(--lab-color-primary);
+  --chart-1: #7BB8FA;
+  --chart-2: #7CE6C2;
+  --chart-3: #B9AEFA;
+  --chart-4: #FFE08A;
+  --chart-5: #FA9E9E;
+  --sidebar: var(--lab-bg-surface);
+  --sidebar-foreground: var(--lab-text-primary);
+  --sidebar-primary: var(--lab-color-primary);
+  --sidebar-primary-foreground: var(--lab-primary-btn-text);
+  --sidebar-accent: var(--lab-bg-tint);
+  --sidebar-accent-foreground: var(--lab-text-primary);
+  --sidebar-border: var(--lab-border-subtle);
+  --sidebar-ring: var(--lab-color-primary);
 }
 
 @layer base {
@@ -122,9 +227,15 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-lab-canvas text-lab-text transition-colors duration-200;
+    -webkit-font-smoothing: antialiased;
   }
   html {
     @apply font-sans;
   }
+}
+
+.lab-dot-grid {
+  background-image: radial-gradient(var(--lab-dot-color) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
 }
