@@ -1,26 +1,50 @@
 import type { Metadata } from "next";
-import { Exo_2 } from "next/font/google";
+import { Nunito, JetBrains_Mono } from "next/font/google";
 import { SoundProvider } from "@/providers/sound-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 import "./globals.css";
 
-const exo2 = Exo_2({
+const nunito = Nunito({
   subsets: ["latin"],
-  variable: "--font-exo-2",
+  weight: ["400", "600", "700", "800"],
+  variable: "--font-nunito",
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   title: "LabApp — Plataforma Gamificada de Ensino de Robótica",
-  description: "Plataforma gamificada para o ensino lúdico e interativo de robótica básica, eletrônica e programação com Arduino.",
+  description:
+    "Plataforma gamificada para o ensino lúdico e interativo de robótica básica, eletrônica e programação com Arduino.",
+  icons: {
+    icon: "/brand/labapp-symbol.svg",
+    apple: "/brand/labapp-app-icon.svg",
+  },
 };
+
+const themeInitScript = `(function(){try{var t=localStorage.getItem('labapp-theme');if(t==='dark'){document.documentElement.setAttribute('data-theme','dark');document.documentElement.classList.add('dark');}else{document.documentElement.removeAttribute('data-theme');document.documentElement.classList.remove('dark');}}catch(e){}})();`;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt-BR" className={`dark h-full antialiased ${exo2.variable}`}>
-      <body className="min-h-full bg-[#212121] text-[#F6F6F9] font-sans flex flex-col">
-        <SoundProvider>{children}</SoundProvider>
+    <html
+      lang="pt-BR"
+      suppressHydrationWarning
+      className={`h-full antialiased ${nunito.variable} ${jetbrainsMono.variable}`}
+    >
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
+      <body className="min-h-full bg-lab-canvas text-lab-text font-sans flex flex-col">
+        <ThemeProvider>
+          <SoundProvider>{children}</SoundProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
 }
-

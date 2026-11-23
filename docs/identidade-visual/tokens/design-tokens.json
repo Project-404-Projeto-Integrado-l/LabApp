@@ -1,0 +1,47 @@
+{
+  "brand": "LabApp",
+  "typography": {
+    "primary": "Nunito",
+    "code": "JetBrains Mono",
+    "weights": {
+      "regular": 400,
+      "semibold": 600,
+      "bold": 700,
+      "extrabold": 800
+    }
+  },
+  "themes": {
+    "light": {
+      "primary": "#64A8F5",
+      "primaryStrong": "#3B82D6",
+      "secondaryMint": "#6CD9B4",
+      "accentLavender": "#A799F5",
+      "accentAmber": "#FFD166",
+      "feedbackCoral": "#F78C8C",
+      "bgCanvas": "#F7FAFE",
+      "bgSurface": "#FFFFFF",
+      "bgTint": "#EAF2FD",
+      "borderSubtle": "#DCE6F4",
+      "textPrimary": "#1E2B3C",
+      "textSecondary": "#5C6F87",
+      "iconFace": "#FFFFFF",
+      "iconVisor": "#235BB5"
+    },
+    "dark": {
+      "primary": "#7BB8FA",
+      "primaryStrong": "#9AC9FC",
+      "secondaryMint": "#7CE6C2",
+      "accentLavender": "#B9AEFA",
+      "accentAmber": "#FFE08A",
+      "feedbackCoral": "#FA9E9E",
+      "bgCanvas": "#121926",
+      "bgSurface": "#1B2538",
+      "bgTint": "#24324A",
+      "borderSubtle": "#2E3E5C",
+      "textPrimary": "#F1F6FC",
+      "textSecondary": "#9FB2CC",
+      "iconFace": "#121926",
+      "iconVisor": "#121926"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+:root {
+  --lab-color-primary: #64A8F5;
+  --lab-color-primary-strong: #3B82D6;
+  --lab-color-secondary: #6CD9B4;
+  --lab-color-accent-lavender: #A799F5;
+  --lab-color-accent-amber: #FFD166;
+  --lab-color-feedback-coral: #F78C8C;
+  --lab-bg-canvas: #F7FAFE;
+  --lab-bg-surface: #FFFFFF;
+  --lab-bg-tint: #EAF2FD;
+  --lab-border-subtle: #DCE6F4;
+  --lab-text-primary: #1E2B3C;
+  --lab-text-secondary: #5C6F87;
+  --lab-icon-face: #FFFFFF;
+  --lab-icon-visor: #235BB5;
+}
+
+[data-theme="dark"] {
+  --lab-color-primary: #7BB8FA;
+  --lab-color-primary-strong: #9AC9FC;
+  --lab-color-secondary: #7CE6C2;
+  --lab-color-accent-lavender: #B9AEFA;
+  --lab-color-accent-amber: #FFE08A;
+  --lab-color-feedback-coral: #FA9E9E;
+  --lab-bg-canvas: #121926;
+  --lab-bg-surface: #1B2538;
+  --lab-bg-tint: #24324A;
+  --lab-border-subtle: #2E3E5C;
+  --lab-text-primary: #F1F6FC;
+  --lab-text-secondary: #9FB2CC;
+  --lab-icon-face: #121926;
+  --lab-icon-visor: #121926;
+}

@@ -1,21 +1,21 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { 
-  BadgeHelp, 
-  Plus, 
-  Search, 
-  Edit3, 
-  Trash2, 
-  CheckCircle2, 
-  HelpCircle, 
-  RotateCcw, 
-  X, 
+import {
+  BadgeHelp,
+  Plus,
+  Search,
+  Edit3,
+  Trash2,
+  CheckCircle2,
+  HelpCircle,
+  RotateCcw,
+  X,
   Map,
   Layers,
   AlertCircle,
   FileQuestion,
-  Info
+  Info,
 } from "lucide-react";
 import { Header } from "@/components/header";
 import { supabase, QuizQuestion } from "@/lib/supabase";
@@ -29,7 +29,7 @@ const SAMPLE_QUESTIONS: QuizQuestion[] = [
     correct_option_index: 1,
     explanation: "GND significa Ground (Terra) e representa o polo negativo/referência de 0V no circuito.",
     category: "eletronica",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
   },
   {
     id: "00000000-0000-0000-0000-000000000002",
@@ -38,7 +38,7 @@ const SAMPLE_QUESTIONS: QuizQuestion[] = [
     correct_option_index: 1,
     explanation: "A função void loop() roda continuamente enquanto o Arduino estiver ligado.",
     category: "programacao",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
   },
   {
     id: "00000000-0000-0000-0000-000000000003",
@@ -47,7 +47,7 @@ const SAMPLE_QUESTIONS: QuizQuestion[] = [
     correct_option_index: 1,
     explanation: "O resistor limita a corrente elétrica que passa pelo LED, impedindo sobrecarga térmica.",
     category: "eletronica",
-    created_at: new Date().toISOString()
+    created_at: new Date().toISOString(),
   },
   {
     id: "00000000-0000-0000-0000-000000000004",
@@ -56,8 +56,8 @@ const SAMPLE_QUESTIONS: QuizQuestion[] = [
     correct_option_index: 1,
     explanation: "No Arduino Uno (baseado em 5V), o estado HIGH fornece uma tensão contínua de 5 Volts.",
     category: "hardware",
-    created_at: new Date().toISOString()
-  }
+    created_at: new Date().toISOString(),
+  },
 ];
 
 export default function AdminQuizPage() {
@@ -71,7 +71,6 @@ export default function AdminQuizPage() {
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [toastMessage, setToastMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
 
-  // Form states
   const [formQuestion, setFormQuestion] = useState("");
   const [formCategory, setFormCategory] = useState("eletronica");
   const [formOptions, setFormOptions] = useState<string[]>(["", "", "", ""]);
@@ -106,7 +105,7 @@ export default function AdminQuizPage() {
       } else {
         const formatted: QuizQuestion[] = data.map((item) => ({
           ...item,
-          options: typeof item.options === "string" ? JSON.parse(item.options) : item.options
+          options: typeof item.options === "string" ? JSON.parse(item.options) : item.options,
         }));
         setQuestions(formatted);
         setIsOfflineMode(false);
@@ -141,7 +140,7 @@ export default function AdminQuizPage() {
         } else {
           const formatted: QuizQuestion[] = data.map((item) => ({
             ...item,
-            options: typeof item.options === "string" ? JSON.parse(item.options) : item.options
+            options: typeof item.options === "string" ? JSON.parse(item.options) : item.options,
           }));
           setQuestions(formatted);
           setIsOfflineMode(false);
@@ -208,8 +207,8 @@ export default function AdminQuizPage() {
       return;
     }
 
-    const filledOptions = formOptions.map(opt => opt.trim());
-    if (filledOptions.some(opt => opt === "")) {
+    const filledOptions = formOptions.map((opt) => opt.trim());
+    if (filledOptions.some((opt) => opt === "")) {
       showToast("Por favor, preencha as 4 opções de resposta.", "error");
       return;
     }
@@ -221,12 +220,11 @@ export default function AdminQuizPage() {
       options: filledOptions,
       correct_option_index: formCorrectIndex,
       explanation: formExplanation.trim(),
-      category: formCategory.toLowerCase().trim()
+      category: formCategory.toLowerCase().trim(),
     };
 
     try {
       if (editingQuestion) {
-        // Update
         const { error } = await supabase
           .from("quiz_questions")
           .update(payload)
@@ -235,13 +233,12 @@ export default function AdminQuizPage() {
         if (error) {
           console.error("Erro ao atualizar no Supabase:", error);
           showToast(`Aviso: ${formatErrorMessage(error)}`, "error");
-          setQuestions(prev => prev.map(q => q.id === editingQuestion.id ? { ...q, ...payload } : q));
+          setQuestions((prev) => prev.map((q) => (q.id === editingQuestion.id ? { ...q, ...payload } : q)));
         } else {
           showToast("Pergunta atualizada no banco de dados com sucesso!");
           await fetchQuestions();
         }
       } else {
-        // Create
         const { error } = await supabase
           .from("quiz_questions")
           .insert([payload]);
@@ -249,13 +246,13 @@ export default function AdminQuizPage() {
         if (error) {
           console.error("Erro ao inserir no Supabase:", error);
           showToast(`Aviso: ${formatErrorMessage(error)}`, "error");
-          const localUuid = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `00000000-0000-0000-0000-${Date.now().toString().padStart(12, '0')}`;
+          const localUuid = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `00000000-0000-0000-0000-${Date.now().toString().padStart(12, "0")}`;
           const newLocalQuestion: QuizQuestion = {
             id: localUuid,
             ...payload,
-            created_at: new Date().toISOString()
+            created_at: new Date().toISOString(),
           };
-          setQuestions(prev => [newLocalQuestion, ...prev]);
+          setQuestions((prev) => [newLocalQuestion, ...prev]);
         } else {
           showToast("Nova pergunta criada e salva no banco!");
           await fetchQuestions();
@@ -266,11 +263,11 @@ export default function AdminQuizPage() {
     } catch (err: unknown) {
       console.error("Erro ao salvar:", err);
       showToast(`Erro ao salvar: ${formatErrorMessage(err)}`, "error");
-      const localUuid = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `00000000-0000-0000-0000-${Date.now().toString().padStart(12, '0')}`;
+      const localUuid = typeof crypto !== "undefined" && crypto.randomUUID ? crypto.randomUUID() : `00000000-0000-0000-0000-${Date.now().toString().padStart(12, "0")}`;
       if (!editingQuestion) {
-        setQuestions(prev => [{ id: localUuid, ...payload, created_at: new Date().toISOString() }, ...prev]);
+        setQuestions((prev) => [{ id: localUuid, ...payload, created_at: new Date().toISOString() }, ...prev]);
       } else {
-        setQuestions(prev => prev.map(q => q.id === editingQuestion.id ? { ...q, ...payload } : q));
+        setQuestions((prev) => prev.map((q) => (q.id === editingQuestion.id ? { ...q, ...payload } : q)));
       }
       setIsModalOpen(false);
     } finally {
@@ -291,10 +288,10 @@ export default function AdminQuizPage() {
       } else {
         showToast("Pergunta excluída do banco de dados!");
       }
-      setQuestions(prev => prev.filter(q => q.id !== id));
+      setQuestions((prev) => prev.filter((q) => q.id !== id));
     } catch (err: unknown) {
       console.error("Erro ao excluir:", err);
-      setQuestions(prev => prev.filter(q => q.id !== id));
+      setQuestions((prev) => prev.filter((q) => q.id !== id));
       showToast("Pergunta removida localmente.", "error");
     } finally {
       setDeleteConfirmId(null);
@@ -304,12 +301,12 @@ export default function AdminQuizPage() {
   const handleRestoreDefaults = async () => {
     setLoading(true);
     try {
-      const sampleData = SAMPLE_QUESTIONS.map(q => ({
+      const sampleData = SAMPLE_QUESTIONS.map((q) => ({
         question: q.question,
         options: q.options,
         correct_option_index: q.correct_option_index,
         explanation: q.explanation,
-        category: q.category
+        category: q.category,
       }));
 
       const { error } = await supabase
@@ -333,72 +330,62 @@ export default function AdminQuizPage() {
     }
   };
 
-  // Categories list
-  const categoriesList = Array.from(new Set(questions.map(q => q.category || "geral")));
+  const categoriesList = Array.from(new Set(questions.map((q) => q.category || "geral")));
 
-  // Filtered Questions
-  const filteredQuestions = questions.filter(q => {
-    const matchesSearch = 
+  const filteredQuestions = questions.filter((q) => {
+    const matchesSearch =
       q.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (q.explanation && q.explanation.toLowerCase().includes(searchTerm.toLowerCase()));
-    
+
     const matchesCategory = selectedCategory === "todas" || (q.category || "geral").toLowerCase() === selectedCategory.toLowerCase();
 
     return matchesSearch && matchesCategory;
   });
 
   return (
-    <div className="relative min-h-screen bg-[#212121] text-white font-sans flex flex-col justify-between">
-      {/* Background Dot Pattern */}
-      <div 
-        className="absolute inset-0 opacity-15 pointer-events-none"
-        style={{
-          backgroundImage: `radial-gradient(#cccccc 1.5px, transparent 1.5px)`,
-          backgroundSize: `24px 24px`
-        }}
-      />
+    <div className="relative min-h-screen bg-lab-canvas text-lab-text font-sans flex flex-col justify-between">
+      <div className="absolute inset-0 opacity-55 dark:opacity-35 pointer-events-none lab-dot-grid" />
 
       <Header />
 
-      {/* Notification Toast */}
       {toastMessage && (
-        <div className={`fixed top-28 right-6 z-50 flex items-center gap-3 px-5 py-4 rounded-lg border shadow-xl text-white transition-all transform translate-y-0 ${
-          toastMessage.type === "error" ? "bg-red-900/90 border-red-500 text-white" : "bg-[#883cec] border-[#a855f7] text-white"
+        <div className={`fixed top-28 right-6 z-50 flex items-center gap-3 px-5 py-4 rounded-2xl border shadow-xl transition-all ${
+          toastMessage.type === "error"
+            ? "bg-lab-error-bg border-lab-error-border text-lab-error-text"
+            : "bg-lab-success-bg border-lab-success-border text-lab-success-text"
         }`}>
-          {toastMessage.type === "error" ? <AlertCircle className="w-5 h-5" /> : <CheckCircle2 className="w-5 h-5 text-white" />}
-          <span className="font-medium text-sm md:text-base">{toastMessage.text}</span>
+          {toastMessage.type === "error" ? <AlertCircle className="w-5 h-5" /> : <CheckCircle2 className="w-5 h-5" />}
+          <span className="font-bold text-sm md:text-base">{toastMessage.text}</span>
         </div>
       )}
 
       <main className="relative z-10 flex-1 max-w-[1216px] w-full mx-auto px-6 lg:px-0 py-12 flex flex-col gap-10">
-        
-        {/* Offline / Paused Supabase Project Banner */}
         {isOfflineMode && (
-          <div className="bg-amber-950/70 border border-amber-500/60 p-5 rounded-lg text-amber-100 flex items-start gap-4 shadow-xl">
-            <AlertCircle className="w-6 h-6 text-amber-400 flex-shrink-0 mt-0.5" />
+          <div className="bg-lab-amber-bg border border-lab-amber-border p-5 rounded-2xl text-lab-text flex items-start gap-4 shadow-sm">
+            <AlertCircle className="w-6 h-6 text-lab-amber-text flex-shrink-0 mt-0.5" />
             <div className="flex flex-col gap-1">
-              <strong className="font-bold text-amber-300 text-base">
+              <strong className="font-extrabold text-lab-amber-text text-base">
                 Banco Supabase Indisponível (Modo de Demonstração Local Ativo)
               </strong>
-              <p className="text-amber-200/90 text-sm leading-relaxed">
-                O servidor do Supabase (<code className="bg-black/40 px-1.5 py-0.5 rounded text-amber-300 font-mono text-xs">tukgaroslokvosweqdiz.supabase.co</code>) não está respondendo. Projetos gratuitos no Supabase entram em pausa automaticamente por inatividade. Para reativar o banco remoto, acesse o <strong>Dashboard do Supabase</strong> e clique em <em>Restore project</em>. Suas edições continuam funcionando localmente durante esta sessão.
+              <p className="text-lab-muted text-sm leading-relaxed">
+                O servidor do Supabase (<code className="bg-lab-code-bg text-[#7BB8FA] px-1.5 py-0.5 rounded font-mono text-xs">tukgaroslokvosweqdiz.supabase.co</code>) não está respondendo. Projetos gratuitos no Supabase entram em pausa automaticamente por inatividade. Para reativar o banco remoto, acesse o <strong className="text-lab-text">Dashboard do Supabase</strong> e clique em <em>Restore project</em>. Suas edições continuam funcionando localmente durante esta sessão.
               </p>
             </div>
           </div>
         )}
 
         {/* Header Title Section */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-[#262626] border border-[#5e5e5e] p-8 rounded-lg shadow-lg">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 bg-lab-surface border border-lab-border p-8 rounded-2xl shadow-sm">
           <div className="flex flex-col gap-2">
             <div className="flex items-center gap-3">
-              <div className="p-3 bg-[#883cec]/20 border border-[#883cec] rounded-lg">
-                <FileQuestion className="w-8 h-8 text-[#883cec]" />
+              <div className="p-3 bg-lab-tint border border-lab-border rounded-xl">
+                <FileQuestion className="w-8 h-8 text-lab-primary-strong" />
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-white tracking-tight">
+                <h1 className="text-3xl font-extrabold text-lab-text tracking-tight">
                   Gerenciamento de Quiz
                 </h1>
-                <p className="text-gray-300 text-sm md:text-base">
+                <p className="text-lab-muted text-sm md:text-base font-semibold">
                   Crie, edite e remova perguntas e respostas do Quiz de Robótica e Eletrônica.
                 </p>
               </div>
@@ -408,18 +395,18 @@ export default function AdminQuizPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={handleRestoreDefaults}
-              className="bg-[#333333] hover:bg-[#444444] border border-[#5e5e5e] text-white px-4 py-3 rounded-lg font-medium text-sm flex items-center gap-2 transition-colors cursor-pointer"
+              className="bg-lab-tint hover:bg-lab-border/70 border border-lab-border text-lab-text px-4 py-3 rounded-xl font-bold text-sm flex items-center gap-2 transition-colors cursor-pointer"
               title="Restaurar perguntas de exemplo se a lista estiver vazia"
             >
-              <RotateCcw className="w-4 h-4 text-gray-300" />
+              <RotateCcw className="w-4 h-4 text-lab-muted" />
               <span>Restaurar Padrão</span>
             </button>
 
             <button
               onClick={openCreateModal}
-              className="bg-[#883cec] hover:bg-[#722bc9] text-white px-6 py-3 rounded-lg font-medium text-sm md:text-base flex items-center gap-2 shadow-lg transition-colors cursor-pointer"
+              className="bg-lab-primary-strong hover:bg-lab-primary dark:bg-lab-primary dark:hover:bg-lab-primary-strong text-white dark:text-[#121926] px-6 py-3 rounded-xl font-bold text-sm md:text-base flex items-center gap-2 shadow-sm transition-colors cursor-pointer"
             >
-              <Plus className="w-5 h-5 text-white" />
+              <Plus className="w-5 h-5" />
               <span>Nova Pergunta</span>
             </button>
           </div>
@@ -427,73 +414,73 @@ export default function AdminQuizPage() {
 
         {/* Quick Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-[#262626] border border-[#5e5e5e] p-6 rounded-lg flex items-center gap-4 shadow-sm">
-            <div className="p-3 bg-purple-950/50 border border-purple-500/30 rounded-lg">
-              <BadgeHelp className="w-8 h-8 text-purple-400" />
+          <div className="bg-lab-surface border border-lab-border p-6 rounded-2xl flex items-center gap-4 shadow-sm">
+            <div className="p-3 bg-lab-lavender-bg border border-lab-lavender-border rounded-xl">
+              <BadgeHelp className="w-8 h-8 text-lab-lavender-text" />
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-bold text-white">{questions.length}</span>
-              <span className="text-gray-400 text-sm">Total de Perguntas Cadastradas</span>
+              <span className="text-2xl font-extrabold text-lab-text">{questions.length}</span>
+              <span className="text-lab-muted text-sm font-semibold">Total de Perguntas Cadastradas</span>
             </div>
           </div>
 
-          <div className="bg-[#262626] border border-[#5e5e5e] p-6 rounded-lg flex items-center gap-4 shadow-sm">
-            <div className="p-3 bg-blue-950/50 border border-blue-500/30 rounded-lg">
-              <Layers className="w-8 h-8 text-blue-400" />
+          <div className="bg-lab-surface border border-lab-border p-6 rounded-2xl flex items-center gap-4 shadow-sm">
+            <div className="p-3 bg-lab-tint border border-lab-border rounded-xl">
+              <Layers className="w-8 h-8 text-lab-primary-strong" />
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-bold text-white">{categoriesList.length}</span>
-              <span className="text-gray-400 text-sm">Categorias Ativas</span>
+              <span className="text-2xl font-extrabold text-lab-text">{categoriesList.length}</span>
+              <span className="text-lab-muted text-sm font-semibold">Categorias Ativas</span>
             </div>
           </div>
 
-          <div className="bg-[#262626] border border-[#5e5e5e] p-6 rounded-lg flex items-center gap-4 shadow-sm">
-            <div className="p-3 bg-emerald-950/50 border border-emerald-500/30 rounded-lg">
-              <Map className="w-8 h-8 text-emerald-400" />
+          <div className="bg-lab-surface border border-lab-border p-6 rounded-2xl flex items-center gap-4 shadow-sm">
+            <div className="p-3 bg-lab-success-bg border border-lab-success-border rounded-xl">
+              <Map className="w-8 h-8 text-lab-success-text" />
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-bold text-white">{questions.length * 4}</span>
-              <span className="text-gray-400 text-sm">Opções de Resposta Mapeadas</span>
+              <span className="text-2xl font-extrabold text-lab-text">{questions.length * 4}</span>
+              <span className="text-lab-muted text-sm font-semibold">Opções de Resposta Mapeadas</span>
             </div>
           </div>
         </div>
 
         {/* Filters and Search Bar */}
-        <div className="bg-[#262626] border border-[#5e5e5e] p-6 rounded-lg flex flex-col md:flex-row items-center justify-between gap-4">
+        <div className="bg-lab-surface border border-lab-border p-6 rounded-2xl flex flex-col md:flex-row items-center justify-between gap-4 shadow-sm">
           <div className="relative w-full md:w-96">
-            <Search className="w-5 h-5 absolute left-3.5 top-3.5 text-gray-400" />
+            <Search className="w-5 h-5 absolute left-3.5 top-3 text-lab-muted" />
             <input
               type="text"
               placeholder="Buscar pergunta ou explicação..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-[#1c1c1c] border border-[#5e5e5e] rounded-lg pl-10 pr-4 py-2.5 text-white placeholder-gray-400 text-sm focus:outline-none focus:border-[#883cec]"
+              className="w-full bg-lab-tint border border-lab-border rounded-xl pl-10 pr-4 py-2.5 text-lab-text placeholder-lab-muted text-sm focus:outline-none focus:border-lab-primary"
             />
           </div>
 
           <div className="flex items-center gap-2 w-full md:w-auto overflow-x-auto pb-1 md:pb-0">
-            <span className="text-xs uppercase text-gray-400 font-semibold mr-1">Filtrar:</span>
+            <span className="text-xs uppercase text-lab-muted font-extrabold mr-1">Filtrar:</span>
             <button
               onClick={() => setSelectedCategory("todas")}
-              className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap cursor-pointer ${
+              className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap cursor-pointer ${
                 selectedCategory === "todas"
-                  ? "bg-[#883cec] text-white"
-                  : "bg-[#333333] text-gray-300 hover:bg-[#444444]"
+                  ? "bg-lab-primary-strong text-white dark:bg-lab-primary dark:text-[#121926]"
+                  : "bg-lab-tint text-lab-muted hover:text-lab-text"
               }`}
             >
               Todas ({questions.length})
             </button>
-            {categoriesList.map(cat => (
+            {categoriesList.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-3 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap capitalize cursor-pointer ${
+                className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-colors whitespace-nowrap capitalize cursor-pointer ${
                   selectedCategory === cat
-                    ? "bg-[#883cec] text-white"
-                    : "bg-[#333333] text-gray-300 hover:bg-[#444444]"
+                    ? "bg-lab-primary-strong text-white dark:bg-lab-primary dark:text-[#121926]"
+                    : "bg-lab-tint text-lab-muted hover:text-lab-text"
                 }`}
               >
-                {cat} ({questions.filter(q => (q.category || "geral").toLowerCase() === cat.toLowerCase()).length})
+                {cat} ({questions.filter((q) => (q.category || "geral").toLowerCase() === cat.toLowerCase()).length})
               </button>
             ))}
           </div>
@@ -501,20 +488,20 @@ export default function AdminQuizPage() {
 
         {/* Question Cards List */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-20 bg-[#262626] border border-[#5e5e5e] rounded-lg">
-            <div className="w-10 h-10 border-4 border-[#883cec] border-t-transparent rounded-full animate-spin mb-4" />
-            <p className="text-gray-300 text-base">Carregando perguntas do quiz...</p>
+          <div className="flex flex-col items-center justify-center py-20 bg-lab-surface border border-lab-border rounded-2xl">
+            <div className="w-10 h-10 border-4 border-lab-primary border-t-transparent rounded-full animate-spin mb-4" />
+            <p className="text-lab-muted text-base font-semibold">Carregando perguntas do quiz...</p>
           </div>
         ) : filteredQuestions.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-16 px-6 bg-[#262626] border border-[#5e5e5e] rounded-lg text-center gap-4">
-            <HelpCircle className="w-16 h-16 text-gray-500 stroke-[1.5]" />
-            <h3 className="text-xl font-bold text-white">Nenhuma pergunta encontrada</h3>
-            <p className="text-gray-400 text-sm max-w-md">
+          <div className="flex flex-col items-center justify-center py-16 px-6 bg-lab-surface border border-lab-border rounded-2xl text-center gap-4">
+            <HelpCircle className="w-16 h-16 text-lab-muted stroke-[1.5]" />
+            <h3 className="text-xl font-extrabold text-lab-text">Nenhuma pergunta encontrada</h3>
+            <p className="text-lab-muted text-sm max-w-md">
               Não encontramos nenhuma pergunta com os filtros aplicados. Tente buscar por outro termo ou adicione novas perguntas.
             </p>
             <button
               onClick={openCreateModal}
-              className="mt-2 bg-[#883cec] hover:bg-[#722bc9] text-white px-5 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 cursor-pointer"
+              className="mt-2 bg-lab-primary-strong hover:bg-lab-primary dark:bg-lab-primary dark:hover:bg-lab-primary-strong text-white dark:text-[#121926] px-5 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 cursor-pointer"
             >
               <Plus className="w-4 h-4" />
               <span>Cadastrar Primeira Pergunta</span>
@@ -525,20 +512,20 @@ export default function AdminQuizPage() {
             {filteredQuestions.map((q, index) => (
               <div
                 key={q.id}
-                className="bg-[#262626] border border-[#5e5e5e] p-6 rounded-lg flex flex-col gap-6 shadow-md hover:border-[#777777] transition-all"
+                className="bg-lab-surface border border-lab-border p-6 rounded-2xl flex flex-col gap-6 shadow-sm hover:border-lab-primary transition-all"
               >
                 <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                   <div className="flex items-start gap-3">
-                    <span className="w-8 h-8 rounded-full bg-[#883cec]/20 border border-[#883cec] text-[#883cec] font-bold text-sm flex items-center justify-center flex-shrink-0">
+                    <span className="w-8 h-8 rounded-full bg-lab-tint border border-lab-border text-lab-primary-strong font-extrabold text-sm flex items-center justify-center flex-shrink-0">
                       {index + 1}
                     </span>
                     <div className="flex flex-col gap-1.5">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <span className="bg-[#333333] border border-[#5e5e5e] text-[#a855f7] px-2.5 py-0.5 rounded-md text-xs font-semibold uppercase tracking-wider">
+                        <span className="bg-lab-lavender-bg border border-lab-lavender-border text-lab-lavender-text px-2.5 py-0.5 rounded-lg text-xs font-bold uppercase tracking-wider">
                           {q.category || "geral"}
                         </span>
                       </div>
-                      <h2 className="text-lg md:text-xl font-bold text-white leading-snug">
+                      <h2 className="text-lg md:text-xl font-bold text-lab-text leading-snug">
                         {q.question}
                       </h2>
                     </div>
@@ -547,10 +534,10 @@ export default function AdminQuizPage() {
                   <div className="flex items-center gap-2 self-end md:self-auto">
                     <button
                       onClick={() => openEditModal(q)}
-                      className="bg-[#333333] hover:bg-[#444444] border border-[#5e5e5e] text-white px-3.5 py-2 rounded-lg font-medium text-xs md:text-sm flex items-center gap-1.5 transition-colors cursor-pointer"
+                      className="bg-lab-tint hover:bg-lab-border/70 border border-lab-border text-lab-text px-3.5 py-2 rounded-xl font-bold text-xs md:text-sm flex items-center gap-1.5 transition-colors cursor-pointer"
                       title="Editar Pergunta"
                     >
-                      <Edit3 className="w-4 h-4 text-blue-400" />
+                      <Edit3 className="w-4 h-4 text-lab-primary-strong" />
                       <span>Editar</span>
                     </button>
 
@@ -559,10 +546,10 @@ export default function AdminQuizPage() {
                         playPopupOpen();
                         setDeleteConfirmId(q.id);
                       }}
-                      className="bg-[#333333] hover:bg-red-950/40 border border-[#5e5e5e] text-red-400 hover:border-red-500/50 px-3.5 py-2 rounded-lg font-medium text-xs md:text-sm flex items-center gap-1.5 transition-colors cursor-pointer"
+                      className="bg-lab-error-bg hover:opacity-90 border border-lab-error-border text-lab-error-text px-3.5 py-2 rounded-xl font-bold text-xs md:text-sm flex items-center gap-1.5 transition-colors cursor-pointer"
                       title="Excluir Pergunta"
                     >
-                      <Trash2 className="w-4 h-4 text-red-400" />
+                      <Trash2 className="w-4 h-4" />
                       <span>Excluir</span>
                     </button>
                   </div>
@@ -570,43 +557,47 @@ export default function AdminQuizPage() {
 
                 {/* Options Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pl-0 md:pl-11">
-                  {q.options && q.options.map((opt, optIdx) => {
-                    const isCorrect = optIdx === q.correct_option_index;
-                    return (
-                      <div
-                        key={optIdx}
-                        className={`p-3.5 rounded-lg border flex items-start gap-3 transition-colors ${
-                          isCorrect
-                            ? "bg-emerald-950/30 border-emerald-500/60 text-emerald-100"
-                            : "bg-[#1c1c1c] border-[#444444] text-gray-300"
-                        }`}
-                      >
-                        <span className={`w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center mt-0.5 ${
-                          isCorrect ? "bg-emerald-500 text-black" : "bg-[#333333] text-gray-400 border border-[#555]"
-                        }`}>
-                          {String.fromCharCode(65 + optIdx)}
-                        </span>
-                        <div className="flex-1 text-sm font-medium leading-relaxed">
-                          {opt}
-                        </div>
-                        {isCorrect && (
-                          <span className="flex items-center gap-1 text-xs font-semibold text-emerald-400 bg-emerald-950/80 border border-emerald-500/40 px-2 py-0.5 rounded">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
-                            Correta
+                  {q.options &&
+                    q.options.map((opt, optIdx) => {
+                      const isCorrect = optIdx === q.correct_option_index;
+                      return (
+                        <div
+                          key={optIdx}
+                          className={`p-3.5 rounded-xl border flex items-start gap-3 transition-colors ${
+                            isCorrect
+                              ? "bg-lab-success-bg border-lab-success-border text-lab-text"
+                              : "bg-lab-tint/50 border-lab-border text-lab-muted"
+                          }`}
+                        >
+                          <span
+                            className={`w-6 h-6 rounded-full text-xs font-extrabold flex items-center justify-center mt-0.5 ${
+                              isCorrect
+                                ? "bg-lab-secondary text-[#121926]"
+                                : "bg-lab-surface text-lab-muted border border-lab-border"
+                            }`}
+                          >
+                            {String.fromCharCode(65 + optIdx)}
                           </span>
-                        )}
-                      </div>
-                    );
-                  })}
+                          <div className="flex-1 text-sm font-semibold leading-relaxed text-lab-text">
+                            {opt}
+                          </div>
+                          {isCorrect && (
+                            <span className="flex items-center gap-1 text-xs font-bold text-lab-success-text bg-lab-surface border border-lab-success-border px-2 py-0.5 rounded-lg">
+                              <CheckCircle2 className="w-3.5 h-3.5" />
+                              Correta
+                            </span>
+                          )}
+                        </div>
+                      );
+                    })}
                 </div>
 
-                {/* Explanation note if present */}
                 {q.explanation && (
                   <div className="pl-0 md:pl-11">
-                    <div className="bg-[#1c1c1c] border border-[#444444] p-3.5 rounded-lg flex items-start gap-3 text-xs md:text-sm text-gray-300">
-                      <Info className="w-5 h-5 text-purple-400 mt-0.5" />
+                    <div className="bg-lab-tint/50 border border-lab-border p-3.5 rounded-xl flex items-start gap-3 text-xs md:text-sm text-lab-muted">
+                      <Info className="w-5 h-5 text-lab-lavender-text mt-0.5 shrink-0" />
                       <div>
-                        <strong className="text-purple-300 font-semibold">Explicação pedagógica: </strong>
+                        <strong className="text-lab-lavender-text font-bold">Explicação pedagógica: </strong>
                         <span>{q.explanation}</span>
                       </div>
                     </div>
@@ -620,14 +611,14 @@ export default function AdminQuizPage() {
 
       {/* Modal: Create & Edit Question */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs overflow-y-auto">
-          <div className="bg-[#262626] border border-[#5e5e5e] text-white w-full max-w-2xl rounded-xl shadow-2xl overflow-hidden my-8">
-            <div className="flex items-center justify-between p-6 border-b border-[#444444]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#121926]/70 backdrop-blur-xs overflow-y-auto">
+          <div className="bg-lab-surface border border-lab-border text-lab-text w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden my-8">
+            <div className="flex items-center justify-between p-6 border-b border-lab-border">
               <div className="flex items-center gap-3">
-                <div className="p-2 bg-[#883cec]/20 rounded-lg">
-                  <FileQuestion className="w-6 h-6 text-[#883cec]" />
+                <div className="p-2 bg-lab-tint border border-lab-border rounded-xl">
+                  <FileQuestion className="w-6 h-6 text-lab-primary-strong" />
                 </div>
-                <h3 className="text-xl font-bold">
+                <h3 className="text-xl font-extrabold">
                   {editingQuestion ? "Editar Pergunta" : "Nova Pergunta do Quiz"}
                 </h3>
               </div>
@@ -636,16 +627,15 @@ export default function AdminQuizPage() {
                   playPopupClose();
                   setIsModalOpen(false);
                 }}
-                className="text-gray-400 hover:text-white p-1 rounded-lg hover:bg-[#333] transition-colors"
+                className="text-lab-muted hover:text-lab-text p-1.5 rounded-xl hover:bg-lab-tint transition-colors cursor-pointer"
               >
                 <X className="w-6 h-6" />
               </button>
             </div>
 
             <form onSubmit={handleSaveQuestion} className="p-6 flex flex-col gap-6">
-              {/* Question Text */}
               <div className="flex flex-col gap-2">
-                <label className="text-sm font-semibold text-gray-200">
+                <label className="text-sm font-bold text-lab-text">
                   Enunciado da Pergunta *
                 </label>
                 <textarea
@@ -654,13 +644,12 @@ export default function AdminQuizPage() {
                   value={formQuestion}
                   onChange={(e) => setFormQuestion(e.target.value)}
                   placeholder="Ex: Qual função no código do Arduino é executada uma única vez ao ligar o componente?"
-                  className="w-full bg-[#1c1c1c] border border-[#5e5e5e] rounded-lg p-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#883cec]"
+                  className="w-full bg-lab-tint border border-lab-border rounded-xl p-3 text-lab-text placeholder-lab-muted text-sm focus:outline-none focus:border-lab-primary"
                 />
               </div>
 
-              {/* Category */}
               <div className="flex flex-col gap-2">
-                <label className="text-sm font-semibold text-gray-200">
+                <label className="text-sm font-bold text-lab-text">
                   Categoria *
                 </label>
                 <input
@@ -669,25 +658,26 @@ export default function AdminQuizPage() {
                   value={formCategory}
                   onChange={(e) => setFormCategory(e.target.value)}
                   placeholder="eletronica, programacao, hardware, etc."
-                  className="w-full bg-[#1c1c1c] border border-[#5e5e5e] rounded-lg p-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#883cec]"
+                  className="w-full bg-lab-tint border border-lab-border rounded-xl p-3 text-lab-text placeholder-lab-muted text-sm focus:outline-none focus:border-lab-primary"
                 />
               </div>
 
-              {/* Options */}
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-between">
-                  <label className="text-sm font-semibold text-gray-200">
+                  <label className="text-sm font-bold text-lab-text">
                     Opções de Resposta (Selecione a Correta) *
                   </label>
-                  <span className="text-xs text-gray-400">Marque o radio button da alternativa certa</span>
+                  <span className="text-xs text-lab-muted">Marque o radio button da alternativa certa</span>
                 </div>
 
                 <div className="flex flex-col gap-3">
                   {formOptions.map((opt, idx) => (
                     <div
                       key={idx}
-                      className={`flex items-center gap-3 p-3 rounded-lg border transition-colors ${
-                        formCorrectIndex === idx ? "bg-emerald-950/20 border-emerald-500/50" : "bg-[#1c1c1c] border-[#444444]"
+                      className={`flex items-center gap-3 p-3 rounded-xl border transition-colors ${
+                        formCorrectIndex === idx
+                          ? "bg-lab-success-bg border-lab-success-border"
+                          : "bg-lab-tint border-lab-border"
                       }`}
                     >
                       <input
@@ -696,9 +686,9 @@ export default function AdminQuizPage() {
                         id={`opt-radio-${idx}`}
                         checked={formCorrectIndex === idx}
                         onChange={() => setFormCorrectIndex(idx)}
-                        className="w-4 h-4 accent-emerald-500 cursor-pointer"
+                        className="w-4 h-4 accent-lab-secondary cursor-pointer"
                       />
-                      <span className="font-bold text-sm w-6 text-gray-300">
+                      <span className="font-extrabold text-sm w-6 text-lab-text">
                         {String.fromCharCode(65 + idx)}:
                       </span>
                       <input
@@ -707,10 +697,10 @@ export default function AdminQuizPage() {
                         value={opt}
                         onChange={(e) => handleOptionChange(idx, e.target.value)}
                         placeholder={`Digite a opção ${String.fromCharCode(65 + idx)}`}
-                        className="flex-1 bg-transparent text-white text-sm focus:outline-none"
+                        className="flex-1 bg-transparent text-lab-text placeholder-lab-muted text-sm focus:outline-none"
                       />
                       {formCorrectIndex === idx && (
-                        <span className="text-xs font-semibold text-emerald-400 bg-emerald-950 border border-emerald-500/30 px-2 py-0.5 rounded">
+                        <span className="text-xs font-bold text-lab-success-text bg-lab-surface border border-lab-success-border px-2 py-0.5 rounded-lg">
                           Correta
                         </span>
                       )}
@@ -719,9 +709,8 @@ export default function AdminQuizPage() {
                 </div>
               </div>
 
-              {/* Explanation */}
               <div className="flex flex-col gap-2">
-                <label className="text-sm font-semibold text-gray-200">
+                <label className="text-sm font-bold text-lab-text">
                   Explicação / Dica Didática (Opcional)
                 </label>
                 <textarea
@@ -729,19 +718,18 @@ export default function AdminQuizPage() {
                   value={formExplanation}
                   onChange={(e) => setFormExplanation(e.target.value)}
                   placeholder="Explicativa técnica sobre o porquê desta alternativa ser a correta..."
-                  className="w-full bg-[#1c1c1c] border border-[#5e5e5e] rounded-lg p-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-[#883cec]"
+                  className="w-full bg-lab-tint border border-lab-border rounded-xl p-3 text-lab-text placeholder-lab-muted text-sm focus:outline-none focus:border-lab-primary"
                 />
               </div>
 
-              {/* Form Buttons */}
-              <div className="flex items-center justify-end gap-3 pt-4 border-t border-[#444444]">
+              <div className="flex items-center justify-end gap-3 pt-4 border-t border-lab-border">
                 <button
                   type="button"
                   onClick={() => {
                     playPopupClose();
                     setIsModalOpen(false);
                   }}
-                  className="bg-[#333333] hover:bg-[#444444] text-gray-200 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors cursor-pointer"
+                  className="bg-lab-tint hover:bg-lab-border/70 text-lab-text px-5 py-2.5 rounded-xl text-sm font-bold transition-colors cursor-pointer"
                 >
                   Cancelar
                 </button>
@@ -749,11 +737,11 @@ export default function AdminQuizPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="bg-[#883cec] hover:bg-[#722bc9] text-white px-6 py-2.5 rounded-lg text-sm font-medium flex items-center gap-2 shadow-lg transition-colors cursor-pointer disabled:opacity-50"
+                  className="bg-lab-primary-strong hover:bg-lab-primary dark:bg-lab-primary dark:hover:bg-lab-primary-strong text-white dark:text-[#121926] px-6 py-2.5 rounded-xl text-sm font-bold flex items-center gap-2 shadow-sm transition-colors cursor-pointer disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      <div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
                       <span>Salvando...</span>
                     </>
                   ) : (
@@ -768,16 +756,16 @@ export default function AdminQuizPage() {
 
       {/* Modal: Delete Confirmation */}
       {deleteConfirmId && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs">
-          <div className="bg-[#262626] border border-[#5e5e5e] text-white w-full max-w-md rounded-xl p-6 flex flex-col gap-6 shadow-2xl">
-            <div className="flex items-center gap-3 text-red-400">
-              <div className="p-3 bg-red-950/60 border border-red-500/40 rounded-lg">
-                <AlertCircle className="w-6 h-6 text-red-400" />
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#121926]/70 backdrop-blur-xs">
+          <div className="bg-lab-surface border border-lab-border text-lab-text w-full max-w-md rounded-2xl p-6 flex flex-col gap-6 shadow-2xl">
+            <div className="flex items-center gap-3 text-lab-error-text">
+              <div className="p-3 bg-lab-error-bg border border-lab-error-border rounded-xl">
+                <AlertCircle className="w-6 h-6" />
               </div>
-              <h3 className="text-xl font-bold">Confirmar Exclusão</h3>
+              <h3 className="text-xl font-extrabold text-lab-text">Confirmar Exclusão</h3>
             </div>
 
-            <p className="text-gray-300 text-sm leading-relaxed">
+            <p className="text-lab-muted text-sm leading-relaxed">
               Tem certeza de que deseja remover esta pergunta permanentemente? Esta ação não poderá ser desfeita.
             </p>
 
@@ -787,14 +775,14 @@ export default function AdminQuizPage() {
                   playPopupClose();
                   setDeleteConfirmId(null);
                 }}
-                className="bg-[#333333] hover:bg-[#444444] text-gray-200 px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer"
+                className="bg-lab-tint hover:bg-lab-border/70 text-lab-text px-4 py-2 rounded-xl text-sm font-bold transition-colors cursor-pointer"
               >
                 Cancelar
               </button>
 
               <button
                 onClick={() => handleDeleteQuestion(deleteConfirmId)}
-                className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer shadow-md"
+                className="bg-lab-coral hover:opacity-90 text-[#121926] px-5 py-2 rounded-xl text-sm font-extrabold transition-colors cursor-pointer shadow-sm"
               >
                 Sim, Excluir
               </button>
@@ -803,9 +791,8 @@ export default function AdminQuizPage() {
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-[#333]">
-        <div className="max-w-[1216px] w-full mx-auto px-6 lg:px-0 py-6 text-center text-sm text-white">
+      <footer className="relative z-10 border-t border-lab-border bg-lab-surface/60">
+        <div className="max-w-[1216px] w-full mx-auto px-6 lg:px-0 py-6 text-center text-sm font-semibold text-lab-muted">
           <p>LabApp — Painel Administrativo de Conteúdo (UFC / SMD)</p>
         </div>
       </footer>

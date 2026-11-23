@@ -4,27 +4,27 @@ import React, { useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { 
-  ArrowLeft, 
-  RotateCcw, 
-  Lightbulb, 
-  HelpCircle, 
-  Sliders, 
+import {
+  ArrowLeft,
+  RotateCcw,
+  Lightbulb,
+  HelpCircle,
+  Sliders,
   X,
   Play,
   Layers,
   Info,
-  Zap
+  Zap,
 } from "lucide-react";
 import { Header } from "@/components/header";
 import { QuizMascot, MascotPose } from "@/components/quiz/quiz-mascot";
 import { CircuitoResultModal } from "@/components/modals/circuito-result-modal";
 import { CircuitoErrorModal, SlotValidationError } from "@/components/modals/circuito-error-modal";
 import { useSoundEffects } from "@/providers/sound-provider";
-import { 
-  CircuitChallenge, 
-  AVAILABLE_COMPONENTS, 
-  getStoredCircuits 
+import {
+  CircuitChallenge,
+  AVAILABLE_COMPONENTS,
+  getStoredCircuits,
 } from "@/lib/circuitos-data";
 
 export default function JogoEletronicaPage() {
@@ -34,10 +34,10 @@ export default function JogoEletronicaPage() {
   const [circuits] = useState<CircuitChallenge[]>(() => getStoredCircuits());
   const [currentCircuitIndex, setCurrentCircuitIndex] = useState(0);
   const [placedComponents, setPlacedComponents] = useState<Record<string, string>>({});
-  
+
   // Selection state for click-to-place accessibility fallback
   const [selectedLibraryComponent, setSelectedLibraryComponent] = useState<string | null>(null);
-  
+
   // Drag-and-drop state
   const [draggedComponentId, setDraggedComponentId] = useState<string | null>(null);
   const [activeHoverSlotId, setActiveHoverSlotId] = useState<string | null>(null);
@@ -188,7 +188,6 @@ export default function JogoEletronicaPage() {
     setIsSimulating(true);
     playClick();
 
-    // Check each slot
     const errors: SlotValidationError[] = [];
     currentCircuit.slots.forEach((slot) => {
       const placed = placedComponents[slot.id];
@@ -240,33 +239,27 @@ export default function JogoEletronicaPage() {
 
   if (!currentCircuit) {
     return (
-      <div className="min-h-screen bg-[#212121] text-white flex flex-col justify-between">
+      <div className="min-h-screen bg-lab-canvas text-lab-text flex flex-col justify-between">
         <Header />
-        <div className="text-center py-24 text-gray-400">Carregando bancada de circuitos...</div>
+        <div className="text-center py-24 text-lab-muted font-semibold">Carregando bancada de circuitos...</div>
       </div>
     );
   }
 
   return (
-    <div className="relative min-h-screen bg-[#212121] text-white font-sans flex flex-col justify-between select-none">
+    <div className="relative min-h-screen bg-lab-canvas text-lab-text font-sans flex flex-col justify-between select-none">
       {/* Background dot grid pattern */}
-      <div 
-        className="absolute inset-0 opacity-15 pointer-events-none"
-        style={{
-          backgroundImage: "radial-gradient(#cccccc 1.5px, transparent 1.5px)",
-          backgroundSize: "24px 24px"
-        }}
-      />
+      <div className="absolute inset-0 opacity-55 dark:opacity-35 pointer-events-none lab-dot-grid" />
 
       <Header />
 
       <main className="relative z-10 flex-1 max-w-[1440px] w-full mx-auto px-4 sm:px-6 py-6 flex flex-col gap-6">
         {/* Top Header Bar */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-2 border-b border-[#3e3e3e]">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-3 border-b border-lab-border">
           <div className="flex items-center gap-4">
             <Link
               href="/jogos"
-              className="p-2.5 rounded-xl bg-[#2a2a2a] hover:bg-[#383838] border border-[#5e5e5e] text-gray-300 hover:text-white transition-all flex items-center gap-2 text-sm font-semibold cursor-pointer active:scale-95"
+              className="p-2.5 rounded-xl bg-lab-surface hover:bg-lab-tint border border-lab-border text-lab-muted hover:text-lab-text transition-all flex items-center gap-2 text-sm font-bold cursor-pointer active:scale-95"
             >
               <ArrowLeft className="w-4 h-4" />
               <span>Voltar aos Jogos</span>
@@ -274,14 +267,14 @@ export default function JogoEletronicaPage() {
 
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
-                <span className="text-xs uppercase font-extrabold tracking-wider text-[#883cec] bg-[#883cec]/15 px-2.5 py-0.5 rounded-md border border-[#883cec]/30">
+                <span className="text-xs uppercase font-extrabold tracking-wider text-lab-primary-strong bg-lab-tint px-2.5 py-0.5 rounded-lg border border-lab-border">
                   Desafio {String(currentCircuitIndex + 1).padStart(2, "0")} / {String(circuits.length).padStart(2, "0")}
                 </span>
-                <span className="text-xs uppercase font-bold text-gray-400 bg-[#333333] px-2 py-0.5 rounded-md border border-[#444444]">
+                <span className="text-xs uppercase font-bold text-lab-muted bg-lab-surface px-2.5 py-0.5 rounded-lg border border-lab-border">
                   {currentCircuit.difficulty}
                 </span>
               </div>
-              <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight mt-1">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-lab-text tracking-tight mt-1">
                 {currentCircuit.title}
               </h1>
             </div>
@@ -296,10 +289,10 @@ export default function JogoEletronicaPage() {
                   playClick();
                   switchCircuit(idx);
                 }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
+                className={`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer whitespace-nowrap ${
                   idx === currentCircuitIndex
-                    ? "bg-[#883cec] text-white shadow-md shadow-[#883cec]/30"
-                    : "bg-[#2b2b2b] text-gray-300 hover:bg-[#383838] border border-[#444444]"
+                    ? "bg-lab-primary-strong text-white dark:bg-lab-primary dark:text-[#121926] shadow-sm"
+                    : "bg-lab-surface text-lab-muted hover:bg-lab-tint hover:text-lab-text border border-lab-border"
                 }`}
               >
                 Circuito {idx + 1}
@@ -309,16 +302,16 @@ export default function JogoEletronicaPage() {
         </div>
 
         {/* Practical Objective Banner */}
-        <div className="bg-[#262626] border border-[#5e5e5e] rounded-xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-lg">
+        <div className="bg-lab-surface border border-lab-border rounded-2xl p-4 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 shadow-sm">
           <div className="flex items-start gap-3">
-            <div className="p-2.5 rounded-lg bg-amber-500/15 border border-amber-500/35 text-amber-400">
-              <Lightbulb className="w-5 h-5 text-amber-400 fill-amber-400/25" />
+            <div className="p-2.5 rounded-xl bg-lab-amber-bg border border-lab-amber-border text-lab-amber-text">
+              <Lightbulb className="w-5 h-5" />
             </div>
             <div className="flex flex-col">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-400">
+              <span className="text-xs font-extrabold uppercase tracking-wider text-lab-amber-text">
                 Objetivo do Desafio
               </span>
-              <p className="text-sm sm:text-base text-gray-100 font-medium leading-relaxed">
+              <p className="text-sm sm:text-base text-lab-text font-semibold leading-relaxed">
                 {currentCircuit.practicalObjective}
               </p>
             </div>
@@ -327,7 +320,7 @@ export default function JogoEletronicaPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/admin/circuitos"
-              className="text-xs text-gray-400 hover:text-purple-300 underline flex items-center gap-1 transition-colors"
+              className="text-xs font-bold text-lab-primary-strong hover:underline flex items-center gap-1 transition-colors"
             >
               <Sliders className="w-3.5 h-3.5" />
               <span>Gerenciar Slots</span>
@@ -335,23 +328,23 @@ export default function JogoEletronicaPage() {
           </div>
         </div>
 
-        {/* 3-Column Interactive Area: Left (Biblioteca) | Center (Circuito) | Right (Mascote/Info) */}
+        {/* 3-Column Interactive Area */}
         <div className="flex flex-col lg:flex-row items-start gap-5">
-          {/* 1. Component Library / Shelf on the LEFT side of circuit */}
-          <div className="w-full lg:w-72 xl:w-80 shrink-0 bg-[#262626] border border-[#5e5e5e] rounded-2xl p-4 flex flex-col gap-3 shadow-xl order-2 lg:order-1">
-            <div className="flex items-center justify-between border-b border-[#3e3e3e] pb-2.5">
+          {/* 1. Component Library / Shelf on the LEFT */}
+          <div className="w-full lg:w-72 xl:w-80 shrink-0 bg-lab-surface border border-lab-border rounded-2xl p-4 flex flex-col gap-3 shadow-sm order-2 lg:order-1">
+            <div className="flex items-center justify-between border-b border-lab-border pb-2.5">
               <div className="flex items-center gap-2">
-                <Layers className="w-4 h-4 text-[#883cec]" />
-                <h2 className="text-sm font-bold uppercase tracking-wider text-white">
+                <Layers className="w-4 h-4 text-lab-primary-strong" />
+                <h2 className="text-sm font-extrabold uppercase tracking-wider text-lab-text">
                   Biblioteca de Componentes
                 </h2>
               </div>
-              <span className="text-[10px] text-gray-400 font-mono bg-[#1e1e1e] px-2 py-0.5 rounded border border-[#444]">
+              <span className="text-[10px] text-lab-muted font-mono bg-lab-tint px-2 py-0.5 rounded-lg border border-lab-border">
                 {availableComponentsList.length} itens
               </span>
             </div>
 
-            <p className="text-[11px] text-gray-400 leading-snug">
+            <p className="text-[11px] text-lab-muted leading-snug font-semibold">
               Arraste para os slots do circuito ou clique no componente para selecionar.
             </p>
 
@@ -369,14 +362,14 @@ export default function JogoEletronicaPage() {
                       playClick();
                       setSelectedLibraryComponent(isSelected ? null : comp.id);
                     }}
-                    className={`relative bg-[#1e1e1e] border rounded-xl p-3 flex items-center gap-3 cursor-grab active:cursor-grabbing transition-all select-none hover:-translate-y-0.5 shadow-sm ${
+                    className={`relative border rounded-xl p-3 flex items-center gap-3 cursor-grab active:cursor-grabbing transition-all select-none hover:-translate-y-0.5 shadow-xs ${
                       isSelected
-                        ? "border-[#883cec] bg-[#883cec]/20 ring-2 ring-[#883cec] shadow-md shadow-[#883cec]/25"
-                        : "border-[#444444] hover:border-[#777777] hover:bg-[#282828]"
+                        ? "border-lab-primary bg-lab-tint ring-2 ring-lab-primary"
+                        : "bg-lab-tint/50 border-lab-border hover:border-lab-primary hover:bg-lab-tint"
                     }`}
                     title={`${comp.name} - ${comp.description}`}
                   >
-                    <div className="relative w-14 h-14 shrink-0 flex items-center justify-center bg-black/30 rounded-lg p-1 border border-white/5">
+                    <div className="relative w-14 h-14 shrink-0 flex items-center justify-center bg-lab-surface rounded-xl p-1 border border-lab-border">
                       <Image
                         src={comp.image_url}
                         alt={comp.name}
@@ -386,13 +379,13 @@ export default function JogoEletronicaPage() {
                     </div>
 
                     <div className="flex flex-col overflow-hidden min-w-0">
-                      <span className="text-xs font-bold text-white truncate">
+                      <span className="text-xs font-bold text-lab-text truncate">
                         {comp.name}
                       </span>
-                      <span className="text-[10px] text-purple-300 font-medium truncate">
+                      <span className="text-[10px] text-lab-primary-strong font-bold truncate">
                         {comp.category}
                       </span>
-                      <p className="text-[10px] text-gray-400 line-clamp-1 mt-0.5">
+                      <p className="text-[10px] text-lab-muted line-clamp-1 mt-0.5">
                         {comp.description}
                       </p>
                     </div>
@@ -404,23 +397,23 @@ export default function JogoEletronicaPage() {
 
           {/* 2. Virtual Workbench / Circuit Canvas in the CENTER */}
           <div className="flex-1 min-w-0 flex flex-col gap-4 order-1 lg:order-2 w-full">
-            <div className="relative bg-[#1a1a1a] border-2 border-[#4a4a4a] rounded-2xl overflow-hidden shadow-2xl p-4 sm:p-5 flex flex-col items-center justify-center">
+            <div className="relative bg-lab-surface border border-lab-border rounded-2xl overflow-hidden shadow-sm p-4 sm:p-5 flex flex-col items-center justify-center">
               {/* Circuit Board Header Indicators */}
-              <div className="w-full flex items-center justify-between text-xs text-gray-400 mb-2 border-b border-[#333333] pb-2">
+              <div className="w-full flex items-center justify-between text-xs text-lab-muted mb-3 border-b border-lab-border pb-2.5">
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="font-mono font-semibold tracking-wider uppercase text-gray-300 text-xs">
+                  <span className="w-2.5 h-2.5 rounded-full bg-lab-secondary animate-pulse" />
+                  <span className="font-mono font-bold tracking-wider uppercase text-lab-text text-xs">
                     Bancada Virtual de Prototipagem
                   </span>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="font-medium text-gray-400 text-xs">
-                    Slots: <strong className="text-white">{filledSlotsCount}</strong> / {totalSlots}
+                  <span className="font-semibold text-lab-muted text-xs">
+                    Slots: <strong className="text-lab-text">{filledSlotsCount}</strong> / {totalSlots}
                   </span>
                   <button
                     onClick={handleClearWorkbench}
                     disabled={filledSlotsCount === 0}
-                    className="text-xs text-gray-400 hover:text-rose-400 disabled:opacity-40 disabled:hover:text-gray-400 cursor-pointer flex items-center gap-1 transition-colors"
+                    className="text-xs font-bold text-lab-muted hover:text-lab-error-text disabled:opacity-40 disabled:hover:text-lab-muted cursor-pointer flex items-center gap-1 transition-colors"
                   >
                     <RotateCcw className="w-3 h-3" />
                     <span>Limpar</span>
@@ -429,11 +422,13 @@ export default function JogoEletronicaPage() {
               </div>
 
               {/* The Circuit Illustration with Absolute Overlay Slots */}
-              <div className="relative w-full max-w-[880px] aspect-[4/3] rounded-xl overflow-hidden border border-[#3a3a3a] bg-[#121212] shadow-inner flex items-center justify-center">
+              <div className="relative w-full max-w-[880px] aspect-[4/3] rounded-2xl overflow-hidden border border-lab-border bg-[#121926] shadow-inner flex items-center justify-center">
                 {/* Background Illustration */}
-                <div className={`relative w-full h-full transition-all duration-700 ${
-                  isCircuitEnergized ? "filter drop-shadow-[0_0_25px_rgba(34,197,94,0.45)] brightness-110" : ""
-                }`}>
+                <div
+                  className={`relative w-full h-full transition-all duration-700 ${
+                    isCircuitEnergized ? "filter drop-shadow-[0_0_25px_rgba(108,217,180,0.5)] brightness-110" : ""
+                  }`}
+                >
                   <Image
                     src={currentCircuit.image_url}
                     alt={currentCircuit.title}
@@ -444,16 +439,16 @@ export default function JogoEletronicaPage() {
 
                   {/* Simulated Energized Glow Overlay */}
                   {isCircuitEnergized && (
-                    <div className="absolute inset-0 bg-emerald-500/10 pointer-events-none animate-pulse flex items-center justify-center">
-                      <div className="absolute top-4 right-4 bg-emerald-950/80 border border-emerald-500/60 text-emerald-300 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg">
-                        <Zap className="w-3.5 h-3.5 text-emerald-400 fill-emerald-400" />
+                    <div className="absolute inset-0 bg-[#6CD9B4]/10 pointer-events-none animate-pulse flex items-center justify-center">
+                      <div className="absolute top-4 right-4 bg-[#121926]/90 border border-[#7CE6C2]/60 text-[#7CE6C2] px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1.5 shadow-lg font-mono">
+                        <Zap className="w-3.5 h-3.5 fill-current" />
                         <span>Circuito Ativo: 5V / 9V Corrente Estável</span>
                       </div>
                     </div>
                   )}
                 </div>
 
-                {/* Interactive Slots with Didactic Hint Icons */}
+                {/* Interactive Slots */}
                 {currentCircuit.slots.map((slot, index) => {
                   const placedCompId = placedComponents[slot.id];
                   const placedComp = getComponentObj(placedCompId);
@@ -476,21 +471,19 @@ export default function JogoEletronicaPage() {
                       onClick={() => handleSlotClick(slot.id)}
                       className={`absolute rounded-xl flex flex-col items-center justify-center transition-all duration-200 cursor-pointer ${
                         placedComp
-                          ? "bg-[#252525]/90 border-2 border-emerald-500/80 shadow-lg shadow-emerald-500/20 backdrop-blur-xs"
+                          ? "bg-[#1B2538]/95 border-2 border-[#7CE6C2] shadow-lg shadow-[#7CE6C2]/20 backdrop-blur-xs"
                           : isHovered
-                          ? "bg-[#883cec]/40 border-2 border-[#a865f8] scale-105 shadow-xl shadow-[#883cec]/40 animate-pulse"
+                          ? "bg-[#64A8F5]/40 border-2 border-[#9AC9FC] scale-105 shadow-xl animate-pulse"
                           : selectedLibraryComponent
-                          ? "bg-[#2a2a2a]/80 border-2 border-dashed border-[#883cec] hover:bg-[#883cec]/25 hover:scale-102"
-                          : "bg-[#1c1c1c]/80 border-2 border-dashed border-[#666666] hover:border-[#883cec] hover:bg-[#252525]/90"
+                          ? "bg-[#1B2538]/85 border-2 border-dashed border-[#7BB8FA] hover:bg-[#64A8F5]/25 hover:scale-102"
+                          : "bg-[#121926]/85 border-2 border-dashed border-[#5C6F87] hover:border-[#7BB8FA] hover:bg-[#1B2538]/90"
                       }`}
                     >
                       {placedComp ? (
-                        /* Filled Slot State */
                         <div className="relative w-full h-full p-1 flex flex-col items-center justify-between group">
-                          {/* Remove button */}
                           <button
                             onClick={(e) => handleRemoveFromSlot(e, slot.id)}
-                            className="absolute -top-2 -right-2 w-5 h-5 bg-rose-600 hover:bg-rose-500 text-white rounded-full flex items-center justify-center text-xs shadow-md z-20 cursor-pointer opacity-90 group-hover:opacity-100 transition-opacity"
+                            className="absolute -top-2 -right-2 w-5 h-5 bg-[#F78C8C] hover:bg-[#FA9E9E] text-[#121926] font-extrabold rounded-full flex items-center justify-center text-xs shadow-md z-20 cursor-pointer opacity-90 group-hover:opacity-100 transition-opacity"
                             title="Remover peça"
                           >
                             <X className="w-3 h-3" />
@@ -505,19 +498,16 @@ export default function JogoEletronicaPage() {
                             />
                           </div>
 
-                          <span className="w-full text-center text-[10px] font-bold text-gray-200 truncate bg-black/60 rounded px-1">
+                          <span className="w-full text-center text-[10px] font-bold text-[#F1F6FC] truncate bg-[#121926]/80 rounded px-1">
                             {placedComp.name}
                           </span>
                         </div>
                       ) : (
-                        /* Challenging Empty Slot State with Interactive Hint Button */
                         <div className="relative w-full h-full flex flex-col items-center justify-center p-1 text-center">
-                          {/* Slot Number Badge */}
-                          <div className="w-5 h-5 rounded-full bg-[#303030] border border-[#555] text-gray-300 text-[10px] font-bold flex items-center justify-center shadow-xs">
+                          <div className="w-5 h-5 rounded-full bg-[#24324A] border border-[#2E3E5C] text-[#F1F6FC] text-[10px] font-bold flex items-center justify-center shadow-xs">
                             {index + 1}
                           </div>
 
-                          {/* Interactive Tip Icon Button */}
                           <button
                             type="button"
                             onClick={(e) => {
@@ -527,40 +517,42 @@ export default function JogoEletronicaPage() {
                             }}
                             onMouseEnter={() => setHoveredHintSlotId(slot.id)}
                             onMouseLeave={() => setHoveredHintSlotId((prev) => (prev === slot.id ? null : prev))}
-                            className="mt-1 p-1 rounded-full bg-amber-500/20 hover:bg-amber-500/35 border border-amber-400/50 text-amber-300 transition-all hover:scale-110 shadow-sm cursor-pointer"
+                            className="mt-1 p-1 rounded-full bg-[#FFD166]/20 hover:bg-[#FFD166]/35 border border-[#FFD166]/60 text-[#FFE08A] transition-all hover:scale-110 shadow-sm cursor-pointer"
                             title="Ver dica do componente desta área"
                           >
-                            <Lightbulb className="w-3.5 h-3.5 text-amber-400 fill-amber-400/30 animate-pulse" />
+                            <Lightbulb className="w-3.5 h-3.5 animate-pulse" />
                           </button>
-                          
-                          <span className="text-[9px] text-gray-400 mt-0.5">
+
+                          <span className="text-[9px] text-[#9FB2CC] mt-0.5 font-semibold">
                             Slot Vazio
                           </span>
 
-                          {/* Floating Hint Popover on Hover or Click */}
                           {isHintActive && (
-                            <div 
-                              className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-48 sm:w-56 bg-[#262626] border border-amber-400/60 rounded-xl p-2.5 shadow-2xl z-40 text-left pointer-events-auto animate-scale-in"
+                            <div
+                              className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 w-48 sm:w-56 bg-lab-surface border border-lab-amber-border rounded-xl p-3 shadow-2xl z-40 text-left pointer-events-auto animate-scale-in"
                               onClick={(e) => e.stopPropagation()}
                             >
-                              <div className="flex items-center justify-between text-amber-400 text-xs font-bold mb-1 border-b border-[#3e3e3e] pb-1">
+                              <div className="flex items-center justify-between text-lab-amber-text text-xs font-extrabold mb-1 border-b border-lab-border pb-1">
                                 <div className="flex items-center gap-1.5">
-                                  <Lightbulb className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
+                                  <Lightbulb className="w-3.5 h-3.5" />
                                   <span>Dica do Slot {index + 1}</span>
                                 </div>
                                 {activeHintSlotId === slot.id && (
                                   <button
                                     onClick={() => setActiveHintSlotId(null)}
-                                    className="text-gray-400 hover:text-white text-xs cursor-pointer"
+                                    className="text-lab-muted hover:text-lab-text text-xs cursor-pointer"
                                   >
                                     ×
                                   </button>
                                 )}
                               </div>
-                              <p className="text-[11px] text-gray-200 leading-snug">
+                              <p className="text-[11px] text-lab-text leading-snug">
                                 {slot.description || slot.hint || "Posicione o componente adequado nesta seção do circuito."}
                               </p>
-                              <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px] border-t-amber-400/60" />
+                              <div
+                                className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[6px]"
+                                style={{ borderTopColor: "var(--lab-amber-border)" }}
+                              />
                             </div>
                           )}
                         </div>
@@ -571,9 +563,9 @@ export default function JogoEletronicaPage() {
               </div>
 
               {/* Action Bar Below Workbench */}
-              <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 pt-3 border-t border-[#333333]">
-                <div className="flex items-center gap-2 text-xs text-gray-400">
-                  <Info className="w-4 h-4 text-purple-400 shrink-0" />
+              <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 mt-4 pt-3 border-t border-lab-border">
+                <div className="flex items-center gap-2 text-xs text-lab-muted font-semibold">
+                  <Info className="w-4 h-4 text-lab-primary-strong shrink-0" />
                   <span>
                     {isAllSlotsFilled
                       ? "Todos os slots preenchidos! Pronto para validar."
@@ -588,8 +580,8 @@ export default function JogoEletronicaPage() {
                     disabled={!isAllSlotsFilled || isSimulating}
                     className={`w-full sm:w-auto px-6 py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2 transition-all cursor-pointer ${
                       isAllSlotsFilled
-                        ? "bg-[#883cec] hover:bg-[#782bdc] text-white shadow-lg shadow-[#883cec]/30 active:scale-98 animate-pulse"
-                        : "bg-[#333333] text-gray-500 border border-[#444444] cursor-not-allowed"
+                        ? "bg-lab-primary-strong hover:bg-lab-primary dark:bg-lab-primary dark:hover:bg-lab-primary-strong text-white dark:text-[#121926] shadow-md active:scale-98 animate-pulse"
+                        : "bg-lab-tint text-lab-muted border border-lab-border cursor-not-allowed"
                     }`}
                   >
                     <Play className="w-4 h-4 fill-current" />
@@ -600,10 +592,10 @@ export default function JogoEletronicaPage() {
             </div>
           </div>
 
-          {/* 3. Sidebar: Mascot + Theory/Info on the RIGHT side */}
+          {/* 3. Sidebar: Mascot + Theory/Info on the RIGHT */}
           <div className="w-full lg:w-72 xl:w-80 shrink-0 flex flex-col gap-4 order-3">
             {/* Mascot Advisor */}
-            <div className="bg-[#262626] border border-[#5e5e5e] rounded-2xl p-4 flex flex-col items-center shadow-lg">
+            <div className="bg-lab-surface border border-lab-border rounded-2xl p-4 flex flex-col items-center shadow-sm">
               <QuizMascot
                 pose={mascotPose}
                 dialogueText={mascotSpeech}
@@ -612,23 +604,23 @@ export default function JogoEletronicaPage() {
             </div>
 
             {/* Explanation / Circuit Theory */}
-            <div className="bg-[#262626] border border-[#5e5e5e] rounded-2xl p-4 flex flex-col gap-2 shadow-lg text-xs sm:text-sm">
-              <div className="flex items-center gap-2 text-purple-300 font-bold">
-                <HelpCircle className="w-4 h-4 text-purple-400" />
+            <div className="bg-lab-surface border border-lab-border rounded-2xl p-4 flex flex-col gap-2 shadow-sm text-xs sm:text-sm">
+              <div className="flex items-center gap-2 text-lab-lavender-text font-bold">
+                <HelpCircle className="w-4 h-4" />
                 <span>Como Funciona Este Circuito</span>
               </div>
-              <p className="text-gray-300 leading-relaxed text-xs">
+              <p className="text-lab-muted leading-relaxed text-xs">
                 {currentCircuit.explanation}
               </p>
             </div>
 
             {/* Quick Tip Card */}
-            <div className="bg-[#1f2620] border border-emerald-600/30 rounded-2xl p-4 flex flex-col gap-2 shadow-lg text-xs">
-              <div className="flex items-center gap-1.5 text-emerald-400 font-bold">
-                <Lightbulb className="w-4 h-4 text-amber-400" />
+            <div className="bg-lab-success-bg border border-lab-success-border rounded-2xl p-4 flex flex-col gap-2 shadow-sm text-xs">
+              <div className="flex items-center gap-1.5 text-lab-success-text font-bold">
+                <Lightbulb className="w-4 h-4 text-lab-amber-text" />
                 <span>Dica Rápida do Módulo</span>
               </div>
-              <p className="text-gray-300 leading-relaxed">
+              <p className="text-lab-text leading-relaxed">
                 {currentCircuit.pedagogicalTips[0] || "Preste atenção aos polos positivos e negativos e aos limites de corrente."}
               </p>
             </div>
